@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="800"
+   height="102"
+   id="svg2"
+   version="1.1"
+   sodipodi:docname="pcm_3.svg"
+   inkscape:version="0.92.3 (2405546, 2018-03-11)">
+  <metadata
+     id="metadata239">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs237" />
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="854"
+     inkscape:window-height="563"
+     id="namedview235"
+     showgrid="false"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0"
+     inkscape:zoom="0.39333333"
+     inkscape:cx="400"
+     inkscape:cy="-149"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="0"
+     inkscape:current-layer="svg2" />
+  <style
+     id="style196">
+.my_style { font: 20px &quot;Arial&quot;, Serif; }
+</style>
+  <line
+     x1="0"
+     y1="1"
+     x2="800"
+     y2="1"
+     style="stroke:#acacac;stroke-width:1"
+     id="line198" />
+  <line
+     x1="0"
+     y1="7.25"
+     x2="800"
+     y2="7.25"
+     style="stroke:#acacac;stroke-width:1"
+     id="line200" />
+  <line
+     x1="0"
+     y1="13.5"
+     x2="800"
+     y2="13.5"
+     style="stroke:#acacac;stroke-width:1"
+     id="line202" />
+  <line
+     x1="0"
+     y1="19.75"
+     x2="800"
+     y2="19.75"
+     style="stroke:#acacac;stroke-width:1"
+     id="line204" />
+  <line
+     x1="0"
+     y1="26"
+     x2="800"
+     y2="26"
+     style="stroke:#acacac;stroke-width:1"
+     id="line206" />
+  <line
+     x1="0"
+     y1="32.25"
+     x2="800"
+     y2="32.25"
+     style="stroke:#acacac;stroke-width:1"
+     id="line208" />
+  <line
+     x1="0"
+     y1="38.5"
+     x2="800"
+     y2="38.5"
+     style="stroke:#acacac;stroke-width:1"
+     id="line210" />
+  <line
+     x1="0"
+     y1="44.75"
+     x2="800"
+     y2="44.75"
+     style="stroke:#acacac;stroke-width:1"
+     id="line212" />
+  <line
+     x1="0"
+     y1="51"
+     x2="800"
+     y2="51"
+     style="stroke:#acacac;stroke-width:1"
+     id="line214" />
+  <line
+     x1="0"
+     y1="57.25"
+     x2="800"
+     y2="57.25"
+     style="stroke:#acacac;stroke-width:1"
+     id="line216" />
+  <line
+     x1="0"
+     y1="63.5"
+     x2="800"
+     y2="63.5"
+     style="stroke:#acacac;stroke-width:1"
+     id="line218" />
+  <line
+     x1="0"
+     y1="69.75"
+     x2="800"
+     y2="69.75"
+     style="stroke:#acacac;stroke-width:1"
+     id="line220" />
+  <line
+     x1="0"
+     y1="76"
+     x2="800"
+     y2="76"
+     style="stroke:#acacac;stroke-width:1"
+     id="line222" />
+  <line
+     x1="0"
+     y1="82.25"
+     x2="800"
+     y2="82.25"
+     style="stroke:#acacac;stroke-width:1"
+     id="line224" />
+  <line
+     x1="0"
+     y1="88.5"
+     x2="800"
+     y2="88.5"
+     style="stroke:#acacac;stroke-width:1"
+     id="line226" />
+  <line
+     x1="0"
+     y1="94.75"
+     x2="800"
+     y2="94.75"
+     style="stroke:#acacac;stroke-width:1"
+     id="line228" />
+  <line
+     x1="0"
+     y1="101"
+     x2="800"
+     y2="101"
+     style="stroke:#acacac;stroke-width:1"
+     id="line230" />
+  <polyline
+     points="0,100.00 12.5,100.00 12,112.50 24.5,112.50 25,125.00 37.5,125.00 37,131.25 49.5,131.25 50,143.75 62.5,143.75 62,150.00 74.5,150.00 75,150.00 87.5,150.00 87,150.00 99.5,150.00 100,143.75 112.5,143.75 112,137.50 124.5,137.50 125,131.25 137.5,131.25 137,118.75 149.5,118.75 150,106.25 162.5,106.25 162,93.75 174.5,93.75 175,81.25 187.5,81.25 187,68.75 199.5,68.75 200,62.50 212.5,62.50 212,56.25 224.5,56.25 225,50.00 237.5,50.00 237,50.00 249.5,50.00 250,50.00 262.5,50.00 262,56.25 274.5,56.25 275,62.50 287.5,62.50 287,75.00 299.5,75.00 300,87.50 312.5,87.50 312,100.00 324.5,100.00 325,112.50 337.5,112.50 337,125.00 349.5,125.00 350,131.25 362.5,131.25 362,143.75 374.5,143.75 375,150.00 387.5,150.00 387,150.00 399.5,150.00 400,150.00 412.5,150.00 412,143.75 424.5,143.75 425,137.50 437.5,137.50 437,131.25 449.5,131.25 450,118.75 462.5,118.75 462,106.25 474.5,106.25 475,93.75 487.5,93.75 487,81.25 499.5,81.25 500,75.00 512.5,75.00 512,62.50 524.5,62.50 525,56.25 537.5,56.25 537,50.00 549.5,50.00 550,50.00 562.5,50.00 562,50.00 574.5,50.00 575,56.25 587.5,56.25 587,62.50 599.5,62.50 600,75.00 612.5,75.00 612,87.50 624.5,87.50 625,93.75 637.5,93.75 637,106.25 649.5,106.25 650,118.75 662.5,118.75 662,131.25 674.5,131.25 675,137.50 687.5,137.50 687,143.75 699.5,143.75 700,150.00 712.5,150.00 712,150.00 724.5,150.00 725,143.75 737.5,143.75 737,143.75 749.5,143.75 750,131.25 762.5,131.25 762,125.00 774.5,125.00 775,112.50 787.5,112.50 787,100.00 799.5,100.00 "
+     style="fill:none;stroke:#000000;stroke-width:2"
+     id="polyline232"
+     transform="translate(0,-49)" />
+</svg>

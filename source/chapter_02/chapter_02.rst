@@ -1,5 +1,5 @@
-Physical Layer
-**************
+Physical Layer Theory
+*********************
 
 The first layer in the networking stack is the *physical* layer, which
 takes pulses of electricity, light, or radio waves, and translates them
@@ -119,12 +119,12 @@ significantly reduces the amount of noise we receive.
 
 We can further improve our signal by twisting together the two wires in
 the balanced line to create a *twisted pair (TP*) and get an even
-cleaner signal (see Figure 2-6).
+cleaner signal (see :numref:`tp_cable`).
 
 .. _tp_cable:
 .. figure:: media/tp_cable.jpg
    :alt: Twisted Pair Cable
-   :width: 75%
+   :width: 60%
 
    Twisted pair cable
 
@@ -152,7 +152,7 @@ standards named Level 1, Level 2, Cat 3, and Cat 4 that we no longer use
 per second). The faster cables have more twists per inch to reliably
 support the higher speeds.
 
-..note::
+.. note::
   Over a short distance with good equipment and connectors, you
   could likely get higher speeds on lower-rated cable. Things aren't black
   and white.
@@ -166,30 +166,32 @@ Registered Jack (RJ) set of specifications—typically, the RJ11
 specification for analog voice phones. For the last several decades,
 networks using TP cable normally have the eight-wire RJ45 plug.
 
-Cat 5 cable has four twisted pairs for a total of eight wires; see Table
-2-1 for a description of each.
+Cat 5 cable has four twisted pairs for a total of eight wires; see
+:ref:`cat5_cable_table` for a description of each.
 
-The Eight Wires of a Cat 5 Cable
+.. _cat5_cable_table:
 
-+-----------+-------------------+-------------------+-----------------+
-| Wire      | Color             | PC                | Hub             |
-+===========+===================+===================+=================+
-| Wire 1    | Green Striped     | Transmit +        | Receive +       |
-+-----------+-------------------+-------------------+-----------------+
-| Wire 2    | Green             | Transmit -        | Receive -       |
-+-----------+-------------------+-------------------+-----------------+
-| Wire 3    | Orange Striped    | Receive +         | Transmit +      |
-+-----------+-------------------+-------------------+-----------------+
-| Wire 4    | Blue              | Unused            | Unused          |
-+-----------+-------------------+-------------------+-----------------+
-| Wire 5    | Blue Striped      | Unused            | Unused          |
-+-----------+-------------------+-------------------+-----------------+
-| Wire 6    | Orange            | Receive -         | Transmit -      |
-+-----------+-------------------+-------------------+-----------------+
-| Wire 7    | Brown Striped     | Unused            | Unused          |
-+-----------+-------------------+-------------------+-----------------+
-| Wire 8    | Brown             | Unused            | Unused          |
-+-----------+-------------------+-------------------+-----------------+
+.. table:: The Eight Wires of a Cat 5 Cable
+
+   +-----------+-------------------+-------------------+-----------------+
+   | Wire      | Color             | PC                | Hub             |
+   +===========+===================+===================+=================+
+   | Wire 1    | Green Striped     | Transmit +        | Receive +       |
+   +-----------+-------------------+-------------------+-----------------+
+   | Wire 2    | Green             | Transmit -        | Receive -       |
+   +-----------+-------------------+-------------------+-----------------+
+   | Wire 3    | Orange Striped    | Receive +         | Transmit +      |
+   +-----------+-------------------+-------------------+-----------------+
+   | Wire 4    | Blue              | Unused            | Unused          |
+   +-----------+-------------------+-------------------+-----------------+
+   | Wire 5    | Blue Striped      | Unused            | Unused          |
+   +-----------+-------------------+-------------------+-----------------+
+   | Wire 6    | Orange            | Receive -         | Transmit -      |
+   +-----------+-------------------+-------------------+-----------------+
+   | Wire 7    | Brown Striped     | Unused            | Unused          |
+   +-----------+-------------------+-------------------+-----------------+
+   | Wire 8    | Brown             | Unused            | Unused          |
+   +-----------+-------------------+-------------------+-----------------+
 
 The Cat 5 standard only uses two of the four pairs of wires: one pair
 for communication from the computer to the networking hub, another pair
@@ -216,19 +218,25 @@ patch cables that you coil and uncoil frequently. You can also buy
 
 Another popular type of cable is *coaxial cable* (or *coax*), which uses
 a center conductor (wire) surrounded by an insulator, surrounded by an
-outer conductor (see Figure 2-7).
+outer conductor (see :numref:`coax_cable_diagram`).
 
-|Diagram Description automatically generated|
 
-Diagram of coaxial cable. Image by user Tkgd2007, modified by author,
-distributed under CC-BY 3.0 license.
+.. _coax_cable_diagram:
+.. figure:: media/coax_cable_diagram.svg
+   :alt: Coax Cable Diagram
+   :width: 60%
 
-Figure 2-8 shows a photo of a real coaxial cable.
+   Diagram of coaxial cable. Image by user Tkgd2007, modified by author,
+   distributed under CC-BY 3.0 license.
 
-|A close-up of a bug Description automatically generated with low
-confidence|
+:numref:`coax_cable_photo` shows a photo of a real coaxial cable.
 
-Photo of coaxial cable
+.. _coax_cable_diagram:
+.. figure:: media/coax_cable_photo.jpg
+   :alt: Coax Cable Photo
+   :width: 60%
+
+   Photo of coaxial cable
 
 While a twisted pair transmits digital (on/off) signals, coax transmits
 analog signals with high frequencies; this is the type of signal that we
@@ -243,11 +251,13 @@ Radio as a Medium
 We can communicate with radio waves based on their *frequency*, which is
 determined by how fast the radio wave cycles up and down. We measure
 frequency in Hertz (Hz), with 1 Hz being one cycle up and down per
-second (see Figure 2-9).
+second (see :numref:`one_hz`).
 
-|Shape Description automatically generated with medium confidence|
+.. _one_hz:
+.. figure:: media/one_hz.svg
+   :alt: One Hertz
 
-One Hz cycle
+   One Hertz (Hz) cycle
 
 For example, you might tune in to an FM music radio station broadcasting
 at a frequency of 90.1 MHz (90.1 million cycles per second) or an AM
@@ -262,6 +272,7 @@ a total width of 180 kHz. We'll give more detail on how this works later
 in this chapter.
 
 Radio Frequencies and Standards
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Radio waves act differently depending on their frequency. Lower
 frequencies tend to travel farther than higher frequency waves because
@@ -274,13 +285,15 @@ about interference from the other side of the globe. The term for how
 these radio waves travel, bounce, and get absorbed is known as *radio
 wave* *propagation*.
 
-| Radio frequencies fall on the *electromagnetic spectrum*. Parts of the
+.. sidebar:: Electromagnetic Spectrum
+
+  Radio frequencies fall on the *electromagnetic spectrum*. Parts of the
   spectrum are set aside for different uses to make sure people and
   devices don't interfere with each other. The United States Spectrum
   Allocation Chart describes how we divide up the spectrum in the US.
   See the link below for a zoomable PDF that shows how things are
   allocated:
-| *https://www.ntia.doc.gov/files/ntia/publications/january_2016_spectrum_wall_chart.pdf*
+  `Spectrum Wall Chart <https://www.ntia.doc.gov/files/ntia/publications/january_2016_spectrum_wall_chart.pdf>`_
 
 The Institute of Electrical and Electronics Engineers (IEEE) develops a
 broad array of standards, many of which cover how to create
@@ -302,13 +315,16 @@ separated by about 5 MHz. However, the channel bandwidth is 22 MHz, so
 the channels overlap.
 
 When setting up wireless routers, you can select the channel you want to
-use. You can use tools like the Net Analyzer Pro app (see Figure 2-10)
+use. You can use tools like the Net Analyzer Pro app (see :numref:`net_analyzer`)
 to find out which routers are running on the same channel.
 
-|Chart, histogram Description automatically generated|
+.. _net_analyzer:
+.. figure:: media/net_analyzer.png
+   :alt: Net Analyzer Pro
+   :width: 60%
 
-Net Analyzer Pro app for Android showing crowded channels on 2.4 GHz
-Wi-Fi space
+   Net Analyzer Pro app for Android showing crowded channels on 2.4 GHz
+   Wi-Fi space
 
 If you're having problems with wireless connectivity, it may be because
 too many other nearby wireless routers are running on the same channel.
@@ -316,6 +332,7 @@ Try using tools like the Net Analyzer Pro app to choose a channel that
 has less interference.
 
 Satellite Communications
+^^^^^^^^^^^^^^^^^^^^^^^^
 
 Another method of communicating data by radio is *satellite
 communications*, where any two points can communicate if they can see
@@ -367,14 +384,16 @@ Light can also act as a communication medium for computer networking. We
 can use several different kinds of light to communicate, such as
 Infra-Red (IR) for remote control devices.
 
-| We usually direct the light with *fiber optics*, which uses a long
+.. sidebar:: Fiber Optics
+
+  We usually direct the light with *fiber optics*, which uses a long
   glass strand called a fiber, and we can bounce a laser light down that
   fiber until it reaches the end. Alternatively, a regular LED light
   shining through plastic fiber can work, but not at the same speeds or
   distances. Try searching for videos that show “how fiber optics work,”
   as a visual explanation works best for this subject. In particular,
   this video is quite good:
-| *https://www.youtube.com/watch?v=0MwMkBET_5I*
+  `Understanding Fiber Optics <https://www.youtube.com/watch?v=0MwMkBET_5I>`_
 
 Fiber optics provide a few advantages over wire: they don't lose signal
 by electromagnetic loss, nor do they pick up noise from stray magnetic
@@ -392,13 +411,18 @@ fiber that goes a mile (1.6 km), while Cat 6 cable limits us to around
 get a decent signal at runs of about 50 miles (about 80 km), which is
 particularly useful for undersea cables.
 
-**NOTE** To learn more about the undersea fiber optic cables in use,
-check out this fascinating website:
-*https://www.submarinecablemap.com/.* If you want to know more about how
-the backbone of the US internet is put together on land, consider
-reading this paper: *http://pages.cs.wisc.edu/~pb/tubes_final.pdf.*
+.. note::
+
+   To learn more about the undersea fiber optic cables in use,
+   check out this fascinating website:
+   `Submarine Cable Map <https://www.submarinecablemap.com/>`_.
+   If you want to know more about how
+   the backbone of the US internet is put together on land, consider
+   reading this paper:
+   `InterTubes:AStudyoftheUSLong-haulFiber-optic Infrastructure <http://pages.cs.wisc.edu/~pb/tubes_final.pdf>`_
 
 Types of Communicating
+======================
 
 A channel of communication can send a signal in only one direction at
 any given time. To send and receive signals at the same time, you need
@@ -407,17 +431,17 @@ two different radio channels. Given this, there are generally three
 types of communication:
 
 Simplex
-
+-------
 transmits in one direction using one channel, such as broadcast radio.
 
 Half duplex
-
+-----------
 transmits in two directions but uses only one channel, preventing you
 from talking and listening at the same time. Think old-style
 walkie-talkies or CB radio.
 
 Full duplex
-
+-----------
 transmits in two directions using two channels, letting you talk and
 listen at the same time, like talking on the phone.
 
@@ -447,13 +471,15 @@ Amplitude Modulation
 ^^^^^^^^^^^^^^^^^^^^
 
 *Amplitude Modulation* *(AM)* takes a lower frequency audio signal,
-shown at the top of Figure 2-11, and combines it with a higher frequency
+shown at the top of :numref:`amplitude_modulation`, and combines it with a higher frequency
 radio signal (such as 1,040 kHz), which we call the *carrier frequency*,
-shown in the middle of Figure 2-11.
+shown in the middle of :numref:`amplitude_modulation`.
 
-|image7|
+.. _amplitude_modulation:
+.. figure:: media/amplitude_modulation.svg
+   :alt: Amplitude Modulation
 
-Amplitude modulation
+   Amplitude Modulation
 
 To carry our audio, we vary (modulate) the amplitude of the carrier
 signal so that we can combine it with the audio signal. When the audio
@@ -475,11 +501,13 @@ Frequency Modulation
 
 *Frequency Modulation* *(FM)* changes the frequency of the carrier,
 rather than the amplitude, based on the signal we want to modulate (see
-Figure 2-12).
+:numref:`frequency_modulation`).
 
-|image8|
+.. _frequency_modulation:
+.. figure:: media/frequency_modulation.svg
+   :alt: Frequency Modulation
 
-Frequency Modulation
+   Frequency Modulation
 
 Our carrier frequency might go between 90.0 MHz to 90.2 MHz. With FM, if
 we get spikes from extra radio noise, it doesn't come across as noise on
@@ -520,32 +548,38 @@ A CD uses a sample frequency of 44.1 kHz and a sample depth of 16 bits,
 so in one second, the PCM stream records 44,100 numbers that can span
 2\ :sup:`16` (65,536) different levels from –32,768 to +32,767.
 
-Figure 2-13 shows an example of taking an analog wave and sampling it
+:numref:`pcm_sampling` shows an example of taking an analog wave and sampling it
 with PCM.
 
-|image9|
+.. _pcm_sampling:
+.. figure:: media/pcm_sampling.svg
+   :alt: PCM Sampling
 
-PCM sample (stepped wave) of an analog signal (smooth wave)
+   PCM sample (stepped wave) of an analog signal (smooth wave)
 
-The resulting wave looks like Figure 2-14.
+The resulting wave looks like :numref:`pcm`.
 
-|image10|
+.. _pcm:
+.. figure:: media/pcm.svg
+   :alt: PCM Result Wave
 
-Resulting PCM wave only
+   Resulting PCM wave only
 
 The faster the sample frequency, the higher the frequency we can store.
 The higher the sample depth, the more accurately we can represent the
-signal. Figure 2-15 shows how much closer to the original the wave looks
+signal. :numref:`pcm_double` shows how much closer to the original the wave looks
 if you double both the frequency and sample depth, making it more
 accurate to the original signal.
 
-|image11|
+.. _pc_double:
+.. figure:: media/pcm_double.svg
+   :alt: PCM Result Wave Double-Sampled
 
-Resulting PCM wave with double the sample frequency and double the
-sample depth
+   Resulting PCM wave with double the sample frequency and double the
+   sample depth
 
-The better the PCM signal, the more data it takes to store it, so Figure
-2-15 takes four times the data storage that Figure 2-14 does. In
+The better the PCM signal, the more data it takes to store it, so :numref:`pcm_double`
+takes four times the data storage that :numref:`pcm` does. In
 general, PCM takes so much data that streaming and downloading music
 wasn't reasonable until data compression algorithms like MP3 came along.
 
@@ -562,11 +596,13 @@ quickly turn it on and off at a certain proportion. We can dim the light
 by half by turning it on and off incredibly fast, so that it's on 50
 percent of the time and off 50 percent of the time. For this proportion
 of on and off, we say that the LED has a *duty cycle* of 50 percent.
-Figure 2-16 shows a diagram of PWM.
+:numref:`pwm` shows a diagram of PWM.
 
-|image12|
+.. _pwm:
+.. figure:: media/pwm.svg
+   :alt: Pulse Width Modulation
 
-Pulse width modulation
+   Pulse Width Modulation
 
 PWM signals allow us to drive motors and use lights efficiently. A light
 running at 75 percent uses only 75 percent of the electricity. We also
@@ -599,12 +635,15 @@ voltage falls from positive to no voltage, that tells the receiving
 computer to read from the data line. If the data line is positive, we
 have a 1. If the data line has no voltage, we have a 0.
 
-Figure 2-17 shows a serial clock line working in conjunction with a
+:numref:`scl` shows a serial clock line working in conjunction with a
 communication line transmitting data.
 
-|image13|
+.. _scl:
+.. figure:: media/scl.svg
+   :alt: Serial Clock Line
+   :width: 60%
 
-Encoding data with a serial clock line
+   Encoding data with a serial clock line
 
 On the *rising edge* of the clock signal, the data line voltage
 transitions to either high or low, depending on the data. We don't read
@@ -643,9 +682,11 @@ won't throw off the receiver. We can use those transitions to
 synchronize when to read rather than using a separate wire with a clock
 signal, as shown in Figure 2-18.
 
-|image14|
+.. _manchester:
+.. figure:: media/manchester.svg
+   :alt: Manchester encoding
 
-Manchester encoding
+   Manchester encoding
 
 *Manchester encoding* divides each transmitted bit of data into a frame
 of time. In the middle of that frame, we transition from low to high if
@@ -660,29 +701,21 @@ and high depending on whether we need to transition to low or high to
 get ready for the upcoming mid-transition. The pseudocode for the logic
 used is as follows:
 
-if clock signal is rising:
+.. code-block:: text
+   :caption: Manchester Encoding
 
-if data = 1:
-
-transition low to high
-
-else if data = 0:
-
-transition high to low
-
-else if clock signal is falling:
-
-if data = 1 and current signal is high:
-
-transition high to low
-
-else if data = 0 and current signal is low:
-
-transition low to high
-
-else:
-
-do nothing
+    if clock signal is rising:
+        if data = 1:
+            transition low to high
+        else if data = 0:
+            transition high to low
+    else if clock signal is falling:
+        if data = 1 and current signal is high:
+            transition high to low
+        else if data = 0 and current signal is low:
+            transition low to high
+        else:
+            do nothing
 
 Because of the regular transitions, we don't have to worry about getting
 desynced by a long series of 1s and 0s. In the next chapter, you'll
@@ -722,60 +755,3 @@ In the next chapter, you'll get hands-on experience with signaling
 through creating your own implementation of the physical layer by
 directly controlling pulses of electricity with a Raspberry Pi computer.
 
-.. |image1| image:: media/image2.svg
-   :width: 2.375in
-   :height: 0.67708in
-.. |image2| image:: media/image4.svg
-   :width: 2.375in
-   :height: 0.67708in
-.. |image3| image:: media/image6.svg
-   :width: 2.38542in
-   :height: 1.55208in
-.. |image4| image:: media/image8.svg
-   :width: 5.92708in
-   :height: 1.57292in
-.. |image5| image:: media/image10.svg
-   :width: 2.33333in
-   :height: 1.51042in
-.. |image6| image:: media/image12.svg
-   :width: 2.34375in
-   :height: 1.125in
-.. |A picture containing kite, flying, outdoor, colorful Description automatically generated| image:: media/image13.jpg
-   :width: 2.39951in
-   :height: 2.22371in
-.. |Diagram Description automatically generated| image:: media/image14.png
-   :width: 3.36818in
-   :height: 2.35773in
-.. |A close-up of a bug Description automatically generated with low confidence| image:: media/image15.jpg
-   :width: 4.7507in
-   :height: 1.64682in
-.. |Shape Description automatically generated with medium confidence| image:: media/image16.png
-   :width: 6.91944in
-   :height: 1.22222in
-.. |Chart, histogram Description automatically generated| image:: media/image17.png
-   :width: 3.64514in
-   :height: 4.81371in
-.. |image7| image:: media/image19.svg
-   :width: 5.41591in
-   :height: 2.30682in
-.. |image8| image:: media/image21.svg
-   :width: 5.32197in
-   :height: 2.2668in
-.. |image9| image:: media/image23.svg
-   :width: 5.63258in
-   :height: 0.71736in
-.. |image10| image:: media/image25.svg
-   :width: 5.51136in
-   :height: 0.70247in
-.. |image11| image:: media/image27.svg
-   :width: 5.5947in
-   :height: 0.71309in
-.. |image12| image:: media/image29.svg
-   :width: 5.625in
-   :height: 1.14092in
-.. |image13| image:: media/image31.svg
-   :width: 3.60828in
-   :height: 1.23106in
-.. |image14| image:: media/image33.svg
-   :width: 4.5625in
-   :height: 1.46875in

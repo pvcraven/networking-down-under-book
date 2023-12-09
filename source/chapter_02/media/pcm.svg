@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="800"
+   height="102"
+   id="svg2"
+   version="1.1"
+   sodipodi:docname="pcm_2.svg"
+   inkscape:version="0.92.3 (2405546, 2018-03-11)">
+  <metadata
+     id="metadata149">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs147" />
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="854"
+     inkscape:window-height="563"
+     id="namedview145"
+     showgrid="false"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0"
+     inkscape:zoom="0.39333333"
+     inkscape:cx="400"
+     inkscape:cy="-149"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="0"
+     inkscape:current-layer="svg2" />
+  <style
+     id="style122">
+.my_style { font: 20px &quot;Arial&quot;, Serif; }
+</style>
+  <line
+     x1="0"
+     y1="1"
+     x2="800"
+     y2="1"
+     style="stroke:#acacac;stroke-width:1"
+     id="line124" />
+  <line
+     x1="0"
+     y1="13.5"
+     x2="800"
+     y2="13.5"
+     style="stroke:#acacac;stroke-width:1"
+     id="line126" />
+  <line
+     x1="0"
+     y1="26"
+     x2="800"
+     y2="26"
+     style="stroke:#acacac;stroke-width:1"
+     id="line128" />
+  <line
+     x1="0"
+     y1="38.5"
+     x2="800"
+     y2="38.5"
+     style="stroke:#acacac;stroke-width:1"
+     id="line130" />
+  <line
+     x1="0"
+     y1="51"
+     x2="800"
+     y2="51"
+     style="stroke:#acacac;stroke-width:1"
+     id="line132" />
+  <line
+     x1="0"
+     y1="63.5"
+     x2="800"
+     y2="63.5"
+     style="stroke:#acacac;stroke-width:1"
+     id="line134" />
+  <line
+     x1="0"
+     y1="76"
+     x2="800"
+     y2="76"
+     style="stroke:#acacac;stroke-width:1"
+     id="line136" />
+  <line
+     x1="0"
+     y1="88.5"
+     x2="800"
+     y2="88.5"
+     style="stroke:#acacac;stroke-width:1"
+     id="line138" />
+  <line
+     x1="0"
+     y1="101"
+     x2="800"
+     y2="101"
+     style="stroke:#acacac;stroke-width:1"
+     id="line140" />
+  <polyline
+     points="0,100.00 25,100.00 25,125.00 50,125.00 50,137.50 75,137.50 75,150.00 100,150.00 100,150.00 125,150.00 125,125.00 150,125.00 150,112.50 175,112.50 175,87.50 200,87.50 200,62.50 225,62.50 225,50.00 250,50.00 250,50.00 275,50.00 275,62.50 300,62.50 300,87.50 325,87.50 325,112.50 350,112.50 350,137.50 375,137.50 375,150.00 400,150.00 400,150.00 425,150.00 425,137.50 450,137.50 450,125.00 475,125.00 475,100.00 500,100.00 500,75.00 525,75.00 525,50.00 550,50.00 550,50.00 575,50.00 575,50.00 600,50.00 600,75.00 625,75.00 625,100.00 650,100.00 650,125.00 675,125.00 675,137.50 700,137.50 700,150.00 725,150.00 725,150.00 750,150.00 750,137.50 775,137.50 775,112.50 800,112.50 "
+     style="fill:none;stroke:#000000;stroke-width:2"
+     id="polyline142"
+     transform="translate(0,-49)" />
+</svg>
