@@ -93,34 +93,39 @@ signal.
    Balanced line with noise
 
 When we receive our signal, we invert the signal on one of the wires
-(see Figure 2-4).
+(see :numref:`noise_inverted`).
 
-|image5|
+.. _noise_inverted:
+.. figure:: media/noise_inverted.svg
+   :alt: Noise In Signal Inverted
 
-Balanced line after de-inverting the second line
+   Balanced line after de-inverting the second line
 
 We've inverted the noise so that it spikes down to 0 volts on one line
 and up to +2 volts on the other line. When we add the signal on both
 wires, we get a value of +2 volts—the same value it would have been
 without the noise. By inverting the noise, we've canceled it, as shown
-in the final signal in Figure 2-5. This process is called *differential
+in the final signal in :numref:`signals_combined`. This process is called *differential
 signaling*. Unlike this text-book example, real-world noise may not
 affect both wires exactly the same, so some noise may still be left
 over. Even if it is not a perfect system, differential signaling
 significantly reduces the amount of noise we receive.
 
-|image6|
+.. _signals_combined:
+.. figure:: media/signals_combined.svg
+   :alt: Signals Combined
 
-Final signal with noise canceled
+   Final signal with noise canceled
 
 We can further improve our signal by twisting together the two wires in
 the balanced line to create a *twisted pair (TP*) and get an even
 cleaner signal (see Figure 2-6).
 
-|A picture containing kite, flying, outdoor, colorful Description
-automatically generated|
+.. _tp_cable:
+.. figure:: media/tp_cable.svg
+   :alt: Twisted Pair Cable
 
-Twisted pair cable
+   Twisted pair cable
 
 Any noise introduced to a twisted pair will be more likely to affect the
 wires equally. Without twisting, the wire closer to the noise could pick
@@ -133,6 +138,7 @@ a second wire with electricity going in the opposite direction, we set
 up an opposite field to cancel out the first, which reduces signal loss.
 
 Types of Cables
+^^^^^^^^^^^^^^^
 
 The American National Standards Institute (ANSI) and Telecommunications
 Industry Association (TIA) have put together standards for creating TP
@@ -145,9 +151,10 @@ standards named Level 1, Level 2, Cat 3, and Cat 4 that we no longer use
 per second). The faster cables have more twists per inch to reliably
 support the higher speeds.
 
-**NOTE** Over a short distance with good equipment and connectors, you
-could likely get higher speeds on lower-rated cable. Things aren't black
-and white.
+..note::
+  Over a short distance with good equipment and connectors, you
+  could likely get higher speeds on lower-rated cable. Things aren't black
+  and white.
 
 The plastic plugs at the end of the cable that makes it easy to hook and
 unhook your device to the network are called *RJ45* connectors. Since
