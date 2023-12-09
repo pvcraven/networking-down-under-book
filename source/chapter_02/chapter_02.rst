@@ -1,5 +1,5 @@
-Physical Layer Theory
-*********************
+Theory: Physical Layer
+**********************
 
 The first layer in the networking stack is the *physical* layer, which
 takes pulses of electricity, light, or radio waves, and translates them
