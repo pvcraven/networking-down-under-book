@@ -231,7 +231,7 @@ outer conductor (see :numref:`coax_cable_diagram`).
 
 :numref:`coax_cable_photo` shows a photo of a real coaxial cable.
 
-.. _coax_cable_diagram:
+.. _coax_cable_photo:
 .. figure:: media/coax_cable_photo.jpg
    :alt: Coax Cable Photo
    :width: 60%
@@ -571,7 +571,7 @@ signal. :numref:`pcm_double` shows how much closer to the original the wave look
 if you double both the frequency and sample depth, making it more
 accurate to the original signal.
 
-.. _pc_double:
+.. _pcm_double:
 .. figure:: media/pcm_double.svg
    :alt: PCM Result Wave Double-Sampled
 
