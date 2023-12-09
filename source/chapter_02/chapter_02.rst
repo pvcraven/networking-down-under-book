@@ -122,8 +122,9 @@ the balanced line to create a *twisted pair (TP*) and get an even
 cleaner signal (see Figure 2-6).
 
 .. _tp_cable:
-.. figure:: media/tp_cable.svg
+.. figure:: media/tp_cable.jpg
    :alt: Twisted Pair Cable
+   :width: 75%
 
    Twisted pair cable
 
