@@ -2,7 +2,7 @@ Networking Down Under
 =====================
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 1
    :caption: Contents:
 
    chapter_00/chapter_00

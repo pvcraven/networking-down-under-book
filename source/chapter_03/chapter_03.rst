@@ -44,7 +44,7 @@ kit that your Raspberry Pi came in should have instructions specific to
 your components for getting started. There is also the excellent
 Raspberry Pi getting started guide here:
 
-*https://www.raspberrypi.com/documentation/computers/getting-started.html*
+`Raspberry Pi: Getting Started <https://www.raspberrypi.com/documentation/computers/getting-started.html>`_
 
 Pull out the Raspberry Pi motherboard and place it in the case. A
 *motherboard* refers to the green circuit board, and *computer* refers
@@ -59,41 +59,49 @@ long rows at the bottom and top of the board are the positive and
 negative (also known as *ground*) power rails. These are connected
 horizontally.
 
-Next, we need to plug in the memory card (Figure 3-2). Many kits come
+Next, we need to plug in the memory card (:numref:`pi_parts`). Many kits come
 have the memory card pre-installed with the Raspbian OS. If your card
 does not, refer back to the Raspberry Pi getting started website on how
-to set up a blank memory card. Plug in the memory card (Figure 3-2). If
+to set up a blank memory card. Plug in the memory card (:numref:`pi_parts`). If
 the memory card doesn't fit, try flipping it over. The chips on the
 computer can get hot while running, so heatsinks should be installed
 before powering on the computer to help draw that heat out and prevent
 damaging the chips. Install the heatsinks by peeling the paper stickers
 off the back and pressing them on top of the indicated chips.
 
-|A picture containing electronics Description automatically generated|
+.. _pi_parts:
+.. figure:: media/pi_parts.jpg
+   :alt: Raspberry Pi Parts
+   :width: 60%
 
-Installing heat sinks and memory card on the Raspberry Pi 3
+   Installing heat sinks and memory card on the Raspberry Pi
 
-Get out the GPIO board, cable, and breadboard (Figure 3-3). Plug the
+Get out the GPIO board, cable, and breadboard (:numref:`pi_ribbon`). Plug the
 gray ribbon cable into the Raspberry Pi. Although you can insert it in
 two different directions, the cable should point away from the Pi. Plug
 the other end of the gray ribbon cable into the black GPIO board. The
 cable should point away from the board and not cover up the pins.
 
-|A picture containing device Description automatically generated|
+.. _pi_ribbon:
+.. figure:: media/pi_ribbon.jpg
+   :alt: Raspberry Pi with ribbon cable
+   :width: 60%
 
-Installing GPIO breakout board
+   Installing GPIO breakout board
 
 Plug the negative 5 V (5 volts) pin into the top row marked with a blue
-line on the white breadboard (Figure 3-4). Plug the positive 3V3 (3.3
+line on the white breadboard (:numref:`power_rails`). Plug the positive 3V3 (3.3
 volts) pin into the bottom red line on the board. The positive pin
 always goes to red, while negative is either blue or black. Some boards
 aren't labeled with positive or negative, but I recommend standardizing
 on positive to the top, negative to the bottom.
 
-|A close up of a device Description automatically generated with low
-confidence|
+.. _power_rails:
+.. figure:: media/power_rails.jpg
+   :alt: Raspberry Pi power rails
+   :width: 60%
 
-Positive with red, negative with blue
+   Positive with red, negative with blue
 
 Plug the network cable (or use Wi-Fi), keyboard, mouse, and monitor into
 your Raspberry Pi board. Then, plug in the monitor with the HDMI cable.
@@ -119,18 +127,22 @@ Once you've installed the operating system, you should be able to use
 the Pi like any Linux system. You'll be typing in some commands rather
 than using only the graphical user interface (GUI). To begin typing,
 click the terminal icon—the black rectangle in the upper-left corner of
-your screen (Figure 3-5).
+your screen (:numref:`terminal`).
 
-|Diagram Description automatically generated|
+.. _terminal:
+.. figure:: media/terminal.png
+   :alt: Terminal Icon
 
-Terminal icon
+   Terminal icon
 
-You should see a terminal window (Figure 3-6). The pi@raspberrypi~ $
-that appears is the command prompt.
+You should see a terminal window (:numref:`terminal_window`). The ``pi@raspberrypi~ $``
+that appears is the *command prompt*.
 
-|Rectangle Description automatically generated|
+.. _terminal_window:
+.. figure:: media/terminal_window.png
+   :alt: Terminal window
 
-Terminal window
+   Terminal window
 
 You can enter commands for your project right after the command prompt,
 which provides more control than using a GUI. We'll be issuing commands
@@ -146,11 +158,15 @@ run the risk of corrupting the filesystem.
 
 You can also shut the computer down in the terminal:
 
-**sudo shutdown -h now**
+.. code-block:: bash
+
+    sudo shutdown -h now
 
 To reboot the Pi, enter the command:
 
-**sudo shutdown -r now**
+.. code-block:: bash
+
+    sudo shutdown -r now
 
 Using the terminal to shut down or reboot the computer is useful when
 you're doing everything remotely, as we'll cover next.
@@ -166,10 +182,10 @@ enable Secure Shell (SSH) for remote access on your Pi by launching
 to the Interfaces tab and select **Enabled** next to SSH and click
 **OK**.
 
-Next, to find your Raspberry Pi's IP address, enter **ifconfig** after
+Next, to find your Raspberry Pi's IP address, enter ``ifconfig`` after
 the command prompt. Search through the resulting output for the
-computer's IP address, which should be right after the label inet (for
-example, the line should look like inet *192.168.1.107*). You might see
+computer's IP address, which should be right after the label ``inet`` (for
+example, the line should look like ``inet 192.168.1.107``). You might see
 multiple lines with inet that include a section for wired network (eth0)
 and wireless (wlan0). If you're using Wi-Fi to connect your Pi, you'll
 want the number after wlan0. If you're using a cable, the number after
@@ -182,14 +198,16 @@ few additional steps to set up your Pi as remote. If you are on a
 Windows computer, open the Command Prompt program. If you're on a Mac,
 open the Terminal program, which you can find under
 **Applications**\ \ **Utilities**, or press cmd-spacebar and enter
-**terminal**. For both Mac and Windows, enter **ssh pi@** followed by
+**terminal**. For both Mac and Windows, enter ``ssh pi@`` followed by
 your Raspberry Pi's IP address. For example, if your IP address is
-192.168.1.107, enter ssh pi@\ *192.168.1.107*.
+192.168.1.107, enter ``ssh pi@ 192.168.1.107``.
 
 Once you make the connection, the terminal should prompt you for a
 password:
 
-pi@\ *192.168.1.107*'s password:
+.. code-block:: text
+
+    pi@192.168.1.107's password:
 
 Unlike a GUI that tracks each letter you type, the terminal won't show
 anything. Type in your password and press ENTER. The computer should
@@ -236,20 +254,20 @@ manufacture.
 .. note::
 
    To learn more about resistors and how to read their values, see
-   *https://learn.sparkfun.com/tutorials/resistors/decoding-resistor-markings*.
+   `Sparkfun's Resistor Page <https://learn.sparkfun.com/tutorials/resistors/decoding-resistor-markings>`_.
 
 To light an LED with the Raspberry Pi, pick any resistor with a brown
 third band and a resistance between 100Ω to1,000Ω. The kits usually come
 with 220Ω or 330Ω resistors, which work fine.
 
-Set up your Raspberry Pi as shown in Figure 3-7. You should already have
+Set up your Raspberry Pi as shown in :numref:`led_setup`. You should already have
 the breakout board plugged into the breadboard from the last step.
 
-|Diagram Description automatically generated with low confidence|
+.. _led_setup:
+.. figure:: media/led_setup.jpg
+   :alt: Photo of blinking LED setup
 
-Prod: Can we circle and label the resistor in this image?
-
-Photo of blinking LED setup
+   Photo of blinking LED setup
 
 Using a male-to-male jumper wire, connect pin 17 on the breakout board
 to any empty column on the right.
@@ -267,12 +285,13 @@ horizontal strip hooked to the negative power, also known as the *ground
 rail*. Unlike LEDs, it doesn't matter what direction the resistor goes
 in.
 
-Your setup should look like Figure 3-8.
+Your setup should look like :numref:`blinking_led_setup`.
 
-|A picture containing text, electronics Description automatically
-generated|
+.. _blinking_led_setup:
+.. figure:: media/blinking_led_setup.svg
+   :alt: Diagram of blinking LED setup
 
-Diagram of blinking LED setup
+   Diagram of blinking LED setup
 
 If your LED is dim, you might be using a resistor with different colors
 that has too much resistance.
@@ -280,43 +299,19 @@ that has too much resistance.
 Program the LEDs
 ----------------
 
-You can now write a Python program to blink the LED (Listing 3-1). To
+You can now write a Python program to blink the LED (:ref:`blink_led`). To
 enter and run this on the Raspberry Pi, use the program Thonny, which
 comes pre-installed on the Raspberry Pi. Click the Raspberry menu, then
 click the Programming menu and select **Thonny Python IDE**. Create a
-file named *blink_led.py*. Enter the code or copy and paste it from
-*https://github.com/pvcraven/networking_down_under*. All code examples
-from this book are available at that URL.
+file named ``blink_led.py``. Enter the code or copy and paste it from
+`https://github.com/pvcraven/networking_down_under <https://github.com/pvcraven/networking_down_under>`_.
+All code examples from this book are available at that URL.
 
-blink_led.py
-
-import time
-
-import RPi.GPIO as GPIO
-
-1 GPIO_CHANNEL = 17
-
-DELAY_TIME = 1
-
-GPIO.setmode(GPIO.BCM)
-
-GPIO.setup(GPIO_CHANNEL, GPIO.OUT)
-
-while True:
-
-print("LED On")
-
-GPIO.output(GPIO_CHANNEL, GPIO.HIGH)
-
-time.sleep(DELAY_TIME)
-
-print("LED Off")
-
-GPIO.output(GPIO_CHANNEL, GPIO.LOW)
-
-time.sleep(DELAY_TIME)
-
-Python program to blink the LED
+.. _blink_led:
+.. literalinclude:: ../code_examples/blink_led.py
+   :language: python
+   :linenos:
+   :caption: blink_led.py: Python program to blink the LED
 
 The constants say what GPIO channel we will use to blink the LED; in
 this case, #17 1. We can change this to any GPIO channel so long as the
@@ -329,7 +324,9 @@ LED, and waiting again.
 
 Run the program from the Thonny editor or from the terminal with:
 
-**python3 blink_led.py**
+.. code-block:: bash
+
+    python3 blink_led.py
 
 When you set the GPIO pin high, electricity flows and lights up the LED.
 When you set the GPIO pin low, the LED goes out. The program should loop
@@ -357,24 +354,19 @@ two LEDs blink at the same time. Use pins 12 and 17, and choose two
 different colors of LEDs. Your code should look something like Listing
 3-2:
 
-Loop forever:
+.. code-block:: text
+   :caption: Framework for blinking two LEDs
 
-Turn on led 12
-
-Turn on led 17
-
-Sleep
-
-Turn off led 12
-
-Turn off led 17
-
-Framework for blinking two LEDs
+    Loop forever:
+        Turn on led 12
+        Turn on led 17
+        Sleep
+        Turn off led 12
+        Turn off led 17
 
 Make sure you can control both LEDs at the same time and that you don't
 have two loops. For a video of two blinking LEDs, see the YouTube video
-“Physical Layer - Lab 1 - Dual Blink LEDs”:
-*https://www.youtube.com/watch?v=mXCQbWq5w3Q*.
+`Physical Layer - Lab 1 - Dual Blink LEDs <https://www.youtube.com/watch?v=mXCQbWq5w3Q>`_.
 
 Step 3: Encode a Message with Bit Shifting
 ==========================================
@@ -723,8 +715,8 @@ there's a long string of 1s or 0s with no transitions. By sending a
 clock signal on another wire, the receiver can make sure the signal is
 synchronized with the sender's clock.
 
-For a video example of this step, see “Physical Layer - Step 3 - Encode
-a Message” at *https://www.youtube.com/watch?v=7Ef11hFo5lo*. In the
+For a video example of this step, see "Physical Layer - Step 3 - Encode
+a Message" at *https://www.youtube.com/watch?v=7Ef11hFo5lo*. In the
 video, the green LED is the clock; the red LED blinks on for a 1 and off
 for a 0. The delay between each clock is 0.1 seconds, and each bit takes
 0.2 seconds to transmit.
@@ -1075,7 +1067,7 @@ you run your program to avoid getting an extra starting bit. It may also
 take some work to avoid adding an extra bit or dropping a bit when your
 program runs.
 
-The “Physical Layer - Decode a Signal” video
+The "Physical Layer - Decode a Signal" video
 (*https://www.youtube.com/watch?v=n61MLYCA_p0*) shows this code in
 action. One terminal shows the sending computer and the other shows the
 receiving.

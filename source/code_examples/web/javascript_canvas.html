@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+    <body>
+        <canvas id="myCanvas" width="300" height="100"></canvas>
+
+        <script>
+            // Get the canvas element, and a context to draw with
+            var canvasElement = document.getElementById("myCanvas");
+            var ctx = canvasElement.getContext("2d");
+
+            // Set the color and draw a rectangle
+            ctx.fillStyle = "#FF00FF";
+            ctx.fillRect(0, 0, 150, 75);
+
+            // Set the color and draw a circle
+            ctx.fillStyle = "#55FF00";
+            ctx.beginPath();
+            ctx.arc(195, 50, 40, 0, 2 * Math.PI);
+            // Draw the outline
+            ctx.stroke();
+            // Fill with the color
+            ctx.fill();
+        </script>
+
+    </body>
+
+</html>

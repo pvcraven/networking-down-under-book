@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <style>
+#head {
+  offset-path: path('M100 100 Q 150 20, 200 100 T 300 100 T 400 100 T 500 100');
+  animation: my-curve 5s linear alternate infinite;
+}
+@keyframes my-curve {
+    from {
+        offset-distance: 0%;
+    }
+    to {
+        offset-distance: 100%;
+    }
+}
+        </style>
+    </head>
+    <body>
+        <svg width="600" height="500">
+
+            <path d='M100 100 Q 150 20, 200 100 T 300 100 T 400 100 T 500 100'
+            style="fill:None;stroke-width:3;stroke:#000000"/>
+
+            <g id="head" transform="translate(0 0)">
+                <ellipse cx="0" cy="0" rx="35" ry="30"
+                        style="fill:#FDE6C4;stroke-width:3;stroke:#DF875C"/>
+
+                <circle cx="-13" cy="-8" r="5"
+                        style="fill:#0878D4;"/>
+                <circle cx="13" cy="-8" r="5"
+                        style="fill:#0878D4;"/>
+                <path d="M -13,10 C -10,20 10,20 13,10"
+                      style="fill:None;stroke-width:3;stroke:#DF875C"/>
+
+                <path d="M -33,-15 l 30,-10 l 30,5 l -10,-30 l -20 15 l -10 -10 l -10, 10 l -10, -5"
+                      style="fill:#D4A301";"/>
+
+            </g>
+        </svg>
+    </body>
+</html>
