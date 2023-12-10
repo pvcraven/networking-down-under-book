@@ -621,7 +621,7 @@ that it can read the data line, because we hold the data line steady. We
 don't want to change the data line while the receiver is in the middle
 of reading it, as we don't know if we'll get a high or low value. You'll
 read the bit from the data line every time the clock line goes from high
-to low, and the data line doesn't change as shown in :ref:`scl2`.
+to low, and the data line doesn't change as shown in :numref:`scl2`.
 
 .. _scl2:
 .. figure:: ../chapter_02/media/scl.svg
@@ -662,20 +662,22 @@ connect the grounds together. The *ground* is the negative side of the
 power supply. To connect the grounds, run a wire from one of the blue
 lines on the 5V negative voltage of one board to one of the blue lines
 on the 5V negative voltage of the other board, as shown by the wire on
-the right side of :numref:`two_pis`.
+the right side of :ref:`two_pis`.
 
 .. _two_pis:
 .. figure:: ../chapter_03/media/two_pis.svg
    :alt: Two Raspberry Pi Computers
 
-    Tying two Raspberry Pi computers together. This diagram shows only the
-    new connections, not the LEDs you should already have working.
+   Two Raspberry Pi Computers
+
+   Tying two Raspberry Pi computers together. This diagram shows only the
+   new connections, not the LEDs you should already have working.
 
 Next, run the signal wire from the first board to the second. You'll use
 pin 12 for the signal. Run a wire from pin 12 on one board to a 220
 red-red-brown resistor, and then run a second wire from the resistor's
 other leg to pin 12 on the other board (see the wires on the left side
-in Figure 3-10). Keep your blinking LED from Step 2 attached; it'll help
+in :ref:`two_pis`). Keep your blinking LED from Step 2 attached; it'll help
 you see what's happening.
 
 If you have only one Raspberry Pi available, you can run a resistor
@@ -686,7 +688,7 @@ Signals with Polling
 --------------------
 
 With the Pis hooked up, let's run some code to try the first steps
-receiving a signal. Run the program *blink_led.py* from Listing 3-1,
+receiving a signal. Run the program *blink_led.py* from :numref:`blink_led`,
 adjusting the program so that it uses pin 12. On the receiving computer,
 read the wire by entering the code shown in :ref:`read_wire_polling`:
 
@@ -716,8 +718,6 @@ Signals with Blocks
 Instead of polling, you can write a program that waits for the wire to
 change between High and Low, like :ref:`read_wire_blocking`:
 
-read_wire_blocking.py
-
 .. _read_wire_blocking:
 .. literalinclude:: ../code_examples/read_wire_blocking.py
    :language: python
@@ -727,7 +727,7 @@ read_wire_blocking.py
 :ref:`read_wire_blocking` is similar to :ref:`read_wire_polling`,
 except instead of polling every
 0.25 seconds, we use the ``wait_for_edge`` function to wait until we go from
-low to high 1, and from high to low 2.
+low to high (lines 11-13), and from high to low (lines 15-17).
 
 This code is *blocking*, meaning the program does something only when
 there's a change in state on the wire. When you run this code, you
@@ -855,44 +855,23 @@ by prepending the function name (line 3) to it. By using the function as a
 exist globally; this reduces the places it can be changed, makes it less
 error prone, and keeps its value between function calls.
 
-In Listing 3-11, we use a variable called counter to track which bit
+In :numref:`decode_message_2`, we use a variable called counter to track which bit
 we're reading. The bits are numbered 0 to 7; after the eighth bit
 (numbered 7, as we started counting at 0), we go to the next line.
 
-decode_message_2.py
-
-def my_callback(channel):
-
-result = GPIO.input(DATA_CHANNEL)
-
-if result:
-
-print("1", end="")
-
-else:
-
-print("0", end="")
-
-my_callback.counter += 1
-
-if my_callback.counter > 7:
-
-print()
-
-my_callback.counter = 0
-
-my_callback.counter = 0
-
-Using a static function variable to print <return> every 8 bits
+.. _decode_message_2:
+.. literalinclude:: ../code_examples/decode_message_2.py
+   :language: python
+   :linenos:
+   :caption: decode_message_2.py: Using a static function variable to print <return> every 8 bits
 
 You may need a small program that resets the state of the pins before
 you run your program to avoid getting an extra starting bit. It may also
 take some work to avoid adding an extra bit or dropping a bit when your
 program runs.
 
-The "Physical Layer - Decode a Signal" video
-(*https://www.youtube.com/watch?v=n61MLYCA_p0*) shows this code in
-action. One terminal shows the sending computer and the other shows the
+The `Physical Layer - Decode a Signal <https://www.youtube.com/watch?v=n61MLYCA_p0>`_ video
+shows this code in action. One terminal shows the sending computer and the other shows the
 receiving.
 
 Step 6: Convert Decoded Bits to Bytes
@@ -903,41 +882,14 @@ into full bytes. Each byte is a letter that's part of our message.
 You'll need another static function variable to hold the result. Call it
 result_byte, as in Listing 3-12:
 
-decode_message_3.py
-
-def my_callback(channel):
-
-result = GPIO.input(DATA_CHANNEL);
-
-if result:
-
-print("1", end="")
-
-1 my_callback.result_byte += 1 << (7 - my_callback.counter)
-
-else:
-
-print("0", end="")
-
-my_callback.counter += 1
-
-if my_callback.counter > 7:
-
-2 print(f" = {my_callback.result_byte} =
-{chr(my_callback.result_byte)}")
-
-my_callback.counter = 0
-
-my_callback.result_byte = 0
-
-my_callback.counter = 0
-
-my_callback.result_byte = 0
-
-Decoding the received byte
+.. _decode_message_3:
+.. literalinclude:: ../code_examples/decode_message_3.py
+   :language: python
+   :linenos:
+   :caption: decode_message_3.py: Decoding the received byte
 
 If you receive a zero, do nothing. If you receive a one, shift it into
-place 1. For example, 1 << 3 would shift the one into the fourth bit
+place 1. For example, ``1 << 3`` would shift the one into the fourth bit
 position. (We start counting at zero, so the fourth bit is position 3.)
 Add that value to your result_byte. Print the bytes and confirm they
 match the bytes sent 2. Reset the counter and the result_byte.
@@ -952,85 +904,29 @@ method by using *Manchester encoding*, which doesn't require a clock
 line, reducing the number of necessary wires by one. Manchester encoding
 also keeps the electricity switching directions, lessening signal loss
 and allowing us to transmit over longer distances. Listing 3-13 encodes
-a message back in Listing 3-5 to use Manchester encoding.
+a message back in :numref:`manchester_encoding` to use Manchester encoding.
 
-manchester_encoding.py
-
-import time
-
-import RPi.GPIO as GPIO
-
-DATA_CHANNEL = 12
-
-BITS_IN_A_BYTE = 8
-
-1 CLOCK_SPEED = .005
-
-GPIO.setup(DATA_CHANNEL, GPIO.OUT)
-
-2 GPIO.output(DATA_CHANNEL, GPIO.HIGH)
-
-time.sleep(CLOCK_SPEED \* 4)
-
-GPIO.output(DATA_CHANNEL, GPIO.LOW)
-
-time.sleep(CLOCK_SPEED \* 4)
-
-my_message = b'This is a secret message'
-
-for my_byte in my_message:
-
-for bit_pos in range(BITS_IN_A_BYTE - 1, -1, -1):
-
-bit = (1 << bit_pos) & my_byte
-
-if bit != 0:
-
-3 GPIO.output(DATA_CHANNEL, GPIO.LOW)
-
-time.sleep(CLOCK_SPEED)
-
-print("1", end='')
-
-GPIO.output(DATA_CHANNEL, GPIO.HIGH)
-
-time.sleep(CLOCK_SPEED)
-
-else:
-
-4 GPIO.output(DATA_CHANNEL, GPIO.HIGH)
-
-time.sleep(CLOCK_SPEED)
-
-print("0", end='')
-
-GPIO.output(DATA_CHANNEL, GPIO.LOW)
-
-time.sleep(CLOCK_SPEED)
-
-print(f" - {my_byte:3} - {chr(my_byte)}")
-
-time.sleep(CLOCK_SPEED \* 4)
-
-5 GPIO.cleanup()
-
-Decoding the received byte
+.. _manchester_encoding:
+.. literalinclude:: ../code_examples/manchester_encoding.py
+   :language: python
+   :linenos:
+   :caption: manchester_encoding.py: Decoding the received byte
 
 To update your code for Manchester encoding, start by creating a
-variable for the CLOCK_SPEED 1. You'll send one bit for every two
-CLOCK_SPEED durations that pass. For example, if CLOCK_SPEED is 0.1
+variable for the ``CLOCK_SPEED`` (lines 13-14). You'll send one bit for every two
+``CLOCK_SPEED`` durations that pass. For example, if ``CLOCK_SPEED`` is 0.1
 seconds, you'll send a bit every 0.2 seconds. Set everything up and
 start with the clock low, then leave it high for at least four times the
-clock speed 2. For example, if your clock is 0.1, then leave it high for
+clock speed (lines 22-25). For example, if your clock is 0.1, then leave it high for
 at least 0.4 seconds. This pause will be the signal that you're about to
 send a new set of data. If the bit you're sending is a 1, start with the
-pin in a low state. Wait the duration of CLOCK_SPEED by using the
-time.sleep() function. Transition to a high state and wait for
-CLOCK_SPEED 3. If the bit you're sending is a 0, start with the pin in a
-high state. Wait the duration of CLOCK_SPEED. Transition to a low state
-and wait for CLOCK_SPEED 4.
+pin in a low state. Wait the duration of ``CLOCK_SPEED`` by using the
+``time.sleep()`` function. Transition to a high state and wait for
+``CLOCK_SPEED`` (lines 54-60). If the bit you're sending is a 0, start with the pin in a
+high state. Wait the duration of ``CLOCK_SPEED``. Transition to a low state
+and wait for ``CLOCK_SPEED`` (lines 62-68).
 
-At the end of the program, we include a GPIO.cleanup() command 5.
+At the end of the program, we include a ``GPIO.cleanup()`` command (line 74).
 Although the command isn't required, omitting it causes the Raspberry Pi
 to send a warning that the GPIO pin is already in use when you run your
 encoding program a second time. (The program will use the pin anyway, so
@@ -1051,68 +947,34 @@ Step 8: Manchester Decoding
 Now, we'll write code so you can *receive* a message using Manchester
 encoding. Even if the data wave doesn't transition because of a series
 of 0s or 1s, Manchester encoding will always transition at the data bit:
-high to low for a 0 and low to high for a 1, as shown in Figure 3-11
-(see Chapter 2).
+high to low for a 0 and low to high for a 1, as shown back in :numref:`manchester`
+(see :ref:`theory_manchester`).
 
-|image1|
+To write the code for decoding a Manchester signal, start with :numref:`decode_message_3`
+from Step 6, and create a program that does a callback when it
+detects a rising or falling edge (:numref:`manchester_decoding_1`):
 
-Manchester encoding
+.. _manchester_decoding_1:
+.. literalinclude:: ../code_examples/manchester_decoding_1.py
+   :language: python
+   :linenos:
+   :caption: manchester_decoding_1.py: Decoding a Manchester encoded message.
 
-To write the code for decoding a Manchester signal, start with Listing
-3-12 from Step 6, and create a program that does a callback when it
-detects a rising or falling edge (Listing 3-14):
+Create a variable with the same ``CLOCK_SPEED`` as the clock speed used in
+Step 6 (line 10). We'll use this in :numref:`manchester_decoding_2`. Depending on the data we are
+transmitting, our transitions will happen every ``CLOCK_SPEED`` seconds, or
+``CLOCK_SPEED \* 2`` seconds.
 
-manchester_decoding_1.py
-
-GPIO_DATA_IN = 13
-
-1 CLOCK_SPEED = .005
-
-def data_callback(channel):
-
-2 data_line = GPIO.input(GPIO_DATA_IN)
-
-Cur_time = time.time()
-
-3 time_interval = cur_time – data_callback.last_call
-
-4 dl = "low->high" if data_line else "high->low"
-
-5 print(f" Change: {dl} Interval: {time_interval:.3f}")
-
-data_callback.last_call = cur_time
-
-6 data_callback.last_call = time.time()
-
-GPIO.setmode(GPIO.BCM)
-
-GPIO.setup(GPIO_DATA_IN, GPIO.IN)
-
-GPIO.add_event_detect(GPIO_DATA_IN, GPIO.BOTH, callback=data_callback)
-
-print("Running")
-
-while True:
-
-time.sleep(10)
-
-Decoding a Manchester encoded message.
-
-Create a variable with the same CLOCK_SPEED as the clock speed used in
-Step 6 1. We'll use this in Listing 3-15. Depending on the data we are
-transmitting, our transitions will happen every CLOCK_SPEED seconds, or
-CLOCK_SPEED \* 2 seconds.
-
-Your program should also read the channel 2. Then create a variable that
+Your program should also read the channel (line 15). Then create a variable that
 holds low->high when the channel is high, and holds high->low when the
-channel is low 4.
+channel is low (line 21).
 
-Calculate the time between transitions 3 6. Print the time between
+Calculate the time between transitions (lines 19 and 24). Print the time between
 transitions along with the transition from the prior step to verify
-what's happening 5. As illustrated in Figure 3-11, the interval will be
-equal to either CLOCK_SPEED or CLOCK_SPEED times two. Every CLOCK_SPEED
+what's happening (line 22). As illustrated in :numref:`decode_message_2`, the interval will be
+equal to either ``CLOCK_SPEED`` or ``CLOCK_SPEED`` times two. Every ``CLOCK_SPEED``
 times two, you'll always transition down for a 0 and up for a 1. Every
-CLOCK_SPEED, you may or may not transition up or down, depending on
+``CLOCK_SPEED``, you may or may not transition up or down, depending on
 what's needed to set up. Make sure your program prints the time interval
 out.
 
@@ -1121,52 +983,35 @@ that prints the interval timing. With Manchester encoding, some—but not
 all—of the transitions represent bits. If the data line was held steady
 for two clock cycles, the next transition has to be a bit. Add code to
 check whether the line time interval was greater than 1.5 times the
-clock speed; if so, print the correct bit (Listing 3-15):
+clock speed; if so, print the correct bit :numref:`manchester_decoding_2`:
 
-manchester_decoding_2.py (truncated)
-
-if time_interval > CLOCK_SPEED + CLOCK_SPEED / 2:
-
-if data_line == 0:
-
-print("0")
-
-else:
-
-print("1")
-
-Additional code that detects 0 or 1 transitions if the data line was
-high or low for about two clock cycles. For the full listing, see
-*manchester_decoding_2.py* in the GitHub repo\ *.*
+.. _manchester_decoding_2:
+.. literalinclude:: ../code_examples/manchester_decoding_2.py
+   :language: python
+   :linenos:
+   :caption: manchester_decoding_2.py: Detect 0 or 1 transitions if the data line was high or low for about two clock cycles.
+   :emphasize-lines: 24-28
 
 If the prior transition was not a data bit, we know the next one has to
 be, even if it has been only one clock cycle. We'll track this with a
 static Boolean variable data_bit, as in Listing 3-16:
 
-if time_interval > CLOCK_SPEED + CLOCK_SPEED / 2 or
-data_callback.data_bit:
-
-data_callback.data_bit = False
-
-if data_line == 0:
-
-print("0")
-
-else:
-
-print("1")
-
-else:
-
-data_callback.data_bit = True
-
-Track whether the next transition is a data bit. For the full listing,
-see *manchester_decoding_3.py* in the GitHub repo.
+.. _manchester_decoding_3:
+.. literalinclude:: ../code_examples/manchester_decoding_3.py
+   :language: python
+   :linenos:
+   :caption: manchester_decoding_3.py: Manchester Decoding
+   :emphasize-lines: 24-31
 
 Once we have the data bits, grouping them into bytes uses the same
-process as the examples earlier in the chapter. For a full working copy,
-see *manchester_decoding_5.py* from
-*https://github.com/pvcraven/networking_down_under*.
+process as the examples earlier in the chapter.
+See :numref:`manchester_decoding_5`
+
+.. _manchester_decoding_5:
+.. literalinclude:: ../code_examples/manchester_decoding_5.py
+   :language: python
+   :linenos:
+   :caption: manchester_decoding_5.py: Manchester Decoding - Full working copy
 
 Mini Projects
 =============
@@ -1175,31 +1020,31 @@ There's a lot more to the physical layer than just encoding 1s and 0s on
 a wire! Try these projects to learn more about controlling
 physical-layer networking signals.
 
-1. Make Your Own Patch Cable
+Make Your Own Patch Cable
+-------------------------
 
 Long cables with too much extra coiled wire make a mess, but if you can
 make your own patch cables, you can keep your connections tidy and run
 them exactly where you want them.
 
 What You'll Need
+^^^^^^^^^^^^^^^^
 
 -  Cat5, Cat5e, or Cat6 cable (you can cut up an old cable)
-
 -  Two RJ45 crimp connectors
-
 -  RJ45 crimp tool
-
 -  RJ45 patch cable tester
-
 -  RJ45 snagless boot (optional)
 
-Figure 3-12 shows the listed items.
+:numref:`crimping_supplies` shows the listed items.
 
-|A picture containing wall, indoor, different, arranged Description
-automatically generated|
+.. _crimping_supplies:
+.. figure:: media/crimping_supplies.jpg
+   :alt: Crimping supplies
+   :width: 60%
 
-Crimping supplies, from left to right: crimper, RJ45 jack, snagless
-boot, Cat 5 cable
+   Crimping supplies, from left to right: crimper, RJ45 jack, snagless
+   boot, Cat 5 cable
 
 You can find inexpensive versions of these online. The optional
 *snagless boot* helps keep the wire from bending too sharply at the
@@ -1209,15 +1054,19 @@ It adds to the cost of the cable, but the cable should last longer if it
 moves around a lot.
 
 Construction
+^^^^^^^^^^^^
 
 Make sure the end of your cable is cleanly cut. Strip off the outer
 insulating cover by about the 3/4 of the length of your RJ45 connector
-(Figure 3-13). Your crimp tool might have a place to insert the cable,
+(:numref:`construction`). Your crimp tool might have a place to insert the cable,
 with a blade that cuts only the outer cover when you rotate the cable.
 
-|A picture containing wall, indoor Description automatically generated|
+.. _construction:
+.. figure:: media/construction.jpg
+   :alt: Cut cable ready to be inserted
+   :width: 20%
 
-Cut cable ready to be inserted
+   Cut cable ready to be inserted
 
 If you're using a snagless boot, put it on now.
 
@@ -1225,19 +1074,15 @@ Untwist the wires. From left to right with the tab pointed down, order
 the wires as follows:
 
 1. Orange striped
-
-5.  Orange solid
-
-6.  Green striped
-
-7.  Blue solid
-
-8.  Blue striped
-
-9.  Green solid
-
+2. Orange solid
+3. Green striped
+4. Blue solid
+5. Orange solid
+6. Green striped
+7. Blue solid
+8. Blue striped
+9. Green solid
 10. Brown striped
-
 11. Brown solid
 
 This order follows the wiring standard T-568B. If you search for a
@@ -1246,7 +1091,7 @@ green-striped wires swapped. The T-568B is typically the preferred and
 more up-to-date standard.
 
 With the tab of the RJ45 connector pointed down, insert the wires in the
-proper order (Figure 3-14). I suggest doing all the wires at once. With
+proper order (:numref:`insert_cable`). I suggest doing all the wires at once. With
 practice, you'll be able to insert them rather quickly. If the outer
 insulator is correctly cut, the inside wires should reach the very end
 of the RJ45 connector, and enough of the outer insulator should be
@@ -1255,25 +1100,34 @@ the wire. Double check the ordering of the wires before crimping,
 because if they are out of order you'll have to cut off the connector
 and start over.
 
-|image2|
+.. _insert_cable:
+.. figure:: media/insert_cable.jpg
+   :alt: Cable inserted into RJ45 connector
+   :width: 25%
 
-Cable inserted into RJ45 connector
+   Cable inserted into RJ45 connector
 
-Insert the connector into the crimper and squeeze (Figure 3-15).
+Insert the connector into the crimper and squeeze (:numref:`crimp`).
 
-|image3|
+.. _crimp:
+.. figure:: media/crimp.jpg
+   :alt: Squeeze the connector in the crimping tool
+   :width: 60%
 
-Squeeze the connector in the crimping tool
+   Squeeze the connector in the crimping tool
 
 Repeat the previous steps with the other end of the Cat5 cable. The wire
 should not easily pull out of either side.
 
 To test your connection, hook up the patch cable to a cable tester like
-the one in Figure 3-16.
+the one in :numref:`test_cable`.
 
-|A picture containing indoor Description automatically generated|
+.. _test_cable:
+.. figure:: media/test_cable.jpg
+   :alt: Test the cable
+   :width: 40%
 
-Test the cable
+   Test the cable
 
 The cable tester should cycle through all eight wires and test them all
 positive. If the number 1 lights up on the sender, it should also light
@@ -1288,7 +1142,8 @@ When all eight wires test positive, congratulations! You've created a
 patch cable of your own! You can now create custom-length cables
 cheaply.
 
-2. Use Pulse Width Modulation to Control LEDs, Servos, and Motors
+Use Pulse Width Modulation to Control LEDs, Servos, and Motors
+--------------------------------------------------------------
 
 Networking isn't only about communicating between computers; you can
 also send signals to control robotics, motors, or lights. In this
@@ -1298,81 +1153,43 @@ control an LED, servo, and brushless motor using *pulse width modulation
 positions, or motor speeds.
 
 What You'll Need
+^^^^^^^^^^^^^^^^
 
 For this project, you'll need a Raspberry Pi, a resistor, and an LED. In
 addition, you can try this with a servo, or even a combination of a
 brushless motor and electronic speed controller.
 
-Controlling LEDs
+Controlling LED brightness
+^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-First, let's learn to control an LED. Learning to blink or dim a light
+First, let's learn to control an LED so you can visually see what is happening.
+Learning to blink or dim a light
 is a great first step toward understanding and visualizing how the same
 concepts can be used to control motors and robotics.
 
 To control an LED, hook up your Raspberry Pi the same way we did earlier
-in the chapter, in Figure 3-8. Then, enter in the program in Listing
-3-17, which will output a PWM signal. We'll use this program to control
+in the chapter, in :numref:`blinking_led_setup`. Then, enter in the program in :numref:`pwm_example_1`,
+which will output a PWM signal. We'll use this program to control
 both an LED and a servo:
 
-pwm_example_1.py
+.. _pwm_example_1:
+.. literalinclude:: ../code_examples/pwm_example_1.py
+   :language: python
+   :linenos:
+   :caption: pwm_example_1.py: Sending different PWM signals from the Raspberry Pi
 
-import RPi.GPIO as GPIO
-
-import time
-
-gpio_channel = 17
-
-1 duty_start = 0
-
-duty_end = 100
-
-2 pwm_frequency = 1
-
-time_gap = 2
-
-increment = 5
-
-GPIO.setmode(GPIO.BCM)
-
-GPIO.setup(gpio_channel, GPIO.OUT)
-
-3 p = GPIO.PWM(gpio_channel, pwm_frequency)
-
-4 p.start(duty_start)
-
-5 for i in range(10):
-
-6 for duty_cycle in range(duty_start, duty_end, increment):
-
-p.ChangeDutyCycle(duty_cycle)
-
-print("Duty cycle:", duty_cycle)
-
-time.sleep(time_gap)
-
-7 for duty_cycle in range(duty_end, duty_start, -increment):
-
-p.ChangeDutyCycle(duty_cycle)
-
-print("Duty cycle:", duty_cycle)
-
-time.sleep(time_gap)
-
-p.stop()
-
-Sending different PWM signals from the Raspberry Pi
-
-This program defines a duty cycle 1 and a frequency 2. The *duty cycle*
+This program defines a duty cycle range (lines 10-11) and a frequency (line 9).
+The *duty cycle*
 is a percentage from 0 to 100. The frequency is in Hertz (Hz). With
-pwm_frequency set to 1, the LED should blink about once every second.
+``pwm_frequency`` set to 1, the LED should blink about once every second.
 When the duty cycle is 0, the LED should always be off. When it's set to
 50, the LED should be on for half of the one-second cycle. When set to
 100, the LED should be on for the entire cycle.
 
-We then set our GPIO to output a PWM signal 3 at our desired frequency.
-Next, we set the duty 4. The first for loop 5 will cycle the duty
-frequency up and down 10 times. The first inside for loop 6 cycles it
-up, while the second one cycles it down 7.
+We then set our GPIO to output a PWM signal (line 19) at our desired frequency.
+Next, we set the duty (line 22). The first for loop (line 25) will cycle the duty
+frequency up and down 10 times. The first inside for loop (line 28) cycles it
+up, while the second one cycles it down (line 34).
 
 You can turn the light on and off slowly enough to dim it, and fast
 enough so that your eyes blend the flashing together and it appears
@@ -1380,29 +1197,36 @@ always on or off. Try changing the frequency constant to be high enough
 that you can dim the LED without seeing it flash.
 
 Controlling Servos
+^^^^^^^^^^^^^^^^^^
 
 A *servo* is a robotic motor that lets you control precisely how far it
-rotates. Servos come in all sorts of sizes, as shown in Figure 3-17.
+rotates. Servos come in all sorts of sizes, as shown in :numref:`servo_example`.
 Unlike regular motors, servos typically don't spin around more than once
 before having to spin back. You can make a little movable robotic arm by
 attaching the center motor shaft to a *servo horn*. These have holes for
 screws to make it easy to attach to other robotic parts.
 
-|image4|
+.. _servo_example:
+.. figure:: media/servo_example.png
+   :alt: Servos
+   :width: 40%
 
-Different types of servo motors. Image from the Raspberry Pi Foundation,
-used under Creative Commons license
+   Different types of servo motors. Image from the Raspberry Pi Foundation,
+   used under Creative Commons license
 
 Hooking up a servo is relatively easy. Servos are controlled with three
-wires, as shown in Figure 3-18. One wire for positive power, one wire
+wires, as shown in :numref:`servo_wiring`. One wire for positive power, one wire
 attached to the negative/ground, and one wire for our PWM signal. First,
 look up the servo's specifications to see what voltage range it expects.
 Servos can typically run up to 6V with no problem.
 
-|Graphical user interface Description automatically generated|
+.. _servo_wiring:
+.. figure:: media/servo_wiring.png
+   :alt: Servo wiring
+   :width: 40%
 
-Wiring a servo. Image from the Raspberry Pi Foundation, used under
-Creative Commons license
+   Wiring a servo. Image from the Raspberry Pi Foundation, used under
+   Creative Commons license
 
 Hook up the servo's red wire to the positive end of a battery or power
 supply that matches the voltage.
@@ -1415,39 +1239,38 @@ both.
 The orange or yellow wire is the PWM signal wire; it should go to pin
 17, or whatever GPIO pin you're using.
 
-**NOTE** I've run very small servos off the Raspberry Pi's 5V power pin
-on the GPIO board because I'm lazy, but it's not designed to take the
-kind of current most servos use. Using this pin to power your servo can
-fault the computer or even destroy it.
+.. note::
+
+   I've run very small servos off the Raspberry Pi's 5V power pin
+   on the GPIO board because I'm lazy, but it's not designed to take the
+   kind of current most servos use. Using this pin to power your servo can
+   fault the computer or even destroy it.
 
 After you've wired up your servo, you can write code that will cause the
 servo arm to move. Modify *pwm_example_1.py* and add the following
 constants so the servo-control code will be easier to read and adjust
-(Listing 3-18):
+(:numref:`modified_constants`):
 
-# Constants
+.. _modified_constants:
+.. code-block::
+   :caption: Modified constants for pwm_example_1.py
+   :linenos:
 
-Gpio_channel = 17
-
-1 pwm_frequency = 100
-
-2 duty_start = 10
-
-3 duty_end = 25
-
-Time_gap = .1
-
-4 increment = 1
-
-Modified constants for pwm_example_1.py
+   # Constants
+   gpio_channel = 17
+   pwm_frequency = 100
+   duty_start = 10
+   duty_end = 25
+   Time_gap = .1
+   increment = 1
 
 Servos usually expect a PWM frequency of 50Hz. However, the Raspberry Pi
 calculates frequency differently from what servos expect. There's some
 complex math behind it, but the easy fix is specifying a pwm_frequency
-of 100 1 instead of the expected 50.
+of 100 instead of the expected 50.
 
-Servos have different specifications, so play around with the duty_start
-2 and duty_end 3 variables. While you can specify values between 0 to
+Servos have different specifications, so play around with the ``duty_start``
+and ``duty_end`` variables. While you can specify values between 0 to
 100, neither 0 nor 100 will work. To the servo, a 0 is the same as a
 signal wire that isn't hooked up. 100 is a constant positive voltage, so
 the servo can't tell that the line is pulsing at all. Values between 10
@@ -1460,27 +1283,25 @@ can use smaller numbers like 0.5 for a smoother rotation.
 
 However, Python's range function supports only integers, so you'll need
 to do a bit of additional programming and math to send smaller
-increments, like the code shown in Listing 3-19:
+increments, like the code shown in :numref:`non_int_duty`:
 
-increment = 0.5
+.. _non_int_duty:
+.. code-block::
+   :caption: Working with a non-integer duty cycle
+   :linenos:
 
-duty = duty_start
-
-while duty < duty_end:
-
-p.ChangeDutyCycle(duty_cycle)
-
-print("Duty cycle:", duty_cycle)
-
-time.sleep(time_gap)
-
-duty += increment
-
-Working with a non-integer duty cycle
+   increment = 0.5
+   duty = duty_start
+   while duty < duty_end:
+       p.ChangeDutyCycle(duty_cycle)
+       print("Duty cycle:", duty_cycle)
+       time.sleep(time_gap)
+       duty += increment
 
 This should allow you to use any increment, even if it isn't an integer.
 
 Controlling Motors
+^^^^^^^^^^^^^^^^^^
 
 We also can control electric motors with PWM. Computers use PWM to
 control how fast their fans run, RC cars or even full sized cars use PWM
@@ -1493,12 +1314,14 @@ difference isn't too high. They're very small, powerful, and efficient.
 They also don't waste a lot of electricity like brushed motors do.
 
 To operate a brushless electric motor, you need hook it up to an
-*electronic speed controller (ESC)*, like the one shown in Figure 3-19.
+*electronic speed controller (ESC)*, like the one shown in :numref:`esc`.
 
-|A picture containing tool, connector Description automatically
-generated|
+.. _esc:
+.. figure:: media/esc.png
+   :alt: Electronic speed controller
+   :width: 40%
 
-Electronic speed controller
+   Electronic speed controller
 
 The ESC hooks up to your computer and takes a PWM signal like the servo.
 It essentially babysits the motor for you; when a computer sends the ESC
@@ -1514,14 +1337,17 @@ the motor will spin. You can control very small, or very powerful motors
 (even big enough for a full-sized electric car) by a using a computer
 like the Raspberry Pi.
 
-|image5|
+.. _esc_wiring:
+.. figure:: media/esc_wiring.png
+   :alt: Wiring an ESC
+   :width: 70%
 
-Wiring an ESC
+   Wiring an ESC
 
 One end of the ESC will have three wires that hook up to the brushless
 motor. The other end of the ESC will have five wires. Two larger outside
 wires connect to the power, red to red and black to black. There is a
-smaller red wire on the inside. See Figure 3-20 for how to wire an ESC.
+smaller red wire on the inside. See :numref:`esc_wiring` for how to wire an ESC.
 For some projects, this wire can supply power to the computer, but don't
 connect it to the Raspberry Pi or anything, as you'll use the power
 supply that came with the Raspberry Pi to be safe. The white (or
@@ -1529,7 +1355,7 @@ sometimes yellow) wire connects to the GPIO pin that has the PWM speed.
 The black wire connects to the computer's ground.
 
 What You Learned
-
+================
 In this chapter, you learned how to work at the physical layer of the
 network. You communicated between computers by controlling the voltage
 on the Raspberry Pi's GPIO pins with your own code, rather than having
@@ -1540,64 +1366,3 @@ In the next chapter, you'll learn how networks extend the physical layer
 to send frames of data from one point to another. You'll also become
 familiar with some of the most popular standards used to communicate
 over wired links, wireless, and fiber optics.
-
-.. |Text, letter Description automatically generated with medium confidence| image:: media/image1.jpeg
-   :width: 3.46746in
-   :height: 2.36709in
-.. |A picture containing electronics Description automatically generated| image:: media/image2.jpeg
-   :width: 3.32872in
-   :height: 2.83796in
-.. |A picture containing device Description automatically generated| image:: media/image3.jpeg
-   :width: 6.45614in
-   :height: 2.42138in
-.. |A close up of a device Description automatically generated with low confidence| image:: media/image4.jpeg
-   :width: 3.39768in
-   :height: 1.33159in
-.. |Diagram Description automatically generated| image:: media/image5.png
-   :width: 3.44484in
-   :height: 1.39744in
-.. |Rectangle Description automatically generated| image:: media/image6.png
-   :width: 6.86841in
-   :height: 1.97927in
-.. |Diagram Description automatically generated with low confidence| image:: media/image7.jpeg
-   :width: 5.44776in
-   :height: 3.16018in
-.. |A picture containing text, electronics Description automatically generated| image:: media/image8.png
-   :width: 6.50794in
-   :height: 2.66418in
-.. |Shape, polygon Description automatically generated| image:: media/image9.png
-   :width: 5.09722in
-   :height: 1.73905in
-.. |Graphical user interface Description automatically generated with medium confidence| image:: media/image10.png
-   :width: 5.44348in
-   :height: 4.47759in
-.. |image1| image:: media/image12.svg
-   :width: 4.5625in
-   :height: 1.48958in
-.. |A picture containing wall, indoor, different, arranged Description automatically generated| image:: media/image13.jpeg
-   :width: 3.42857in
-   :height: 2.05714in
-.. |A picture containing wall, indoor Description automatically generated| image:: media/image14.jpeg
-   :width: 1.22041in
-   :height: 1.87305in
-.. |image2| image:: media/image15.jpeg
-   :width: 1.51429in
-   :height: 2.13578in
-.. |image3| image:: media/image16.jpeg
-   :width: 3.14694in
-   :height: 2.09964in
-.. |A picture containing indoor Description automatically generated| image:: media/image17.jpeg
-   :width: 2.03402in
-   :height: 3.11428in
-.. |image4| image:: media/image18.png
-   :width: 2.84141in
-   :height: 2.12879in
-.. |Graphical user interface Description automatically generated| image:: media/image19.png
-   :width: 3.80303in
-   :height: 1.78277in
-.. |A picture containing tool, connector Description automatically generated| image:: media/image20.png
-   :width: 2.73262in
-   :height: 2.3835in
-.. |image5| image:: media/image21.png
-   :width: 6.45189in
-   :height: 1.58772in

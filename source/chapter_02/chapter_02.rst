@@ -1,3 +1,5 @@
+.. _chapter_02:
+
 Theory: Physical Layer
 **********************
 
@@ -670,6 +672,8 @@ The physical layer is all about how to take pulses of electricity,
 light, or radio and convert them back and forth between 1s and 0s. This
 method of encoding the 1s and 0s onto a couple wires is simple and works
 well; we'll use it in the project for Chapter 3.
+
+.. _theory_manchester:
 
 Manchester Encoding
 ^^^^^^^^^^^^^^^^^^^
