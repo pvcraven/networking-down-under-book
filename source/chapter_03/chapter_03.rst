@@ -351,11 +351,12 @@ Adding LEDs
 
 Once you've finished getting the LED to blink, see whether you can make
 two LEDs blink at the same time. Use pins 12 and 17, and choose two
-different colors of LEDs. Your code should look something like Listing
-3-2:
+different colors of LEDs. Your code should look something like
+:ref:`blink_leds_pseudocode`:
 
+.. _blink_leds_pseudocode:
 .. code-block:: text
-   :caption: Framework for blinking two LEDs
+   :caption: Pseudocode for blinking two LEDs
 
     Loop forever:
         Turn on led 12
@@ -387,27 +388,29 @@ different numbers from 0 to 9. When we count to 9 and run out of
 possible numbers, we add to the 10s place and start again in the 1s
 place with 10. Binary works the same, but with only two digits, 0 and 1.
 Instead of a 10s place and 100s place, binary has places of 2, 4, 8, 16,
-and so on. Table 3-1 shows the pattern of how binary numbers are stored.
+and so on. :ref:`binary_numbers` shows the pattern of how binary numbers are stored.
 
-How Binary Numbers Are Stored
+.. _binary_numbers:
 
-+----------------------------------+-----------------------------------+
-| Binary                           | Decimal                           |
-+==================================+===================================+
-| 0000 0000                        | 0                                 |
-+----------------------------------+-----------------------------------+
-| 0000 0001                        | 1                                 |
-+----------------------------------+-----------------------------------+
-| 0000 0010                        | 2                                 |
-+----------------------------------+-----------------------------------+
-| 0000 0011                        | 3                                 |
-+----------------------------------+-----------------------------------+
-| 0000 0100                        | 4                                 |
-+----------------------------------+-----------------------------------+
-| . . .                            | . . .                             |
-+----------------------------------+-----------------------------------+
-| 1111 1111                        | 255                               |
-+----------------------------------+-----------------------------------+
+.. table:: How Binary Numbers Are Stored
+
+   +----------------------------------+-----------------------------------+
+   | Binary                           | Decimal                           |
+   +==================================+===================================+
+   | 0000 0000                        | 0                                 |
+   +----------------------------------+-----------------------------------+
+   | 0000 0001                        | 1                                 |
+   +----------------------------------+-----------------------------------+
+   | 0000 0010                        | 2                                 |
+   +----------------------------------+-----------------------------------+
+   | 0000 0011                        | 3                                 |
+   +----------------------------------+-----------------------------------+
+   | 0000 0100                        | 4                                 |
+   +----------------------------------+-----------------------------------+
+   | . . .                            | . . .                             |
+   +----------------------------------+-----------------------------------+
+   | 1111 1111                        | 255                               |
+   +----------------------------------+-----------------------------------+
 
 To perform our encoding, we need to pull out the individual 1s and 0s
 from our message. Converting a number or a letter into binary can be
@@ -416,26 +419,15 @@ tricky. We'll work through two examples to help get you started.
 Encoding a Single Value
 -----------------------
 
-The first example, seen in Listing 3-3, takes a single decimal value
-(122) stored in the variable number_to_encode and outputs its binary
+The first example, seen in :ref:`bitshift_example_1`, takes a single decimal value
+(23) stored in the variable number_to_encode and outputs its binary
 value:
 
-bitshift_example_1.py
-
-bits_to_encode = 8
-
-number_to_encode = 122
-
-1 for bit_pos in range(bits_to_encode):
-
-2 bit = (1 << bit_pos) & number_to_encode
-
-bit_value = 0 if bit == 0 else 1
-
-print(f"Bit position {bit_pos:2} is {bit_value} which is worth
-{bit:2}.")
-
-First step in converting a number from decimal to binary.
+.. _bitshift_example_1:
+.. literalinclude:: ../code_examples/bitshift_example_1.py
+   :language: python
+   :linenos:
+   :caption: bitshift_example_1.py: First step in converting a number from decimal to binary.
 
 To convert our decimal number to binary, we loop eight times, once for
 each bit 1. Regarding the line that does the decoding work 2, the number
@@ -444,83 +436,73 @@ which shifts bits to the left. We'll use << to pull the individual 1s
 and 0s out of our byte, so we know when to turn the electricity on or
 off.
 
-Table 3-2 shows how you can use the bit-shift operator to shift a 1 to
+:ref:`bit_shifting` shows how you can use the bit-shift operator to shift a 1 to
 any spot within the eight-bit byte.
 
-Shifting Bits to Any Position within a Byte
+.. _bit_shifting:
+.. code-block:: text
+   :caption: Shifting Bits to Any Position within a Byte
 
-+-----------------------------------------------------------------------+
-| 1 << 0 = 0000 0001 = 1                                                |
-+=======================================================================+
-| 1 << 1 = 0000 0010 = 2                                                |
-+-----------------------------------------------------------------------+
-| 1 << 2 = 0000 0100 = 4                                                |
-+-----------------------------------------------------------------------+
-| 1 << 3 = 0000 1000 = 8                                                |
-+-----------------------------------------------------------------------+
-| 1 << 4 = 0001 0000 = 16                                               |
-+-----------------------------------------------------------------------+
-| 1 << 5 = 0010 0000 = 32                                               |
-+-----------------------------------------------------------------------+
-| 1 << 6 = 0100 0000 = 64                                               |
-+-----------------------------------------------------------------------+
-| 1 << 7 = 1000 0000 = 128                                              |
-+-----------------------------------------------------------------------+
+   1 << 0 = 0000 0001 = 1
+   1 << 1 = 0000 0010 = 2
+   1 << 2 = 0000 0100 = 4
+   1 << 3 = 0000 1000 = 8
+   1 << 4 = 0001 0000 = 16
+   1 << 5 = 0010 0000 = 32
+   1 << 6 = 0100 0000 = 64
+   1 << 7 = 1000 0000 = 128
 
-| The & in this decoding line is a bitwise *and*, which takes two binary
-  numbers and compares them bit by bit. If both binary numbers have a 1
-  in the same spot or digit, the resulting number also has a 1 in that
-  position. Otherwise, the result has a 0 in that location. For example,
-  our number 122 is 0111 1010 in binary. The first bit, with bit_pos =
-  1, gives us (1 << bit_pos)= 0000 0001. From that, we substitute in and
-  simplify:
-| (1 << bit_pos) & number_to_encode and get 0000 0001 & 0111 1010. Then
-  we do the &:
+The & in this decoding line is a bitwise *and*, which takes two binary
+numbers and compares them bit by bit. If both binary numbers have a 1
+in the same spot or digit, the resulting number also has a 1 in that
+position. Otherwise, the result has a 0 in that location. For example,
+the number 122 is ``0111 1010`` in binary. The first bit, with ``bit_pos = 1``,
+gives us ``(1 << bit_pos) = 0000 0001``. From that, we substitute in and
+simplify:
+``(1 << bit_pos) & number_to_encode`` and get ``0000 0001 & 0111 1010``. Then
+we do the &:
 
-0111 1010
+.. code-block:: text
 
-& 0000 0001
+    0111 1010
+  & 0000 0001
+    ---------
+    0000 0000 = 0
 
----------
+Second bit, with ``bit_pos = 2``, gives us ``(1 << bit_pos) = 0000 0010``. From
+that, we have ``0000 00100 & 0111 1010``:
 
-0000 0000 = 0
+.. code-block:: text
 
-Second bit, with bit_pos = 2, gives us (1 << bit_pos)= 0000 0010. From
-that, we have 0000 00100 & 0111 1010:
+     0111 1010
+   & 0000 0010
+     ---------
+     0000 0010 = 2 (non-zero)
 
-0111 1010
+Third bit, with ``bit_pos = 3``, gives us ``(1 << bit_pos) = 0000 0100``:
 
-& 0000 0010
+.. code-block:: text
 
----------
+     0111 1010
+   & 0000 0100
+     ---------
+     0000 0000 = 0
 
-0000 0010 = 2 (non-zero)
+Fourth bit, with ``bit_pos = 4``, gives us ``(1 << bit_pos) = 0000 1000``:
 
-Third bit, with bit_pos = 3, gives us (1 << bit_pos)= 0000 0100:
+.. code-block:: text
 
-0111 1010
-
-& 0000 0100
-
----------
-
-0000 0000 = 0
-
-Fourth bit, with bit_pos = 4, gives us (1 << bit_pos)= 0000 1000:
-
-0111 1010
-
-& 0000 1000
-
----------
-
-0000 1000 = 8 (non-zero)
+     0111 1010
+   & 0000 1000
+     ---------
+     0000 1000 = 8 (non-zero)
 
 and so on. Our encoding program will use this to turn on the LED for
 each 1 and turn it off for each 0.
 
 Encoding a List of Values
 -------------------------
+
 In our second example, we'll encode a list, or *array*, of values. This
 is useful when we want to send text, because each letter in the text
 will be represented by a value. To store letters, computers map letters
@@ -549,37 +531,23 @@ the simpler ASCII character mapping instead of UTF-8.
 
 Now that you have a basic understanding of ASCII and UTF-8, let's run
 *bitshift_example_2.py*, which encodes not just one value, but an array
-of values into binary (Listing 3-4). This gets us another step closer to
+of values into binary (:ref:`bitshift_example_2`). This gets us another step closer to
 sending our own message.
 
-bitshift_example_2.py
+.. _bitshift_example_2:
+.. literalinclude:: ../code_examples/bitshift_example_2.py
+   :language: python
+   :linenos:
+   :caption: bitshift_example_2.py: Convert multiple letters into their binary representation.
 
-bits_to_encode = 8
-
-1 byte_array = b'This is a message.'
-
-for my_byte in byte_array:
-
-2 for bit_pos in range(bits_to_encode - 1, -1, -1):
-
-3 bit = 1 << bit_pos & my_byte
-
-bit_value = 0 if bit == 0 else 1
-
-print(bit_value, end="")
-
-4 print(f" - {my_byte:3} - {chr(my_byte)}")
-
-Convert multiple letters into their binary representation.
-
-We're going to encode the data b'This is a message.' stored in the
-variable byte_array 1 and send that as our message. The data starts with
-a b before the first quote, which tells the computer that the data will
+We're going to encode the data ``b'This is a message.'`` stored in the
+variable byte_array (line 8) and send that as our message. The data starts with
+a ``b`` before the first quote, which tells the computer that the data will
 be a byte array stored as ASCII, as opposed to regular string stored as
 UTF-8.
 
-When running the program, a for loop goes through the b'This is a
-message.' data. Each time through the loop, we pull out a new letter and
+When running the program, a for loop goes through the
+``b'This is a message.'`` data. Each time through the loop, we pull out a new letter and
 store it in the my_byte variable. The first letter we pull out is the T,
 which maps to 84 in ASCII. The value of my_byte will be the ASCII value
 84, and not the letter. This is different than iterating through a
@@ -587,30 +555,31 @@ regular UTF-8 string in Python, which would save the letter in the
 variable instead of its value.
 
 For each letter, we start the encoding by pulling out bit 7 and work our
-way down to 0 2. We then use the bit operators 3 to convert the number
+way down to 0 (line 16). We then use the bit operators (line 19) to convert the number
 to binary, the 1s and 0s that make up 84. At the end of the first loop,
 we've processed the T and will print out the binary value, the decimal
 value, and the ASCII letter:
 
-01010100 - 84 – T
+.. code-block:: text
+
+   01010100 - 84 – T
 
 Then we loop through the rest of the letters, printing the following
 values:
 
-01101000 - 104 - h
+.. code-block:: text
 
-01101001 - 105 - i
-
-01110011 - 115 - s
-
-00100000 - 32 -
+   01101000 - 104 - h
+   01101001 - 105 - i
+   01110011 - 115 - s
+   00100000 - 32 -
 
 and so on.
 
 If we want to take the ASCII value and covert it from a number to the
-character, we can do this with the character function chr( ). Calling
-chr(84) will return 'T', chr(85) returns 'U', and so forth. We do this
-in the final print statement 4 so that we can see both the ASCII value
+character, we can do this with the character function ``chr( )``. Calling
+``chr(84)`` will return ``'T'``, ``chr(85)`` returns ``'U'``, and so forth. We do this
+in the final ``print`` statement (line 26) so that we can see both the ASCII value
 and the letter it corresponds with.
 
 Encoding a Message with Multiple Bytes
@@ -626,87 +595,40 @@ will turn on and off at a regular interval, just like a clock. At the
 exact time it turns on, the data line updates to on or off. When the
 clock line turns off, it is time for the receiver to read the data line.
 
-Enter the code in Listing 3-5, in which we have merged our two programs:
+Enter the code in :ref:`encode_message`, in which we have merged our two programs:
 
-encode_message.py
+.. _encode_message:
+.. literalinclude:: ../code_examples/encode_message.py
+   :language: python
+   :linenos:
+   :caption: encode_message.py: Code that blinks LEDs according to the binary code of our message.
 
-import time
-
-import RPi.GPIO as GPIO
-
-1 CLOCK_LINE_PIN = 17
-
-DATA_LINE_PIN = 12
-
-SLEEP_TIME = 0.1
-
-GPIO.setmode(GPIO.BCM)
-
-GPIO.setup(CLOCK_LINE_PIN, GPIO.OUT)
-
-GPIO.setup(DATA_LINE_PIN, GPIO.OUT)
-
-done = False
-
-bits_in_a_byte = 8
-
-2 my_message = b'Hello World'
-
-3 for my_byte in my_message:
-
-print(f"{chr(my_byte)} = {my_byte:3} = ", end="")
-
-4 for bit_pos in range(bits_in_a_byte - 1, -1, -1):
-
-5 bit = (1 << bit_pos) & my_byte
-
-bit_value = 0 if bit == 0 else 1
-
-print(bit_value, end="")
-
-6 GPIO.output(CLOCK_LINE_PIN, GPIO.HIGH)
-
-7 if bit_value == 1:
-
-GPIO.output(DATA_LINE_PIN, GPIO.HIGH)
-
-else:
-
-GPIO.output(DATA_LINE_PIN, GPIO.LOW)
-
-8 time.sleep(SLEEP_TIME)
-
-9 GPIO.output(CLOCK_LINE_PIN, GPIO.LOW)
-
-time.sleep(SLEEP_TIME)
-
-print()
-
-Code that blinks LEDs according to the binary code of our message.
-
-We define constants for the two GPIO pins we'll be using 1. The code to
-set them up is the same as the blinking LED example in Listing 3-1. Like
-the bit-shift example in Listing 3-4, we set up the message to be
-transmitted 2. Then we loop through each letter (byte) in that message
-3. For each letter, we start another loop that will loop eight times,
-one for each bit in the byte 4. We start at seven and go down to zero
+We define constants for the two GPIO pins we'll be using (lines 5-8). The code to
+set them up is the same as the blinking LED example in :ref:`blink_led`. Like
+the bit-shift example in :ref:`bitshift_example_2`, we set up the message to be
+transmitted (line 19). Then we loop through each letter (byte) in that message
+(line 22). For each letter, we start another loop that will loop eight times,
+one for each bit in the byte (line 29). We start at seven and go down to zero
 using bit-shifting, and we pull out if it there is a 1 or 0 in each
-location 5.
+location (line 42).
 
-The clock is always set to a positive voltage (high) at this point 6. At
+The clock is always set to a positive voltage (high) at this point (line 50). At
 the same time we set the data line to be either high or low depending on
-the data being sent 7. We then delay a little bit of time 8.
+the data being sent (line 53). We then delay a little bit of time (line 59).
 
 Next we set the clock line low 9. This is our signal to the receiver
 that it can read the data line, because we hold the data line steady. We
 don't want to change the data line while the receiver is in the middle
 of reading it, as we don't know if we'll get a high or low value. You'll
 read the bit from the data line every time the clock line goes from high
-to low, and the data line doesn't change as shown in Figure 3-9.
+to low, and the data line doesn't change as shown in :ref:`scl2`.
 
-|Shape, polygon Description automatically generated|
+.. _scl2:
+.. figure:: ../chapter_02/media/scl.svg
+   :alt: Serial Clock Line
+   :width: 60%
 
-Clock and data line
+   Encoding data with a serial clock line
 
 We use a clock line to keep track of when to read from the data line,
 because for fast data speeds and long messages, eventually one computer
@@ -715,14 +637,15 @@ there's a long string of 1s or 0s with no transitions. By sending a
 clock signal on another wire, the receiver can make sure the signal is
 synchronized with the sender's clock.
 
-For a video example of this step, see "Physical Layer - Step 3 - Encode
-a Message" at *https://www.youtube.com/watch?v=7Ef11hFo5lo*. In the
-video, the green LED is the clock; the red LED blinks on for a 1 and off
+For a video example of this step, see the video
+`Physical Layer - Step 3 - Encode a Message <https://www.youtube.com/watch?v=7Ef11hFo5lo>`_.
+In the video, the green LED is the clock; the red LED blinks on for a 1 and off
 for a 0. The delay between each clock is 0.1 seconds, and each bit takes
 0.2 seconds to transmit.
 
 Step 4: Receive a Signal
 ========================
+
 The next step to implement your own physical layer is to receive the
 signal you just created. Ideally, you'll have another Raspberry Pi with
 another breakout board, but you can also use one Raspberry Pi to send on
