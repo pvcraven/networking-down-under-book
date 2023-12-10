@@ -662,13 +662,14 @@ connect the grounds together. The *ground* is the negative side of the
 power supply. To connect the grounds, run a wire from one of the blue
 lines on the 5V negative voltage of one board to one of the blue lines
 on the 5V negative voltage of the other board, as shown by the wire on
-the right side of Figure 3-10.
+the right side of :numref:`two_pis`.
 
-|Graphical user interface Description automatically generated with
-medium confidence|
+.. _two_pis:
+.. figure:: ../chapter_03/media/two_pis.svg
+   :alt: Two Raspberry Pi Computers
 
-Tying two Raspberry Pi computers together. This diagram shows only the
-new connections, not the LEDs you should already have working.
+    Tying two Raspberry Pi computers together. This diagram shows only the
+    new connections, not the LEDs you should already have working.
 
 Next, run the signal wire from the first board to the second. You'll use
 pin 12 for the signal. Run a wire from pin 12 on one board to a 220
@@ -687,41 +688,16 @@ Signals with Polling
 With the Pis hooked up, let's run some code to try the first steps
 receiving a signal. Run the program *blink_led.py* from Listing 3-1,
 adjusting the program so that it uses pin 12. On the receiving computer,
-read the wire by entering the code shown in Listing 3-6:
+read the wire by entering the code shown in :ref:`read_wire_polling`:
 
-read_wire_polling.py
+.. _read_wire_polling:
+.. literalinclude:: ../code_examples/read_wire_polling.py
+   :language: python
+   :linenos:
+   :caption: read_wire_polling.py: Code to receive see if the data line is high or low at regular intervals.
 
-import time
-
-import RPi.GPIO as GPIO
-
-GPIO_CHANNEL = 12
-
-TIME_DELAY = 0.25
-
-GPIO.setmode(GPIO.BCM)
-
-GPIO.setup(GPIO_CHANNEL, GPIO.IN)
-
-1 while True:
-
-2 result = GPIO.input(GPIO_CHANNEL)
-
-if result:
-
-print("High")
-
-else:
-
-print("Low")
-
-3 time.sleep(TIME_DELAY)
-
-Code to receive see if the data line is high or low at regular
-intervals.
-
-This code loops forever 1. While looping, it reads from the input pin 2,
-waits 0.25 seconds 3, then loops again.
+This code loops forever (line 10). While looping, it reads from the input pin (line 13),
+waits 0.25 seconds (line 23), then loops again.
 
 When you run the program, it should print out both High and Low, showing
 that it sees the changing signal. This code is *polling*, or
@@ -738,34 +714,19 @@ Signals with Blocks
 -------------------
 
 Instead of polling, you can write a program that waits for the wire to
-change between High and Low, like Listing 3-7:
+change between High and Low, like :ref:`read_wire_blocking`:
 
 read_wire_blocking.py
 
-import RPi.GPIO as GPIO
+.. _read_wire_blocking:
+.. literalinclude:: ../code_examples/read_wire_blocking.py
+   :language: python
+   :linenos:
+   :caption: read_wire_blocking.py: Code that detects when the state of an input line changes.
 
-GPIO_CHANNEL = 12
-
-GPIO.setmode(GPIO.BCM)
-
-GPIO.setup(GPIO_CHANNEL, GPIO.IN)
-
-print("Waiting...")
-
-while True:
-
-1 result = GPIO.wait_for_edge(GPIO_CHANNEL, GPIO.RISING)
-
-print("High")
-
-2 result = GPIO.wait_for_edge(GPIO_CHANNEL, GPIO.FALLING)
-
-print("Low")
-
-Code that detects when the state of an input line changes.
-
-Listing 3-7 is similar to Listing 3-6, except instead of polling every
-0.25 seconds, we use the wait_for_edge function to wait until we go from
+:ref:`read_wire_blocking` is similar to :ref:`read_wire_polling`,
+except instead of polling every
+0.25 seconds, we use the ``wait_for_edge`` function to wait until we go from
 low to high 1, and from high to low 2.
 
 This code is *blocking*, meaning the program does something only when
@@ -798,55 +759,27 @@ occurs with blocking, you can create a callback function. This way,
 rather than stopping and waiting for input, the computer immediately
 continues to the next line of code and continues executing. It will
 automatically call the callback function only once it has input. For
-example, see Listing 3-8, in which you create a callback function:
+example, see :ref:`read_wire_callback`, in which you create a callback function:
 
-read_wire_callback.py
+.. _read_wire_callback:
+.. literalinclude:: ../code_examples/read_wire_callback.py
+   :language: python
+   :linenos:
+   :caption: read_wire_callback.py: Using a callback to detect changes to an input line.
 
-import time
-
-import RPi.GPIO as GPIO
-
-CLOCK_CHANNEL = 12
-
-1 def my_callback(channel):
-
-if GPIO.input(channel):
-
-print(f"Channel {channel} is high.")
-
-else:
-
-print(f"Channel {channel} is low.")
-
-GPIO.setmode(GPIO.BCM)
-
-GPIO.setup(CLOCK_CHANNEL, GPIO.IN)
-
-2 GPIO.add_event_detect(CLOCK_CHANNEL, GPIO.BOTH, callback=my_callback)
-
-print("Running")
-
-3 while True:
-
-time.sleep(10)
-
-print("Still running")
-
-Using a callback to detect changes to an input line.
-
-The callback function 1 is set up to read the current state of the pin
-(channel). The call to *register* the callback uses GPIO.BOTH 2, which
+The callback function (line 8) is set up to read the current state of the pin
+(channel). The call to *register* the callback uses GPIO.BOTH (line 23), which
 triggers when the signal changes from high to low, or low to high. Once
 the callback is registered, the computer automatically calls the
 function when the state changes. We don't have to keep checking on it.
 You can also use GPIO.FALLING to trigger only during high to low signal
 changes, or GPIO.RISING for low to high changes.
 
-Because the computer doesn't stop when a callback is registered 2, the
+Because the computer doesn't stop when a callback is registered (line 23), the
 code can't end there. If there were no more code after registering the
 callback, the program would quit. Callbacks aren't called if the program
 isn't running, so you need the program to do something. As you don't
-have anything to do except wait, create a loop to repeat forever 3 until
+have anything to do except wait, create a loop to repeat forever (line 27) until
 you press CTRL-C or otherwise end the program. In a more complex
 program, you could use it to process other user input while the network
 activity happens in the background. Make sure this program works before
@@ -857,67 +790,32 @@ Step 5: Decode a Signal
 
 We can encode a message, send it, and receive the signal. Our next step
 in receiving the message is to convert it back to 1s and 0s. To do this,
-make the adjustments shown in Listing 3-9 to the *read_wire_callback.py*
-program from Listing 3-8.
+make the adjustments shown below in :ref:`decode_message_1` to the prior *read_wire_callback.py*
+program from :ref:`read_wire_callback`.
 
-decode_message_1.py
-
-import time
-
-import RPi.GPIO as GPIO
-
-CLOCK_CHANNEL = 12
-
-1 **DATA_CHANNEL = 23**
-
-def my_callback(channel):
-
-2 **result = GPIO.input(DATA_CHANNEL)**
-
-if result:
-
-print("1")
-
-else:
-
-print("0")
-
-GPIO.setmode(GPIO.BCM)
-
-GPIO.setup(CLOCK_CHANNEL, GPIO.IN)
-
-3 **GPIO.setup(DATA_CHANNEL, GPIO.IN)**
-
-4 **GPIO.add_event_detect(CLOCK_CHANNEL, GPIO.FALLING,
-callback=my_callback)**
-
-print("Running")
-
-while True:
-
-time.sleep(10)
-
-print("Still running")
-
-Decoding the received signal to 1s and 0s.
+.. _decode_message_1:
+.. literalinclude:: ../code_examples/decode_message_1.py
+   :language: python
+   :linenos:
+   :caption: decode_message_1.py: Decoding the received signal to 1s and 0s.
 
 This listing makes the following adjustments:
 
-1. Change the constants at the top and define the input lines for the
-   clock and the data line 1. This example uses the same pin 12 as the
+1. (lines 4-5) Change the constants at the top and define the input lines for the
+   clock and the data line. This example uses the same pin 12 as the
    prior examples for the clock line, and then adds yet another pin to
    carry the data on. You will need to run an additional wire between
    pins 23 on the boards for this second line.
 
-2. Set up both pins for input 3.
+2. (lines 18-21) Set up both pins for input.
 
-3. Read the clock line only if the clock is falling. Change the
+3. (line 28) Read the clock line only if the clock is falling. Change the
    add_event_detect function so that instead of GPIO.BOTH, you use
-   GPIO.FALLING 4.
+   ``GPIO.FALLING``.
 
-4. Change your callback 2. Instead of printing if the clock channel is
+4. (lines 8-15) Change your callback. Instead of printing if the clock channel is
    high or low, poll the data channel. To read it, use something like
-   result = GPIO.input(DATA_CHANNEL). If the data line is low, print 0;
+   ``result = GPIO.input(DATA_CHANNEL)``. If the data line is low, print 0;
    otherwise print 1.
 
 Try adjusting the clock delay to see how fast you can receive data. For
@@ -934,23 +832,25 @@ Creating a Counter Variable
 
 Normally function variables don't keep their value between calls. We can
 get around this by *static function variables*, which do exactly that.
-An example of creating a static variable is in Listing 3-10:
+An example of creating a static variable is in :ref:`static_variable`:
 
-def my_function():
+.. _static_variable:
+.. code-block:: python
+   :caption: Creating a counter using static function variables.
+   :linenos:
 
-# This will increase x
+    def my_function():
+        # This will increase x
+        my_function.x += 1
 
-1 my_function.x += 1
+    my_function.x = 0
 
-2 my_function.x = 0
 
-Creating a counter using static function variables.
-
-At the very end of the listing 2 we create the static function variable
+At the very end of the listing (line 5) we create the static function variable
 by defining the variable x while prepending that variable name with the
 function name, my_function. That line also sets the variable to an
 initial value of 0. Inside the function we again refer to the variable
-by prepending the function name 1 to it. By using the function as a
+by prepending the function name (line 3) to it. By using the function as a
 *namespace*, you tie the variable to the function. The variable does not
 exist globally; this reduces the places it can be changed, makes it less
 error prone, and keeps its value between function calls.

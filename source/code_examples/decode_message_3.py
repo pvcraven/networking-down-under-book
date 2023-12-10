@@ -25,7 +25,7 @@ def my_callback(_channel):
 my_callback.counter = 0
 my_callback.result_byte = 0
 
-# Set pin 12 up for input
+# Set pins up for input
 GPIO.setmode(GPIO.BCM)
 GPIO.setup(CLOCK_CHANNEL, GPIO.IN)
 GPIO.setup(DATA_CHANNEL, GPIO.IN)
