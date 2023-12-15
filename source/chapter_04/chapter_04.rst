@@ -57,7 +57,7 @@ Point-to-point topology
 With Ethernet, we do this by plugging one computer directly into another
 computer. A direct connection is a bit more complex than you might
 expect because Cat 5 cable expects you to connect to a central hub
-rather than to another node. As discussed in Chapter 2, an Ethernet
+rather than to another node. As discussed in :ref:`chapter_02`, an Ethernet
 cable has lines to transmit to the hub and lines to receive data from
 the hub. If you are connecting two computers together, rather than a
 computer to a hub, both computers will transmit on the same lines and no
@@ -200,8 +200,6 @@ layer as well, as we'll learn in Chapter 6).
 
    Mesh topology
 
-Mesh topology
-
 Now let's look at how to manage multiple nodes communicating
 simultaneously within the same network.
 
@@ -271,32 +269,16 @@ Industry-related groups, such as IEEE and ISO, have set up many
 standards for transmitting data at Layer 2. The most common standards
 are as follows:
 
-Wired networks
-
-Multiple Ethernet standards, grouped under IEEE 802.3.
-
-Wi-Fi
-
-Multiple Ethernet standards, grouped under IEEE 802.11.
-
-Ethernet
-
-Can be used for both wired and wireless networks, and is the one of the
-most commonly used protocols. It arranges the bytes into the same data
-frame format, regardless of the medium being used.
-
-Vehicles
-
-CAN-Bus, grouped under several ISO standards.
-
-USB connections
-
-Created by a consortium of multiple companies.
-
-Bluetooth
-
-Started as an IEEE standard, now maintained by a group of thousands of
-companies in the Bluetooth Special Interest Group organization.
+- Ethernet:
+  Can be used for both wired and wireless networks, and is the one of the
+  most commonly used protocols. It arranges the bytes into the same data
+  frame format, regardless of the medium being used.
+- Wired networks: Multiple Ethernet standards, grouped under IEEE 802.3.
+- Wi-Fi: Multiple Ethernet standards, grouped under IEEE 802.11.
+- Vehicles: CAN-Bus, grouped under several ISO standards.
+- USB connections: Created by a consortium of multiple companies.
+- Bluetooth: Started as an IEEE standard, now maintained by a group of thousands of
+  companies in the Bluetooth Special Interest Group organization.
 
 Let's survey each of these standards in terms of where they're used, how
 they've evolved, and how they format their data.
@@ -305,7 +287,7 @@ Wired Network Standards
 -----------------------
 
 The most popular standards used over TP wire at the time of this writing
-are Ethernet standards. As mentioned in Chapter 2, there are several
+are Ethernet standards. As mentioned in :ref:`chapter_02`, there are several
 wired Ethernet standards as well as standards for wireless and
 fiber-optic mediums. The wired standards are all part of the 802.3 IEEE
 standards.
@@ -320,9 +302,11 @@ slower at 100Mbps. Some equipment also uses *802.3ae 10 Gigabit
 Ethernet*, which is very new and not as common because of its high price
 point.
 
-**NOTE** For the full list of Ethernet standards and their evolution
-over time, see the Wikipedia article on IEEE 802.3:
-*https://en.wikipedia.org/wiki/IEEE_802.3*.
+.. note::
+
+   For the full list of Ethernet standards and their evolution
+   over time, see the Wikipedia article on IEEE 802.3:
+   `https://en.wikipedia.org/wiki/IEEE_802.3 <https://en.wikipedia.org/wiki/IEEE_802.3>`_.
 
 Ethernet is very popular for both wired and fiber connections; however,
 not all communications use Ethernet as a protocol. For example,
@@ -338,33 +322,38 @@ standards added letters after the number, like 802.11a and 802.11b.
 However, this numbering scheme proved confusing for the average user. In
 2018, the Wi-Fi Alliance associated these standards with progressive
 version numbers to help people more easily recognize what their router
-supports and which standard is faster or better. Table 4-1 lists the
+supports and which standard is faster or better. :ref:`wifi_versions` lists the
 various Wi-Fi version numbers in use today.
 
-Wi-Fi Version Numbers
+.. _wifi_versions:
 
-+-----------------+-----------------+----------------+-----------------+
-| Wi-Fi version   | IEEE version    | Date           | Max speed       |
-+=================+=================+================+=================+
-| Wi-Fi 1         | 802.11b         | 1999           | 11Mbps          |
-+-----------------+-----------------+----------------+-----------------+
-| Wi-Fi 2         | 802.11a         | 1999           | 54Mbps          |
-+-----------------+-----------------+----------------+-----------------+
-| Wi-Fi 3         | 802.11g         | 2003           | 54Mbps          |
-+-----------------+-----------------+----------------+-----------------+
-| Wi-Fi 4         | 802.11n         | 2009           | 300Mbps         |
-+-----------------+-----------------+----------------+-----------------+
-| Wi-Fi 5         | 802.11ac        | 2014           | 866.5 Mbps      |
-+-----------------+-----------------+----------------+-----------------+
-| Wi-Fi 6         | 802.11ax        | 2019           | 10 Gbps         |
-+-----------------+-----------------+----------------+-----------------+
+.. table:: Wi-Fi Version Numbers
+
+    +-----------------+-----------------+----------------+-----------------+
+    | Wi-Fi version   | IEEE version    | Date           | Max speed       |
+    +=================+=================+================+=================+
+    | Wi-Fi 1         | 802.11b         | 1999           | 11Mbps          |
+    +-----------------+-----------------+----------------+-----------------+
+    | Wi-Fi 2         | 802.11a         | 1999           | 54Mbps          |
+    +-----------------+-----------------+----------------+-----------------+
+    | Wi-Fi 3         | 802.11g         | 2003           | 54Mbps          |
+    +-----------------+-----------------+----------------+-----------------+
+    | Wi-Fi 4         | 802.11n         | 2009           | 300Mbps         |
+    +-----------------+-----------------+----------------+-----------------+
+    | Wi-Fi 5         | 802.11ac        | 2014           | 866.5 Mbps      |
+    +-----------------+-----------------+----------------+-----------------+
+    | Wi-Fi 6         | 802.11ax        | 2019           | 10 Gbps         |
+    +-----------------+-----------------+----------------+-----------------+
 
 To find the standard your connection uses on Windows, navigate to the
-Performance tab of the Task Manager (Figure 4-9).
+Performance tab of the Task Manager (numref:`wifi_type`).
 
-|Graphical user interface Description automatically generated|
+.. _wifi_type:
+.. figure:: media/wifi_type.png
+   :alt: Finding the connection type on Windows
+   :width: 60%
 
-Finding the connection type on Windows
+   Finding the connection type on Windows
 
 If you're on a Mac, hold down the option key and click the Wi-Fi icon in
 the menu bar. From there, find the currently connected wireless router
@@ -391,25 +380,18 @@ Equivalent Privacy (WEP)*, which used a 40- or 104-bit key for
 encryption and two methods for authenticating (logging in to the
 network). WEP was advertised to be as secure as running through a wire.
 
-**Warning** Spoiler: it wasn't. If WEP appears as an option in your
-settings, *don't use it.*
+.. warning::
+   Spoiler: it wasn't. If WEP appears as an option in your
+   settings, *don't use it.*
 
 The following is a list of current protocols:
 
-Wi-Fi Protected Access (WPA)
-
-Has been superseded by WPA2, so don't use this if setting up a new
-network.
-
-Wi-Fi Protected Access version 2 (WPA2)
-
-The most common protocol and a safe choice.
-
-Wi-Fi Protected Access version 3 (WPA3)
-
-Introduced January 2018 and is new enough that not all older devices
-support it. For now, WPA2 might be the better choice until more devices
-support WPA3.
+- Wi-Fi Protected Access (WPA): Has been superseded by WPA2, so don't use this if setting up a new
+  network.
+- Wi-Fi Protected Access version 2 (WPA2): The most common protocol and a safe choice.
+- Wi-Fi Protected Access version 3 (WPA3): Introduced January 2018 and is new enough that not all older devices
+  support it. For now, WPA2 might be the better choice until more devices
+  support WPA3.
 
 In addition to selecting which version of WPA to use, you also need to
 choose how you want the devices on the network to authenticate. There
@@ -592,7 +574,7 @@ add additional controls to the CAN-Bus network.
 
 The CAN-Bus uses a high and a low wire to communicate. The signals on
 the wires are exactly opposite of each other and about two volts apart,
-so they can use differential signaling (see Chapter 2). Optionally, you
+so they can use differential signaling (see :ref:`differential_signaling`). Optionally, you
 can add other wires to increase shielding from other signals or keep
 communications going if either the high or low wire breaks.
 
@@ -639,35 +621,38 @@ recent USB-C plugs can deliver 5 amps of power at 5V, or 3 amps at 20V
 The top connection speed for USB 3.2 is 20Gbps. USB 3 with a USB Type-C
 connector can transmit video, making it a great all-in-one connection.
 
-Table 4-3 shows how the USB standard has evolved over time to support
+:ref:`usb_standards` shows how the USB standard has evolved over time to support
 faster connection speeds.
 
-Evolution of the USB Standard
 
-+----------------+----------------+-----------------+-----------------+
-| Year Invented  | USB Standard   | Connection      | Common          |
-|                |                | Speed           | Connectors      |
-+================+================+=================+=================+
-| 1996           | USB 1.0        | 1.5Mbit/s and   | USB A and B     |
-|                |                | 12Mbit/s        | connectors      |
-+----------------+----------------+-----------------+-----------------+
-| 1998           | USB 1.1        | 1.5Mbit/s and   |                 |
-|                |                | 12Mbit/s        |                 |
-+----------------+----------------+-----------------+-----------------+
-| 2000           | USB 2.0        | 480Mbit/s       | USB Mini-A and  |
-|                |                |                 | Mini-B          |
-|                |                |                 | connectors      |
-+----------------+----------------+-----------------+-----------------+
-| 2008           | USB 3.0        | 5Gbit/s         | USB Type-C      |
-|                |                |                 | connector       |
-+----------------+----------------+-----------------+-----------------+
-| 2013           | USB 3.1        | 10Gbit/s        |                 |
-+----------------+----------------+-----------------+-----------------+
-| 2017           | USB 3.2        | 20Gbit/s        |                 |
-+----------------+----------------+-----------------+-----------------+
-| 2019           | USB 4.0        | 40Gbit/s        | USB Type-C      |
-|                |                |                 | connector       |
-+----------------+----------------+-----------------+-----------------+
+.. _usb_standards:
+
+.. table:: Evolution of the USB Standard
+
+    +----------------+----------------+-----------------+-----------------+
+    | Year Invented  | USB Standard   | Connection      | Common          |
+    |                |                | Speed           | Connectors      |
+    +================+================+=================+=================+
+    | 1996           | USB 1.0        | 1.5Mbit/s and   | USB A and B     |
+    |                |                | 12Mbit/s        | connectors      |
+    +----------------+----------------+-----------------+-----------------+
+    | 1998           | USB 1.1        | 1.5Mbit/s and   |                 |
+    |                |                | 12Mbit/s        |                 |
+    +----------------+----------------+-----------------+-----------------+
+    | 2000           | USB 2.0        | 480Mbit/s       | USB Mini-A and  |
+    |                |                |                 | Mini-B          |
+    |                |                |                 | connectors      |
+    +----------------+----------------+-----------------+-----------------+
+    | 2008           | USB 3.0        | 5Gbit/s         | USB Type-C      |
+    |                |                |                 | connector       |
+    +----------------+----------------+-----------------+-----------------+
+    | 2013           | USB 3.1        | 10Gbit/s        |                 |
+    +----------------+----------------+-----------------+-----------------+
+    | 2017           | USB 3.2        | 20Gbit/s        |                 |
+    +----------------+----------------+-----------------+-----------------+
+    | 2019           | USB 4.0        | 40Gbit/s        | USB Type-C      |
+    |                |                |                 | connector       |
+    +----------------+----------------+-----------------+-----------------+
 
 You can easily create your own USB device with small Arduino-compatible
 boards that emulate a keyboard, mouse, or joystick.
@@ -679,21 +664,23 @@ Bluetooth is a popular wireless standard intended for *Personal Area
 Networks (PAN)*—that is, networks intended to span only a few feet, such
 as your desktop or personal space. Each Bluetooth device has a class
 that describes the transmission power and range of the device, as shown
-in Table 4-4.
+in :ref:`bluetooth_classes`.
 
-Bluetooth Classes
+.. _bluetooth_classes:
 
-+-------------+------------------------+------------------------------+
-| Class       | Power (mW)             | Typ. Range (m)               |
-+=============+========================+==============================+
-| 1           | 100                    | ~100                         |
-+-------------+------------------------+------------------------------+
-| 2           | 2.5                    | ~10                          |
-+-------------+------------------------+------------------------------+
-| 3           | 1                      | ~1                           |
-+-------------+------------------------+------------------------------+
-| 4           | 0.5                    | ~0.5                         |
-+-------------+------------------------+------------------------------+
+.. table:: Bluetooth Classes
+
+    +-------------+------------------------+------------------------------+
+    | Class       | Power (mW)             | Typical Range (m)            |
+    +=============+========================+==============================+
+    | 1           | 100                    | ~100                         |
+    +-------------+------------------------+------------------------------+
+    | 2           | 2.5                    | ~10                          |
+    +-------------+------------------------+------------------------------+
+    | 3           | 1                      | ~1                           |
+    +-------------+------------------------+------------------------------+
+    | 4           | 0.5                    | ~0.5                         |
+    +-------------+------------------------+------------------------------+
 
 The Bluetooth version is different from the Bluetooth class. Instead of
 specifying the power output, the *Bluetooth version* defines the current
@@ -705,19 +692,21 @@ been continued in subsequent versions, with Bluetooth 5 introduced in
 2016.
 
 Like Ethernet, Bluetooth has a frame format. Bluetooth packets have
-three main sections, as listed in Table 4-5.
+three main sections, as listed in :ref:`bluetooth_frame_format`.
 
-Bluetooth Frame Format
+.. _bluetooth_frame_format:
 
-+-----------------------------------+----------------------------------+
-| Section                           | Bit Size                         |
-+===================================+==================================+
-| Access Code                       | 72 bits                          |
-+-----------------------------------+----------------------------------+
-| Header                            | 54 bits                          |
-+-----------------------------------+----------------------------------+
-| Payload                           | 0–2,745 bits                     |
-+-----------------------------------+----------------------------------+
+.. table:: Bluetooth Frame Format
+
+    +-----------------------------------+----------------------------------+
+    | Section                           | Bit Size                         |
+    +===================================+==================================+
+    | Access Code                       | 72 bits                          |
+    +-----------------------------------+----------------------------------+
+    | Header                            | 54 bits                          |
+    +-----------------------------------+----------------------------------+
+    | Payload                           | 0–2,745 bits                     |
+    +-----------------------------------+----------------------------------+
 
 The first section is an *access code*, which has a preamble similar to
 Ethernet's and a method of identifying the Bluetooth connection. The
@@ -752,7 +741,7 @@ and analog-to-digital converters; servo and motor drivers; audio
 amplifiers; and keypads and switches.
 
 I\ :sup:`2`\ C uses both a *serial clock line (SCL)* and a *serial data
-line (SDA)*, similar to the method described in Chapter 2. The SCL
+line (SDA)*, similar to the method described in :ref:`chapter_02`. The SCL
 regularly goes between low and high. When the SCL is low, the SDA
 transitions to high or low depending on what data bit we have. When the
 SCL goes high, the SDA is ready for us to read. Although I\ :sup:`2`\ C
