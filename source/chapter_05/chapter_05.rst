@@ -855,14 +855,17 @@ For Android on Samsung Phones:
 
 You can use an app like NFC Tools to program an NFC tag. NFC Tools can
 both read and write tags. To write a tag, select the **Write** tab at
-the top as shown in Figure 5-9. Next, create one or more records that
+the top as shown in :numref:`nfc`. Next, create one or more records that
 will hold your data. The record can contain data like contact
 information, a video link, a small file, an email contact, an SMS
 number, or even a GPS location.
 
-|image8|
+.. _nfc:
+.. figure:: media/nfc.png
+   :alt: Using NFC Tools to write to an NFC tag
+   :width: 40%
 
-Using NFC Tools to write to an NFC tag
+   Using NFC Tools to write to an NFC tag
 
 Click **Add a Record** then select the type of record—I suggest starting
 with URL. You should be prompted to enter a web address. After doing
@@ -893,253 +896,133 @@ cables.
 
 I used the following products:
 
--  STEMMA QT/Qwiic 4-pin cable: *https://www.adafruit.com/product/4210*
+-  STEMMA QT/Qwiic 4-pin cable:`https://www.adafruit.com/product/4210 <https://www.adafruit.com/product/4210>`_
 
 -  SparkFun Qwiic or Stemma QT SHIM for Raspberry Pi:
-   *https://www.adafruit.com/product/4463*
+   `https://www.adafruit.com/product/4463 <https://www.adafruit.com/product/4463>`_
 
 -  Monochrome 1.3" 128×64 OLED graphic display STEMMA QT/Qwiic:
-   *https://www.adafruit.com/product/938*
+   `https://www.adafruit.com/product/938 <https://www.adafruit.com/product/938>`_
 
 -  AHT20 Temperature & Humidity Sensor STEMMA QT/Qwiic:
-   *https://www.adafruit.com/product/4566*
+   `https://www.adafruit.com/product/4566 <https://www.adafruit.com/product/4566>`_
 
 The I\ :sup:`2`\ C protocol isn't set up or turned on by default on the
 Raspberry Pi. To install I\ :sup:`2`\ C tools and some Python libraries,
-enter the commands in Listing 5-5 at the command prompt.
+enter the commands in :numref:`setup_i2c` at the command prompt.
 
-**sudo apt-get update**
+.. _setup_i2c:
+.. codel:block:: text
 
-**sudo apt-get install -y i2c-tools build-essential python-smbus**
+   sudo apt-get update
+   sudo apt-get install -y i2c-tools build-essential python-smbus
+   sudo apt-get install –y python-dev python-pip
+   sudo apt-get install -y python-pil python-imaging
+   pip3 install adafruit-circuitpython-ahtx0
+   pip3 install adafruit-circuitpython-ssd1306
 
-**sudo apt-get install –y python-dev python-pip**
-
-**sudo apt-get install -y python-pil python-imaging**
-
-**pip3 install adafruit-circuitpython-ahtx0**
-
-**pip3 install adafruit-circuitpython-ssd1306**
 
 Installing i2c tools
-
+--------------------
 After you install the tools, you need to turn on I\ :sup:`2`\ C:
 
-1. Enter **sudo raspi-config** to access the configuration tool.
-
-7. Select **Interfacing Options** in the configuration tool, followed by
+1. Enter ``sudo raspi-config`` to access the configuration tool.
+2. Select **Interfacing Options** in the configuration tool, followed by
    **I2C**.
-
-8. Select **Yes** to enable the I\ :sup:`2`\ C interface and **Yes** to
+3. Select **Yes** to enable the I\ :sup:`2`\ C interface and **Yes** to
    load it by default on boot.
-
-9. Reboot your computer.
+4. Reboot your computer.
 
 Wiring is rather easy. While some I\ :sup:`2`\ C devices require
 soldering, these don't. First, Place the SHIM on your Raspberry Pi (see
-Figure 5-10).
+:numref:`shim`).
 
-|A close-up of a circuit board Description automatically generated with
-medium confidence|
+.. _shim:
+.. figure:: media/shim.jpg
+   :alt: Installing a SHIM on a Raspberry Pi
+   :width: 40%
 
-Installing a SHIM on a Raspberry Pi
+   Installing a SHIM on a Raspberry Pi
 
 Then use a Qwiic cable to connect from the SHIM to the AHT20 temperature
-sensor (see Figure 5-11).
+sensor (see :numref:`aht20`).
 
-|A close-up of a computer chip Description automatically generated with
-medium confidence|
+.. _aht20:
+.. figure:: media/AHT20.jpg
+   :alt: Connecting the AHT20 Temperature Sensor
+   :width: 40%
 
-Connecting the AHT20 Temperature Sensor
+   Connecting the AHT20 Temperature Sensor
 
-Next, plug the sensor into the OLED display (see Figure 5-12).
+Next, plug the sensor into the OLED display (see :numref:`oled`).
 
-|Text Description automatically generated|
+.. _oled:
+.. figure:: media/oled.jpg
+   :alt: Connecting the OLED Display
+   :width: 40%
 
-Connecting the OLED Display
+   Connecting the OLED Display
 
-After you reboot, enter the command in Listing 5-6 to see what comes up
+After you reboot, enter the command in :numref:`i2cdetect` to see what comes up:
 
-**sudo i2cdetect -y 1**
+.. _i2cdetect:
+.. code-block:: text
+   :caption: Detecting I\ :sup:`2`\ C devices with i2cdetect command
 
-0 1 2 3 4 5 6 7 8 9 a b c d e f
+   sudo i2cdetect -y 1
+        0  1  2  3  4  5  6  7  8  9  a  b  c  d  e  f
+   00:                         -- -- -- -- -- -- -- --
+   10: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
+   20: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
+   30: -- -- -- -- -- -- -- -- 38 -- -- -- -- 3d -- --
+   40: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
+   50: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
+   60: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
+   70: -- -- -- -- -- -- -- --
 
-00: -- -- -- -- -- -- -- --
 
-10: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
-
-20: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
-
-30: -- -- -- -- -- -- -- -- 38 -- -- -- -- 3d -- --
-
-40: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
-
-50: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
-
-60: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
-
-70: -- -- -- -- -- -- -- --
-
-Detecting I\ :sup:`2`\ C devices with i2cdetect command
 
 You should see two devices, with the hex addresses of 0x38 and 0x3d. If
 nothing comes up, recheck your connections.
 
 With that working, let's write some code that will display the current
-temperature and humidity, as shown in Listing 5-7.
+temperature and humidity, as shown in :numref:`i2c_temp`.
 
-i2c_temp.py
+.. _i2c_temp:
+.. literalinclude:: ../code_examples/i2c_temp.py
+   :language: python
+   :linenos:
+   :caption: i2c_temp.py: Reading temperature and humidity
 
-import time
-
-import board
-
-import adafruit_ahtx0
-
-def setup_aht20():
-
-1 i2c = board.I2C()
-
-2 sensor = adafruit_ahtx0.AHTx0(i2c)
-
-return sensor
-
-def get_readings(sensor):
-
-3 humidity = sensor.relative_humidity
-
-temp_c = sensor.temperature
-
-4 temp_f = temp_c \* (9.0 / 5.0) + 32.0
-
-return temp_f, humidity
-
-def run_display_loop(sensor):
-
-while True:
-
-temp_f, humidity = get_readings(sensor)
-
-print(f"Temp: {temp_f:4.1f} F, Humidity: {humidity:4.1f}%")
-
-time.sleep(2)
-
-def main():
-
-sensor = setup_aht20()
-
-run_display_loop(sensor)
-
-main()
-
-Reading temperature and humidity
-
-First, we initialize and start I\ :sup:`2`\ C on the computer 1. Then,
-we open a connection to our temperature sensor 2. Next, we get our
-temperature and humidity sensor readings 3. If you are in the U.S., you
-might want to convert the default Celsius to Fahrenheit 4. The code
+First, we initialize and start I\ :sup:`2`\ C on the computer (line 18). Then,
+we open a connection to our temperature sensor (line 19). Next, we get our
+temperature and humidity sensor readings (line 33). If you are in the U.S., you
+might want to convert the default Celsius to Fahrenheit (line 25). The code
 loops and displays the sensor readings every two seconds.
 
 Once that is working, write some code to try out the OLED display, as
-shown in Listing 5-8.
+shown in :numref:`i2c_oled`.
 
-import board
-
-import busio
-
-import digitalio
-
-from PIL import Image, ImageDraw, ImageFont
-
-import adafruit_ssd1306
-
-OLED_DEVICE_ADDRESS = 0x3D
-
-OLED_WIDTH = 128
-
-OLED_HEIGHT = 64
-
-BORDER = 5
-
-1 def setup_oled():
-
-i2c = board.I2C()
-
-oled_reset = digitalio.DigitalInOut(board.D4)
-
-oled = adafruit_ssd1306.SSD1306_I2C(OLED_WIDTH,
-
-OLED_HEIGHT,
-
-i2c,
-
-addr=OLED_DEVICE_ADDRESS,
-
-reset=oled_reset)
-
-return oled
-
-2 def create_image(text):
-
-3 image_size = (OLED_WIDTH, OLED_HEIGHT)
-
-image = Image.new("1", image_size)
-
-draw = ImageDraw.Draw(image)
-
-4 rect = (0, 0, OLED_WIDTH, OLED_HEIGHT)
-
-draw.rectangle(rect, outline=255, fill=255)
-
-5 rect = (BORDER,
-
-BORDER,
-
-OLED_WIDTH - BORDER - 1,
-
-OLED_HEIGHT - BORDER - 1)
-
-draw.rectangle(rect, outline=0, fill=0)
-
-6 font = ImageFont.load_default()
-
-font_width, font_height = font.getsize(text)
-
-position = (OLED_WIDTH // 2 - font_width // 2,
-
-OLED_HEIGHT // 2 - font_height // 2)
-
-draw.text(position, text, font=font, fill=255)
-
-return image
-
-def main():
-
-oled = setup_oled()
-
-image = create_image("Hello World!")
-
-7 oled.image(image)
-
-oled.show()
-
-main()
-
-"Hello World" on an OLED screen
+.. _i2c_oled:
+.. literalinclude:: ../code_examples/i2c_oled.py
+   :language: python
+   :linenos:
+   :caption: i2c_oled.py: "Hello World" on an OLED screen
 
 First, a function sets up I\ :sup:`2`\ C and opens a communications
-channel to the OLED display 1. It returns a class that will manage
-commands to the display. Next, the create_image function 2 creates an
+channel to the OLED display (lines 27-39). It returns a class that will manage
+commands to the display. Next, the create_image function (line 44) creates an
 image to display. It uses the Python Pillow library to create the image
-3, clear it to white 4, create a black inset rectangle 5, and then draw
-the centered text 6. Finally, we can take that image and display it 7.
+(line 48), clear it to white (lines 53-55), create a black inset rectangle (lines 57-62), and then draw
+the centered text (lines 64-71). Finally, we can take that image and display it (line 90).
 
 With these two listings, see if you can write a program that will read
 in the temperature and humidity, then display it on the OLED screen.
 Example code is available at
-*https://github.com/pvcraven/networking_down_under/blob/master/i2c_temp_oled.py*.
+`https://github.com/pvcraven/networking_down_under/blob/master/i2c_temp_oled.py <https://github.com/pvcraven/networking_down_under/blob/master/i2c_temp_oled.py>`_.
 
 Summary
-
+=======
 In this chapter you learned to run Wireshark to capture network packets.
 You learned how to get and change your Layer 2 MAC address. You sent raw
 Ethernet packets over the network, and then used iperf3 to test how fast
@@ -1151,40 +1034,3 @@ one node to another. In the next two chapters, you'll learn how to build
 on this with Layer 3 and route data across a network of nodes. With
 Layer 3 you'll no longer be limited to just point-to-point
 communications.
-
-.. |image1| image:: media/image1.png
-   :width: 3.76119in
-   :height: 2.6314in
-.. |image2| image:: media/image2.png
-   :width: 4.52985in
-   :height: 3.08779in
-.. |C:\\Users\\craven\\AppData\\Local\\Temp\\SNAGHTMLc21378.PNG| image:: media/image3.png
-   :width: 4.77244in
-   :height: 3.36545in
-.. |image3| image:: media/image4.png
-   :width: 2.52298in
-   :height: 3.25456in
-.. |image4| image:: media/image5.png
-   :width: 2.78583in
-   :height: 2.83296in
-.. |image5| image:: media/image6.png
-   :width: 2.21428in
-   :height: 3.53846in
-.. |image6| image:: media/image7.png
-   :width: 2.55567in
-   :height: 4.08209in
-.. |image7| image:: media/image8.png
-   :width: 2.5187in
-   :height: 4.47755in
-.. |image8| image:: media/image9.png
-   :width: 2.47594in
-   :height: 2.33504in
-.. |A close-up of a circuit board Description automatically generated with medium confidence| image:: media/image10.jpeg
-   :width: 4.36111in
-   :height: 3.06818in
-.. |A close-up of a computer chip Description automatically generated with medium confidence| image:: media/image11.jpeg
-   :width: 4.69444in
-   :height: 2.47207in
-.. |Text Description automatically generated| image:: media/image12.jpeg
-   :width: 4.43056in
-   :height: 3.38383in
