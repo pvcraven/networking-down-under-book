@@ -393,15 +393,28 @@ device name instead of wlan0, and you don't need to add the hw
 Project: Sending Raw Ethernet Packets
 =====================================
 
-Let's try making our own Layer 2 data frame. This is easiest on a Linux
+Let's try making our own Layer 2 data frame. We'll have one program send a
+frame, and one receive it.
+
+This is easiest on a Linux
 computer like the Raspberry Pi since the development tools are built in.
-Download the C language code available at
-https://github.com/pvcraven/networking_down_under/blob/master/send_raw_ethernet.c.
+We'll be doing this in the C language.
+
+Sendfing Raw Packets
+-------------------
+
+The code to send a frame is available below:
+
+.. _send_raw_ethernet:
+.. literalinclude:: ../code_examples/send_raw_ethernet.c
+   :language: c
+   :linenos:
+   :caption: send_raw_ethernet.c: C program to send a raw ethernet packet
 
 This code can send raw Ethernet packets, and it allows you to set all
 the bytes on what is sent out as a message. To run this code, simply
 copy it and save it in a file on your computer. Note that C files should
-end in *.c*, so name this file *send_raw_ethernet.c*. Spend some time
+end in ``.c``, so name this file ``send_raw_ethernet.c``. Spend some time
 reading through the code and the comments to learn more about how it
 works. You can adjust the program to specify the networking interface it
 will send the message on. You can also update your destination MAC
@@ -409,18 +422,21 @@ address and the data to be sent.
 
 Next, you have to translate the human readable C code to machine code
 the computer can understand. This is done with a program called a
-*compiler*. Enter **gcc** on the Raspberry Pi's command line to use the
+*compiler*. Enter ``gcc`` on the Raspberry Pi's command line to use the
 GNU C Compiler (gcc). Give it the name of your input C language file,
 and the name of the program you want it to output, such as send.
 
-**gcc** *send_raw_ethernet.c* **-o** *send*
+.. code-block:: text
+
+   gcc send_raw_ethernet.c -o send
 
 Check the output to make sure you do not have any errors, which could be
 caused by not typing in the program correctly. If there are no errors,
 the compiled program will be stored in the **send** file. The compiler
 will not print anything if successful.
 
-Running the Program
+Running a C Program
+-------------------
 
 Normally, you can run a program by simply entering its name, such as
 **send** in this case. However to access the networking hardware
@@ -431,7 +447,9 @@ system directory. We can specify the current directory with a period.
 Therefore, to request admin privileges, specify the current directory,
 and run the program our command is:
 
-**sudo ./send**
+.. code-block:: text
+
+   sudo ./send
 
 Running this command should send our own custom Ethernet data frame over
 the network. To ensure this worked, use Wireshark to see the data frame
@@ -441,20 +459,30 @@ your program to change the data, recompile it, and watch for the updated
 data being sent.
 
 Receiving Raw Packets
+---------------------
 
-To receive the packets we sent, download the C code from
-*https://github.com/pvcraven/networking_down_under/blob/master/receive_raw_ethernet.c*.
+To receive the packets we sent, look at :ref:`receive_raw_ethernet`.
 You'll need to update this program with your computer's MAC address and
 the name of the adapter you want it to use.
 
-Just like the program to send packets, enter **gcc** on your Raspberry
+.. _receive_raw_ethernet:
+.. literalinclude:: ../code_examples/receive_raw_ethernet.c
+   :language: c
+   :linenos:
+   :caption: receive_raw_ethernet.c: C program to receive a raw ethernet packet
+
+Just like the program to send packets, enter ``gcc`` on your Raspberry
 Pi's command line to compile the program:
 
-**gcc** *receive_raw_ethernet.c* **-o** *receive*
+.. code-block:: text
+
+   gcc receive_raw_ethernet.c -o receive
 
 Once compiled, run the program with:
 
-**sudo ./receive**
+.. code-block:: text
+
+   sudo ./receive
 
 This program will receive data until you press ctrl-C to stop it. Run
 the program that sends raw ethernet packets and see if you can get the
@@ -479,71 +507,64 @@ computers. Using the same computer doesn't test the performance of any
 networking.
 
 Installing iperf3
+-----------------
 
 If you are using a Raspberry Pi or Linux computer, get iperf3 with the
 command:
 
-**sudo apt-get install iperf3**
+.. code-block:: text
+
+   sudo apt-get install iperf3
 
 If you're using Windows or Mac, you can download iperf3 from
-*https://iperf.fr/iperf-download.php.* While iperf3 doesn't come with
+`https://iperf.fr/iperf-download.php <https://iperf.fr/iperf-download.php>`_.
+While iperf3 doesn't come with
 easy-to-use installers for Windows or Mac, you can uncompress the files
 into a directory, navigate to that directory via the command line, and
 run the tool from there.
 
 Setting Up the Server and Client
+--------------------------------
 
 Before you start using iperf3, designate one computer as the server and
 another as the client; it doesn't matter which is which. On the server,
 find the machine's IP address via the command line by entering
-**ipconfig** on Windows or **ifconfig** on Mac or Linux. Then start
-iperf3 and use **-s** to signify it as the server:
+``ipconfig`` on Windows or ``ifconfig`` on Mac or Linux. Then start
+iperf3 and use ``-s`` to signify it as the server:
 
-**iperf3 -s**
+.. code-block:: text
 
-On your client, start iperf3 with **-c** to tell iperf3 to run as a
+   iperf3 -s
+
+On your client, start iperf3 with ``-c`` to tell iperf3 to run as a
 client and enter the address of the server computer to which to connect.
 For example:
 
-**iperf3** **–c** *192.168.1.12*
+.. code-block:: text
 
-Connecting to host 192.168.1.12, port 5201
+   iperf3 –c 192.168.1.12
+   Connecting to host 192.168.1.12, port 5201
+   [  4] local 192.168.1.4 port 61233 connected to 192.168.1.12 port 5201
+   [ ID] Interval           Transfer     Bandwidth
+   [  4]   0.00-1.00   sec  6.38 MBytes  53.4 Mbits/sec
+   [  4]   1.00-2.00   sec  6.50 MBytes  54.6 Mbits/sec
+   [  4]   2.00-3.00   sec  5.75 MBytes  48.2 Mbits/sec
+   [  4]   3.00-4.00   sec  6.25 MBytes  52.4 Mbits/sec
+   [  4]   4.00-5.00   sec  6.50 MBytes  54.6 Mbits/sec
+   [  4]   5.00-6.00   sec  6.25 MBytes  52.4 Mbits/sec
+   [  4]   6.00-7.00   sec  6.50 MBytes  54.5 Mbits/sec
+   [  4]   7.00-8.00   sec  6.50 MBytes  54.5 Mbits/sec
+   [  4]   8.00-9.00   sec  6.38 MBytes  53.5 Mbits/sec
+   [  4]   9.00-10.00  sec  6.38 MBytes  53.5 Mbits/sec
+   - - - - - - - - - - - - - - - - - - - - - - - - -
+   [ ID] Interval           Transfer     Bandwidth
+   [  4]   0.00-10.00  sec  63.4 MBytes  53.2 Mbits/sec                  sender
+   [  4]   0.00-10.00  sec  63.4 MBytes  53.2 Mbits/sec                  receiver
 
-[ 4] local 192.168.1.4 port 61233 connected to 192.168.1.12 port 5201
-
-[ ID] Interval Transfer Bandwidth
-
-[ 4] 0.00-1.00 sec 6.38 MBytes 53.4 Mbits/sec
-
-[ 4] 1.00-2.00 sec 6.50 MBytes 54.6 Mbits/sec
-
-[ 4] 2.00-3.00 sec 5.75 MBytes 48.2 Mbits/sec
-
-[ 4] 3.00-4.00 sec 6.25 MBytes 52.4 Mbits/sec
-
-[ 4] 4.00-5.00 sec 6.50 MBytes 54.6 Mbits/sec
-
-[ 4] 5.00-6.00 sec 6.25 MBytes 52.4 Mbits/sec
-
-[ 4] 6.00-7.00 sec 6.50 MBytes 54.5 Mbits/sec
-
-[ 4] 7.00-8.00 sec 6.50 MBytes 54.5 Mbits/sec
-
-[ 4] 8.00-9.00 sec 6.38 MBytes 53.5 Mbits/sec
-
-[ 4] 9.00-10.00 sec 6.38 MBytes 53.5 Mbits/sec
-
-- - - - - - - - - - - - - - - - - - - - - - - - -
-
-[ ID] Interval Transfer Bandwidth
-
-[ 4] 0.00-10.00 sec 63.4 MBytes 53.2 Mbits/sec sender
-
-[ 4] 0.00-10.00 sec 63.4 MBytes 53.2 Mbits/sec receiver
-
-iperf Done.
+   iperf Done.
 
 Running iperf3
+--------------
 
 From the output, you can see that in the first second my computer was
 able to transmit 6.38MB of data. There are 8 bits in a byte, so that is
@@ -554,36 +575,33 @@ wireless connection to a wired. If you're able, compare the speed of a
 cheap computer like the Raspberry Pi to a faster notebook or desktop
 computer.
 
-To experiment, enter **iperf3 --help** for a list of all options:
+To experiment, enter ``iperf3 --help`` for a list of all options:
 
-**iperf3 --help**
+.. code-block:: text
 
-Usage: iperf [-s\|-c host] [options]
+   iperf3 --help
+   Usage: iperf [-s|-c host] [options]
+          iperf [-h|--help] [-v|--version]
 
-iperf [-h\|--help] [-v\|--version]
+   Server or Client:
+     -p, --port      #         server port to listen on/connect to
+     -f, --format    [kmgKMG]  format to report: Kbits, Mbits, KBytes, Mbytes
+   --snip--
 
-Server or Client:
-
--p, --port # server port to listen on/connect to
-
--f, --format [kmgKMG] format to report: Kbits, Mbits, KBytes, Mbytes
-
-*--snip--*
-
-One of these options is the -M option. Entering -M 90 attempts to set
+One of these options is the ``-M`` option. Entering ``-M 90`` attempts to set
 the TCP segment size to 90 bytes. This will split the same data across
 more individual data frames. Since each frame has additional overhead in
 bytes transmitted, it should increase the time it takes to send data.
 
-iperf3 –M 90 –c 192.168.1.12
+``iperf3 –M 90 –c 192.168.1.12``
 
-You can set -M from about 88 up. Going past 1,500 is normally pointless,
+You can set ``-M`` from about 88 up. Going past 1,500 is normally pointless,
 as Ethernet has a limit of 1,522 bytes per frame. Despite the request
 from the software, the networking hardware might ignore the TCP segment
 size request and buffer it to a larger segment, or split it into smaller
 segments. Try setting it to small numbers to see if that impacts your
 transfer speed. Use Wireshark to see whether it's changing the segment
-size; if not, try combining it with the -N option, which should
+size; if not, try combining it with the ``-N`` option, which should
 immediately send the packet and not let it buffer. I've found that
 setting the segment size does not change the throughput of data as much
 as I expected, except for very low numbers.
@@ -597,29 +615,30 @@ connecting it from the command line can often speed up your work.
 From the Raspberry Pi command line, enter the following to bring up the
 Bluetooth control:
 
-**bluetoothctl**
+``bluetoothctl``
 
 If you get a Command not found error, remember ctl is short for control,
 and ends in the letter *l*, not the number *1*. You should get the
 following prompt:
 
-[bluetooth]#
+``[bluetooth]#``
 
 Check that Bluetooth hardware is on with:
 
-**power on**
+``power on``
 
 Make sure the background software/agent process is running with:
 
-**agent on**
+``agent on``
 
 Now Bluetooth is ready to scan and connect to other devices.
 
 Connect from a Raspberry Pi to a Device
+---------------------------------------
 
 To search for nearby devices, enter:
 
-**scan on**
+``scan on``
 
 You should see all your Bluetooth devices pop up with their MAC
 addresses (shown on the screen next to the device name). We can *pair*
@@ -629,7 +648,9 @@ we'll cover further in Chapter 8. To pair a device, put it in pairing
 mode and note its MAC address, then enter **connect** followed by the
 MAC address:
 
-**connect** *AC:37:43:7D:A7:27*
+.. code-block:: text
+
+   connect AC:37:43:7D:A7:27
 
 That's all that it takes! You might get disconnected right away by the
 other device since you aren't sending it data that it expects, but
@@ -638,13 +659,16 @@ you. Consider trying this project in a crowded area, like a school or
 coffee shop, where there are a lot of nearby Bluetooth devices.
 
 Connect from a Device to a Raspberry Pi
+---------------------------------------
 
 The prior example connected from your Raspberry Pi to another Bluetooth
 device. Let's do the opposite. To create a connection from your
 Bluetooth device to Raspberry Pi, enter the following to make your
 Raspberry Pi discoverable:
 
-**discoverable on**
+.. code-block:: text
+
+   discoverable on
 
 This causes your Raspberry Pi to broadcast its name so other devices can
 see it.
@@ -652,7 +676,9 @@ see it.
 To make your Raspberry Pi open to accepting new connections, we also
 need to make it pairable:
 
-**pairable on**
+.. code-block:: text
+
+   pairable on
 
 In the list of paired devices on your phone, it will show up in with
 your machine name—this is probably raspberrypi or similar. Using this
@@ -679,28 +705,37 @@ has banned many of the war driving apps for iPhone, so to try this task,
 you'll need a laptop or an Android phone.
 
 Download an app that can map access points. I recommend an Android app
-called WiGLE WiFi (Figure 5-6). For macOS, try MacStumbler, and try
+called WiGLE WiFi :numref:`wigle_1`). For macOS, try MacStumbler, and try
 either inSSIDer or NetSpot for PCs.
 
-**Note** The app will scan even when you aren't looking at it. If you
-are driving, put the phone away! Be safe.
+.. note::
 
-|image5|
+   The app will scan even when you aren't looking at it. If you
+   are driving, put the phone away! Be safe.
 
-WiGLE app on Android showing map view
+.. _wigle_1:
+.. figure:: media/wigle_1.png
+   :alt: WiGLE app on Android showing map view
+   :width: 40%
+
+   WiGLE app on Android showing map view
 
 Walk, bike, or drive around your area to map out the access points
-(Figure 5-7). SSIDs will appear on your app's map, pinpointing all the
+(:numref:`wigle_2`). SSIDs will appear on your app's map, pinpointing all the
 access points in the area, including open access points with no
 security.
 
-|image6|
+.. _wigle_2:
+.. figure:: media/wigle_2.png
+   :alt: WiGLE details
+   :width: 40%
 
-WiGLE App on Android showing Bluetooth, Phone LTE, and Wi-Fi access
-points
+   WiGLE App on Android showing Bluetooth, Phone LTE, and Wi-Fi access
+   points
 
 With WiGLE, you can upload the Wi-Fi access points you find to the
-public database at *https://wigle.net/.* Even if you don't contribute to
+public database at `https://wigle.net/ <https://wigle.net/>`_.
+Even if you don't contribute to
 that database, take a minute to look at its impressive worldwide heat
 map of access points.
 
@@ -715,56 +750,60 @@ work well with Android phones. If you have an iPhone, make sure it's
 compatible with your ODB-II connector; iPhones work with some Bluetooth
 devices, but not all.
 
-**NOTE** The ODB-II scanner I used was the Veepeak OBD, and I also
-recommend the BLE OBD2 Bluetooth Scanner.
+.. note::
+
+   The ODB-II scanner I used was the Veepeak OBD, and I also
+   recommend the BLE OBD2 Bluetooth Scanner.
 
 Next, download a program that reads ODB-II data. If you have an Android
 phone or laptop, Torque Pro by Ian Hawkins works great. You can create
 custom dials for monitoring the car's speed, RPM, and temperature; I've
-done this with my car in Figure 5-8. If you have a check engine light
+done this with my car in :numref:`torque`. If you have a check engine light
 on, these apps can read the diagnostic codes for you. If your car has a
 display screen, you can use Android Auto or Apple CarPlay to display
 additional information about your engine's performance.
 
-|image7|
+.. _torque:
+.. figure:: media/torque.png
+   :alt: WiGLE details
+   :width: 40%
 
-Torque Pro app showing car data
+   Torque Pro app showing car data
 
 If you don't want to use someone else's application to read car data,
 and would rather program your own, you can get started using Python on
 any operating system. Pair your Bluetooth ODB-II connector with the
 computer and then start coding a new Python program. You'll need to
-download the pyODB library (*https://python-obd.readthedocs.io*). Their
+download the pyODB library
+(`https://python-obd.readthedocs.io <https://python-obd.readthedocs.io>`_).
+Their
 main web page has detailed installation instructions, but in most cases,
 you can simply type pip install obd in the command line.
 
-A program to log how fast the car is going might look similar to Listing
-5-4:
+A program to log how fast the car is going might look similar to
+:ref:`pyodb`:
 
-import obd
+.. _pyodb:
+.. code-block:: python
+   :caption: Using the pyODB library
+   :linenos:
 
-import time
+   import obd
+   import time
 
-1 connection = obd.OBD()
-
-2 cmd = obd.commands.SPEED
-
-while True:
-
-3 response = connection.query(cmd)
-
-4 print(response.value.to("mph"))
-
-time.sleep(1.0)
-
-Using the pyODB library
+   connection = obd.OBD()
+   cmd = obd.commands.SPEED
+   while True:
+       response = connection.query(cmd)
+       print(response.value.to("mph"))
+       time.sleep(1.0)
 
 After importing the pyODB library and time, you'll create a connection
-1. Next, tell the car you want the reading for the speed 2. Then, query
-the car 3 and print the result 4. Besides speed, you can pull data for
+(line 4). Next, tell the car you want the reading for the speed (line 5). Then, query
+the car (line 7) and print the result (line 8). Besides speed, you can pull data for
 the engine RPM, engine temperature, distance travelled, voltage, fuel
 level, accelerator pedal position, and more. For a full list, check out
-*https://python-obd.readthedocs.io/en/latest/Command%20Tables/*.
+`https://python-obd.readthedocs.io/en/latest/Command%20Tables/ <https://python-obd.readthedocs.io/en/latest/Command%20Tables/>`_.
 
 By writing your own program, you can combine this with other data. For
 example, you might use GPS data and car speed to warn you if you're
@@ -795,27 +834,24 @@ a website, much like QR codes.
 For this project, you'll need an Android or iPhone. You can find
 different NFC tags to buy online. I used an NFC tag that comes in the
 form of a sticker from Adafruit
-(*https://www.adafruit.com/product/362*).
+(`https://www.adafruit.com/product/362 <https://www.adafruit.com/product/362>`_).
 
 Each phone that supports NFC is a bit different. Some phones have NFC
 detection turned off by default. Before using NFC on Android, you may
-need to enable it. For Android on Google phones:
+need to enable it.
+
+For Android on Google phones:
 
 1. Open Settings
-
 2. Select **Connected Devices**
-
 3. Select **Connection Preferences**
-
 4. Turn NFC to **On**
 
 For Android on Samsung Phones:
 
 1. Open Settings
-
-5. Select **Connections**
-
-6. Turn on NFC and Payment option
+2. Select **Connections**
+3. Turn on NFC and Payment option
 
 You can use an app like NFC Tools to program an NFC tag. NFC Tools can
 both read and write tags. To write a tag, select the **Write** tab at
