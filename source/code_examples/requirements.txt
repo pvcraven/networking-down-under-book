@@ -1,5 +1,0 @@
-cherrypy
-pillow
-colorama
-lxml
-cryptography
