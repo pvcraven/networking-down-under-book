@@ -20,6 +20,5 @@ python:
      - requirements: requirements.txt
 
 submodules:
-  include:
-    - all
+  include: all
   recursive: true
