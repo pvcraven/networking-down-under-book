@@ -14,5 +14,5 @@ First learn the theory, then get hands-on experience using Python and Raspberry 
    chapter_02/chapter_02
    chapter_03/chapter_03
    chapter_04/chapter_04
-
+   chapter_05/chapter_05
 

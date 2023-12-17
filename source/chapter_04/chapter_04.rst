@@ -1,3 +1,5 @@
+.. _chapter_04:
+
 Theory: Data-Link Layer
 ***********************
 
@@ -54,22 +56,26 @@ directly connect one node to another (:numref:`p2p`).
 Point-to-point topology
 -----------------------
 
-With Ethernet, we do this by plugging one computer directly into another
-computer. A direct connection is a bit more complex than you might
-expect because Cat 5 cable expects you to connect to a central hub
-rather than to another node. As discussed in :ref:`chapter_02`, an Ethernet
-cable has lines to transmit to the hub and lines to receive data from
-the hub. If you are connecting two computers together, rather than a
-computer to a hub, both computers will transmit on the same lines and no
-computer will be listening. You need either a *cross-over* cable that
-crosses those wires, or to have electronics built into your computer
-that detect this issue and reconfigure which wires are used for transmit
-and receive automatically. Thankfully, those electronics are reasonably
-common.
+With Ethernet, we can do this by plugging one computer directly into another
+computer.
+This point-to-point protocol isn't very common with Ethernet, as we normally connect
+using some kind of hub, but it's
+common with other types of networks. For example, when working with hardware such as
+connecting a sensor or display to a computer, we might use a point to point connection using I\ :sup:`2`\ C.
 
-This point-to-point protocol isn't very common with Ethernet, but it's
-common with other types of networks when working with hardware, such as
-connecting a sensor or display to a computer using I\ :sup:`2`\ C.
+.. note::
+
+   A direct connection is a bit more complex than you might
+   expect because Cat 5 or 6 cable expects you to connect to a central hub
+   rather than to another node. As discussed in :ref:`chapter_02`, an Ethernet
+   cable has lines to transmit to the hub and lines to receive data from
+   the hub. If you are connecting two computers together, rather than a
+   computer to a hub, both computers will transmit on the same lines and no
+   computer will be listening. You need either a *cross-over* cable that
+   crosses those wires, or to have electronics built into your computer
+   that detect this issue and reconfigure which wires are used for transmit
+   and receive automatically. Thankfully, those electronics are reasonably
+   common.
 
 Line Topology
 -------------
@@ -443,42 +449,18 @@ where it's from, and whether it's corrupted.
 Ethernet is by far the most common standard at Layer 2. Table 4-2 shows
 the parts that make up an Ethernet frame.
 
-The Parts of an Ethernet Frame
 
-+-----+------+-----+-------+----+------+-----+-----+----+---------+
-|     | Prea | Fr  | MAC   | M  | 80   | Et  | P   | F  | I       |
-|     | mble | ame | d     | AC | 2.1Q | her | ayl | ra | nterpac |
-|     |      | del | estin | so |  tag | net | oad | me | ket gap |
-|     |      | imi | ation | ur | (o   | t   |     | c  |         |
-|     |      | ter |       | ce | ptio | ype |     | he |         |
-|     |      |     |       |    | nal) |     |     | ck |         |
-+=====+======+=====+=======+====+======+=====+=====+====+=========+
-|     | 7 b  | 1   | 6     | 6  | (4   | 2   | 4   | 4  | 12      |
-|     | ytes | by  | bytes |  b | by   | by  | 6–1 | b  | bytes   |
-|     |      | tes |       | yt | tes) | tes | 500 | yt |         |
-|     |      |     |       | es |      |     | by  | es |         |
-|     |      |     |       |    |      |     | tes |    |         |
-+-----+------+-----+-------+----+------+-----+-----+----+---------+
-| La  |      |     | ←     |    |      |     |     |    |         |
-| yer |      |     | 64    |    |      |     |     |    |         |
-| 2   |      |     | –1522 |    |      |     |     |    |         |
-| Et  |      |     | bytes |    |      |     |     |    |         |
-| her |      |     | →     |    |      |     |     |    |         |
-| net |      |     |       |    |      |     |     |    |         |
-| fr  |      |     |       |    |      |     |     |    |         |
-| ame |      |     |       |    |      |     |     |    |         |
-+-----+------+-----+-------+----+------+-----+-----+----+---------+
-| La  | ←    |     |       |    |      |     |     |    | ← 12    |
-| yer | 72–  |     |       |    |      |     |     |    | bytes → |
-| 1   | 1530 |     |       |    |      |     |     |    |         |
-| Et  | b    |     |       |    |      |     |     |    |         |
-| her | ytes |     |       |    |      |     |     |    |         |
-| net | →    |     |       |    |      |     |     |    |         |
-+-----+------+-----+-------+----+------+-----+-----+----+---------+
+.. _wifi_type:
+.. figure:: media/ethernet_frame.svg
+   :alt: The Parts of an Ethernet Frame
+   :width: 80%
+
+   The Parts of an Ethernet Frame
 
 Let's look at each part in more detail:
 
 Preamble
+^^^^^^^^
 
 An Ethernet frame first transmits a *preamble* to give the receiver a
 chance to synchronize with the transmitter. The preamble is seven bytes
@@ -488,14 +470,16 @@ between each up/down transition; the preambles give the receiver time to
 figure that out.
 
 Frame Delimiter
+^^^^^^^^^^^^^^^
 
 The *frame delimiter* has two ones at the end that tell the receiver
 you're about to transmit data. The seven-byte preamble along with the
 one-byte delimiter look like this:
 
-10101010 10101010 10101010 10101010 10101010 10101010 10101010 10101011
+``10101010 10101010 10101010 10101010 10101010 10101010 10101010 10101011``
 
 MAC Destination and Source Addresses
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Because devices can share the same medium, they need a way to know
 whether a frame of data is intended for them or for a different device.
@@ -513,15 +497,18 @@ The six-byte *MAC destination address* of the frame's recipient—that is,
 where the data is going—follows the frame delimiter. In hexadecimal, it
 looks something like this:
 
-BE 15 38 D3 0B 70
+``BE 15 38 D3 0B 70``
 
 Then comes the six-byte *MAC source* *address* of the frame's sender.
 Think of it as the return address.
 
-**NOTE** The 802.1Q tag is optional and used only with virtual networks,
-so we won't discuss it here.
+.. note::
+
+  The 802.1Q tag is optional and used only with virtual networks,
+  so we won't discuss it here.
 
 Ethernet Type
+^^^^^^^^^^^^^
 
 Next are two bytes that denote the *Ethernet type*, which defines how
 the rest of the packet is formatted. Most modern Ethernet packets are
@@ -531,6 +518,7 @@ Address Resolution Protocol (ARP) packet used to connect Layer 2
 addresses to Layer 3 addresses.
 
 Payload
+^^^^^^^
 
 Following the Ethernet type comes the actual data we're trying to
 transmit, known as the *payload*, which can range from 46 to 1,500
@@ -538,6 +526,7 @@ bytes. This payload data is often a Layer 3 packet, so we pass this
 payload up to the Networking Layer.
 
 Frame Check Sequence
+^^^^^^^^^^^^^^^^^^^^
 
 After the payload, we transmit 4 bytes (32 bits) that make up our *frame
 check sequence*. The frame check sequence ensures the frame doesn't have
@@ -549,12 +538,14 @@ check sequence is calculated using an algorithm called a cyclic
 redundancy check (CRC).
 
 Interpacket Gap
+^^^^^^^^^^^^^^^
 
 After that, no one should talk for 12 bytes worth of time to give the
 receiver time to prepare to receive another packet. This gap is called
 the *interpacket gap*.
 
 Controller Area Network
+-----------------------
 
 Most modern cars, trucks, and even some airplanes and medical equipment
 have a standard networking technology called *controller area network
@@ -605,13 +596,17 @@ install custom software drivers for everything that hooked up to their
 computers, which was a major hassle.
 
 USB has had three major revisions and about 10 different common plug
-types (Figure 4-10). Typically, connections travel only about 10 feet
+types (:numref:`usb_connector_types`). Typically, connections travel only about 10 feet
 (two meters).
 
-|image4|
+.. _usb_connector_types:
+.. figure:: media/usb_connector_types.svg
+   :alt: The Parts of an Ethernet Frame
+   :width: 60%
 
-“Comparison of USB connector plugs” by Milos and “USB Type-C” by Pietz
-retrieved from Wikipedia and licensed under CC BY 3.0
+   "Comparison of USB connector plugs" by Milos and "USB Type-C" by Pietz
+   retrieved from Wikipedia and licensed under CC BY 3.0
+
 
 USB can deliver power at 5 volts. A high-current power supply can
 deliver up to 2.4 amps of power at 5V for most USB plug types. The most
@@ -770,7 +765,7 @@ I\ :sup:`2`\ C to define who can talk, how fast to send data, and the
 order and format of sent data.
 
 In the next chapter, you'll work on several projects to try out some of
-these protocols. You'll send and receive Ethernet frames, “sniff” data
+these protocols. You'll send and receive Ethernet frames, "sniff" data
 sent from other applications, and see how fast you can send data. You'll
 also read from a car's CAN-Bus, work with Bluetooth, and try
 I\ :sup:`2`\ C.
