@@ -19,3 +19,7 @@ python:
    install:
      - requirements: requirements.txt
 
+submodules:
+  include:
+    - all
+  recursive: true

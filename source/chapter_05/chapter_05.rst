@@ -400,7 +400,7 @@ This is easiest on a Linux
 computer like the Raspberry Pi since the development tools are built in.
 We'll be doing this in the C language.
 
-Sendfing Raw Packets
+Sending Raw Packets
 -------------------
 
 The code to send a frame is available below:
