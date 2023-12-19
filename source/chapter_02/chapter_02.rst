@@ -104,8 +104,10 @@ When we receive our signal, we invert the signal on one of the wires
    Balanced line after de-inverting the second line
 
 .. _differential_signaling:
+
 Differential Signaling
 ~~~~~~~~~~~~~~~~~~~~~~
+
 We've inverted the noise so that it spikes down to 0 volts on one line
 and up to +2 volts on the other line. When we add the signal on both
 wires, we get a value of +2 volts—the same value it would have been

@@ -446,11 +446,11 @@ data frame between two computers, those computers need a standard on how
 to format that data. They need to figure out where the data is going,
 where it's from, and whether it's corrupted.
 
-Ethernet is by far the most common standard at Layer 2. Table 4-2 shows
+Ethernet is by far the most common standard at Layer 2. :numref:`ethernet_frame` shows
 the parts that make up an Ethernet frame.
 
 
-.. _wifi_type:
+.. _ethernet_frame:
 .. figure:: media/ethernet_frame.svg
    :alt: The Parts of an Ethernet Frame
    :width: 80%

@@ -912,7 +912,8 @@ Raspberry Pi. To install I\ :sup:`2`\ C tools and some Python libraries,
 enter the commands in :numref:`setup_i2c` at the command prompt.
 
 .. _setup_i2c:
-.. codel:block:: text
+.. code-block:: text
+   :caption: Setup i2c protocol with Raspberry Pi and Python
 
    sudo apt-get update
    sudo apt-get install -y i2c-tools build-essential python-smbus
