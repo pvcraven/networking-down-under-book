@@ -13,11 +13,11 @@ In this chapter, you'll learn how the internet can manage to route data
 anywhere in the world; this process starts with packets, the fundamental
 container of data that moves around the internet. These packets have
 their own addresses which differ from the MAC addresses we discussed in
-Chapters 4 and 5. As computers can run multiple programs we'll show how
+:ref:`chapter_04` and :ref:`chapter_05`. As computers can run multiple programs we'll show how
 to send data not just to the right computer, but also the right program.
 We'll show how networks are divided into smaller subnetworks and how
 data is routed between them. There are important protocols at this
-layer, such as the protocol to translate domain names like nostarch.com
+layer, such as the protocol to translate domain names like ``wikipedia.org``
 to a network addresses, and a protocol that will automatically set up
 your computer for the network as soon as you connect. We'll also talk
 about how firewalls work to help secure networks.
@@ -26,7 +26,7 @@ Packets
 =======
 
 A Layer 3 *packet* is a chunk of data that goes inside the payload area
-of a Layer 2 frame (see Chapters 4 and 5). While Layer 2 moves data from
+of a Layer 2 frame. While Layer 2 moves data from
 directly from one node to another, at Layer 3 we use a packet to move
 across multiple *hops* to deliver data to its final destination. Each
 time we transmit our data from one node to another, we add one hop to
@@ -168,161 +168,78 @@ the originating node sets a *Time to Live* *(TTL)* field in the packet.
 For each router the packet passes through, that number decreases by one.
 If the counter runs down to zero, the packet is tossed.
 
-A basic IP packet header has 160 bytes. Take a look at Table 6-1, which
+A basic IP packet header has 160 bytes. Take a look at :numref:`ip_packet_format`, which
 shows how each packet is formatted. Each row of the table shows 32 bits
 of data (4 bytes). For example, the first four bits (numbered 0-3) are
 the IP version, bits 4-7 hold the length of the header. Starting at the
 32\ :sup:`nd` bit on the second row, we have the identification field.
 
-IP Packet Format
+.. _ip_packet_format:
+.. figure:: media/ip_packet_format.svg
+   :alt: IP Packet Format
+   :width: 100%
 
-+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+
-|   |   | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 1 | 1 | 1 | 1 | 1 | 1 | 1 | 1 | 1 | 1 | 2 | 2 | 2 | 2 | 2 | 2 | 2 | 2 | 2 | 2 | 3 | 3 |
-|   |   |   |   |   |   |   |   |   |   |   | 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 0 | 1 |
-+===+===+===+===+===+===+===+===+===+===+===+===+===+===+===+===+===+===+===+===+===+===+===+===+===+===+===+===+===+===+===+===+===+
-|   |   |   |   |   | H |   |   |   | D |   |   |   |   |   | E |   | T |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
-|   |   |   |   |   | e |   |   |   | i |   |   |   |   |   | C |   | o |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
-|   |   |   |   |   | a |   |   |   | f |   |   |   |   |   | N |   | t |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
-|   |   |   |   |   | d |   |   |   | f |   |   |   |   |   |   |   | a |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
-|   |   |   |   |   | e |   |   |   | S |   |   |   |   |   |   |   | l |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
-|   |   |   |   |   | r |   |   |   | e |   |   |   |   |   |   |   | L |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
-|   |   |   |   |   | L |   |   |   | r |   |   |   |   |   |   |   | e |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
-|   |   |   |   |   | e |   |   |   | v |   |   |   |   |   |   |   | n |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
-|   |   |   |   |   | n |   |   |   | i |   |   |   |   |   |   |   | g |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
-|   |   |   |   |   | g |   |   |   | c |   |   |   |   |   |   |   | t |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
-|   |   |   |   |   | t |   |   |   | e |   |   |   |   |   |   |   | h |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
-|   |   |   |   |   | h |   |   |   | s |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
-+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+
-|   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   | F |   |   | F |   |   |   |   |   |   |   |   |   |   |   |   |
-|   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   | l |   |   | r |   |   |   |   |   |   |   |   |   |   |   |   |
-|   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   | a |   |   | a |   |   |   |   |   |   |   |   |   |   |   |   |
-|   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   | g |   |   | g |   |   |   |   |   |   |   |   |   |   |   |   |
-|   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   | s |   |   | m |   |   |   |   |   |   |   |   |   |   |   |   |
-|   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   | e |   |   |   |   |   |   |   |   |   |   |   |   |
-|   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   | n |   |   |   |   |   |   |   |   |   |   |   |   |
-|   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   | t |   |   |   |   |   |   |   |   |   |   |   |   |
-|   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   | O |   |   |   |   |   |   |   |   |   |   |   |   |
-|   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   | f |   |   |   |   |   |   |   |   |   |   |   |   |
-|   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   | f |   |   |   |   |   |   |   |   |   |   |   |   |
-|   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   | s |   |   |   |   |   |   |   |   |   |   |   |   |
-|   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   | e |   |   |   |   |   |   |   |   |   |   |   |   |
-|   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   | t |   |   |   |   |   |   |   |   |   |   |   |   |
-+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+
-|   |   |   |   |   |   |   |   |   | P |   |   |   |   |   |   |   | H |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
-|   |   |   |   |   |   |   |   |   | r |   |   |   |   |   |   |   | e |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
-|   |   |   |   |   |   |   |   |   | o |   |   |   |   |   |   |   | a |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
-|   |   |   |   |   |   |   |   |   | t |   |   |   |   |   |   |   | d |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
-|   |   |   |   |   |   |   |   |   | o |   |   |   |   |   |   |   | e |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
-|   |   |   |   |   |   |   |   |   | c |   |   |   |   |   |   |   | r |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
-|   |   |   |   |   |   |   |   |   | o |   |   |   |   |   |   |   | C |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
-|   |   |   |   |   |   |   |   |   | l |   |   |   |   |   |   |   | h |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
-|   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   | e |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
-|   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   | c |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
-|   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   | k |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
-|   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   | s |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
-|   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   | u |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
-|   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   | m |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
-+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+
-|   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
-+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+
-|   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
-+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+
-|   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
-+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+
-|   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
-+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+
-|   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
-+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+
-|   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |
-+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+
+   IP Packet Format
 
-|image4|
 
 In more detail, the packet contains:
 
-IP Version
-
-The first four bits of a packet. The number 4 (in binary 0100) is IPv4.
-The number 6 (in binary 0110) is used for IPv6.
-
-Header Length
-
-The length of the header (not the data) in 32-bit chunks. The minimum is
-5, which is 160 bits (20 bytes). If there are options added, this might
-be longer.
-
-Diff(erentiated) Services
-
-This is sometimes used for streaming or voiceover IP. When not used,
-it's filled with zeros.
-
-Explicit Traffic Congestion Notification (ECN)
-
-This flag can prevent the dropping of specific packets on congested
-networks *if* all the intervening nodes support it. Normally, it's
-filled with zeros.
-
-Total Length
-
-This is the total length of the packet, including data. The minimum is
-20 bytes (the header), and the maximum is 64k. Ethernet limits the data
-payload of a Layer 2 frame to 1,500 bytes, so packets greater than that
-will have to be fragmented.
-
-Identification
-
-If a large Layer 3 packet goes onto a Layer 2 protocol that can't
-support packets of that size, the packet must be fragmented into smaller
-parts. For example, Ethernet only supports data frames that hold 1,500
-bytes of data. If our packet is 2,000 bytes, then we'll need to split it
-into a 1,500 byte data frame and a 500 byte data frame. Each part of the
-fragmented packet will contain the same unique identifying number in
-this field so the receiving computer knows they go together. If the
-packet isn't fragmented, the field is filled with zeros.
-
-Flags
-
-This is a three bit field. The first bit is not used for anything, and
-must always be zero. The second bit determines whether the packet can be
-fragmented into multiple parts by Layer 2. If it can't be fragmented,
-and Layer 2 doesn't hold enough data for the packet, the packet will be
-dropped. The third bit is set if the packet is fragmented, and there are
-more parts coming.
-
-Fragment Offset
-
-If the packet is fragmented, this field helps reassemble it in the
-correct order. If the packet isn't fragmented, or if it is the first
-part of the packet, this field is filled with zeros.
-
-Time to Live (TTL)
-
-8 bits for a maximum hop count of 256.
-
-Protocol
-
-8 bits for which IP protocol is being used. For example, 0x06 is TCP and
-0x11 is UDP.
-
-Header Checksum
-
-16 bits used to see if the header is valid. This is optional, and can be
-set to zeros if not used.
-
-Source
-
-IP address of the packet's original source.
-
-Destination
-
-IP address of the packet's final destination.
-
-Options / Padding
-
-Depending on the protocol used and the header length set, there may be
-optional information. This field is rarely used or even supported with
-modern equipment. Its original intent was to allow a packet to specify
-or record its route across the network.
+- *IP Version*:
+  The first four bits of a packet. The number 4 (in binary 0100) is IPv4.
+  The number 6 (in binary 0110) is used for IPv6.
+- *Header Length*:
+  The length of the header (not the data) in 32-bit chunks. The minimum is
+  5, which is 160 bits (20 bytes). If there are options added, this might
+  be longer.
+- *Diff(erentiated) Services*:
+  This is sometimes used for streaming or voiceover IP. When not used,
+  it's filled with zeros.
+- *Explicit Traffic Congestion Notification (ECN)*:
+  This flag can prevent the dropping of specific packets on congested
+  networks *if* all the intervening nodes support it. Normally, it's
+  filled with zeros.
+- *Total Length*:
+  This is the total length of the packet, including data. The minimum is
+  20 bytes (the header), and the maximum is 64k. Ethernet limits the data
+  payload of a Layer 2 frame to 1,500 bytes, so packets greater than that
+  will have to be fragmented.
+- *Identification*:
+  If a large Layer 3 packet goes onto a Layer 2 protocol that can't
+  support packets of that size, the packet must be fragmented into smaller
+  parts. For example, Ethernet only supports data frames that hold 1,500
+  bytes of data. If our packet is 2,000 bytes, then we'll need to split it
+  into a 1,500 byte data frame and a 500 byte data frame. Each part of the
+  fragmented packet will contain the same unique identifying number in
+  this field so the receiving computer knows they go together. If the
+  packet isn't fragmented, the field is filled with zeros.
+- *Flags*:
+  This is a three bit field. The first bit is not used for anything, and
+  must always be zero. The second bit determines whether the packet can be
+  fragmented into multiple parts by Layer 2. If it can't be fragmented,
+  and Layer 2 doesn't hold enough data for the packet, the packet will be
+  dropped. The third bit is set if the packet is fragmented, and there are
+  more parts coming.
+- *Fragment Offset*:
+  If the packet is fragmented, this field helps reassemble it in the
+  correct order. If the packet isn't fragmented, or if it is the first
+  part of the packet, this field is filled with zeros.
+- *Time to Live (TTL)*:
+  8 bits for a maximum hop count of 256.
+- *Protocol*:
+  8 bits for which IP protocol is being used. For example, ``0x06`` is TCP and
+  ``0x11`` is UDP.
+- *Header Checksum*:
+  16 bits used to see if the header is valid. This is optional, and can be
+  set to zeros if not used.
+- *Source*:
+  IP address of the packet's original source.
+- *Destination*:
+  IP address of the packet's final destination.
+- *Options / Padding*:
+  Depending on the protocol used and the header length set, there may be
+  optional information. This field is rarely used or even supported with
+  modern equipment. Its original intent was to allow a packet to specify
+  or record its route across the network.
 
 We rarely use a plain IP packet by itself; in fact, you must be an
 administrator on your machine to have permission to send or receive raw
@@ -340,10 +257,10 @@ subnets, and disconnected computers each have their own special sets of
 IP addresses.
 
 The local loop-back link is used anytime you want to create a network
-connection back to your own computer. This address, 127.0.0.1, is called
+connection back to your own computer. This address, ``127.0.0.1``, is called
 *localhost* and is considered your "home" address.
 
-If you type 127.0.0.1 or localhost in your web browser, it will check
+If you type ``127.0.0.1`` or localhost in your web browser, it will check
 whether you have a web server running on your computer and pull web
 pages from that. Computers will always have this home address for local
 loop-back connections. A networked computer will have additional
@@ -360,7 +277,7 @@ It is possible to have a computer not hooked to any network at all, but
 your computer can still get an IP address! When you don't have an
 outside link, your computer uses a local link connection. A laptop that
 doesn't have a Wi-Fi connection may have an address in the range
-169.254.0.0 to 169.254.255.255
+``169.254.0.0`` to ``169.254.255.255``.
 
 *Multicast addresses* send the same packet to multiple destinations.
 These addresses are used in protocols for routing, advertising
@@ -370,14 +287,14 @@ packet that states, "It is 10AM" and all 100 computers in your network
 can pick up that same packet. That's better than sending 100 copies of
 the same thing. Certain addresses are standardized for use with
 particular protocols. Multicast addresses are any address in the range
-224.0.0.0 to 239.255.255.255.
+``224.0.0.0`` to ``239.255.255.255``.
 
 Any IP address ending in .255 is a *broadcast address*, although it
 could end with another number. Broadcast addresses are similar to
 multicast addresses in that they send the same packet to multiple
 computers. Exactly what the broadcast address is depends on the netmask,
 which we will discuss in the next section. By convention, addresses
-ending in .1 are usually a gateway/router. This isn't a requirement, but
+ending in ``.1`` are usually a gateway/router. This isn't a requirement, but
 most people follow this convention.
 
 Aside from these ranges, other blocks of IP addresses (aside from the
@@ -398,30 +315,29 @@ are considered to be in the wide area network (WAN).
 
 How do you figure out what computers are local? It depends on their IP
 address and a *netmask*, sometimes called *subnet mask*. For example,
-you may have 254 computers on the local subnet numbered 192168.1.0 to
-192.168.1.255. Why 254 instead of 256? The first address in the range
-(192.168.1.0) is the network address, used to identify the network as a
+you may have 254 computers on the local subnet numbered ``192.168.1.0`` to
+``192.168.1.255``. Why 254 instead of 256? The first address in the range
+(``192.168.1.0``) is the network address, used to identify the network as a
 whole while routing. That can't be used as an address for a computer.
-The last address (192.168.1.255) in a sequence is the broadcast address.
+The last address (``192.168.1.255``) in a sequence is the broadcast address.
 Every computer listens to that address. That leaves 254 addresses. To
 find whether an address is local, check the netmask to see what part is
 local and what part is routing, splitting the IP address into a network
 prefix and a host portion.
 
-Listing 6-1 shows an example computer's IP address both in binary and
+:ref:`subnet_mask` shows an example computer's IP address both in binary and
 decimal.
 
-What Binary form Dot-decimal notation
+.. _subnet_mask:
+.. code-block:: text
+    :caption: Subnet Mask
 
-IP address 11000000.10101000.00000101.10000010 192.168. 5.130
+    What           Binary form                         Dot-decimal notation
+    IP address     11000000.10101000.00000101.10000010 192.168.  5.130
+    Subnet mask    11111111.11111111.11111111.00000000 255.255.255.  0
+    Network prefix 11000000.10101000.00000101.00000000 192.168.  5.  0
+    Host part      00000000.00000000.00000000.10000010   0.  0.  0.130
 
-Subnet mask 11111111.11111111.11111111.00000000 255.255.255. 0
-
-Network prefix 11000000.10101000.00000101.00000000 192.168. 5. 0
-
-Host part 00000000.00000000.00000000.10000010 0. 0. 0.130
-
-Subnet Mask
 
 The subnet mask is shown on the next line. The part of the IP address
 that lines up with the 1s of the subnet mask makes up the network
@@ -432,9 +348,9 @@ fewer 1s, the more local computers can be in our networking block.
 
 We often show a subnet's routing properties using the *classless
 inter-domain routing* (CIDR) form. Following the CIDR model, the subnet
-above would be 192.168.5.0/24, where the 192.168.5 is the network
-prefix. The 24 comes from the fact there are 24 1s in binary form of the
-subnet mask, 255.255.255.0. (255 is 1111 1111 in binary.)
+above would be ``192.168.5.0/24``, where the ``192.168.5`` is the network
+prefix. The ``24`` comes from the fact there are 24 1s in binary form of the
+subnet mask, ``255.255.255.0``. (``255`` is ``1111 1111`` in binary.)
 
 Table 6-2 shows different CIDR values and how they relate. For example,
 192.0.0.0/8 would have the first eight bits be one, making a netmask of
@@ -566,11 +482,11 @@ Network address translation
 
 NAT uses a private subnet within one of the following address ranges:
 
--  10.0.0.0 to 10.255.255.255
+-  ``10.0.0.0`` to ``10.255.255.255``
 
--  172.16.0.0 to 172.31.255.255
+-  ``172.16.0.0`` to ``172.31.255.255``
 
--  192.168.0.0 to 192.168.255.255
+-  ``192.168.0.0`` to ``192.168.255.255``
 
 Since these addresses are reserved for private subnets, you don't have
 to worry that a computer on the internet has one of them. If that
@@ -588,8 +504,7 @@ through the traffic.
 Chances are, you're behind a NAT right now. You can test it and see:
 
 1. Take two devices on the same network such as your local Wi-Fi.
-
-1. Launch a web browser on both devices and connect to a service like
+2. Launch a web browser on both devices and connect to a service like
    *www.whatismyip.com*, which displays your assigned IP address. If
    both devices show the same IP address, you're using a NAT.
 
@@ -796,6 +711,7 @@ the most common protocol in use.
 
 Path-vector routing protocol
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
 This protocol is similar to distance-vector, but is used for exterior
 routing. Routing between exterior systems is complex, as there might be
 business networks that aren't reliably online all the time, or are
@@ -811,6 +727,7 @@ Information Protocol.
 
 Popular Layer 3 Protocols
 =========================
+
 Along with the base TCP/IP protocols, there are many other related
 protocols you should know about. Before we delve into each protocol,
 here's a quick overview:
@@ -907,7 +824,7 @@ minutes for all clients to switch to the new address.
 The domain name servers aren't listed by IP address, but by a DNS
 record. For example, you can use the nslookup tool (which we'll use in
 Chapter 7) to look up the domain arcade.academy, which might show it has
-a DNS of ns10.dnsmadeeasy.com. If you look up ns10.dnsmadeeasy.com,
+a DNS of ``ns10.dnsmadeeasy.com``. If you look up ``ns10.dnsmadeeasy.com``,
 you'll receive an IP record, which you can use to connect and get an IP
 address.
 
@@ -963,7 +880,7 @@ reverse lookups and a few other items. It is a left-over from the
 original ARPANET that predated the internet.
 
 If you don't have a DNS you can hook up to, you can use the two Google
-Public DNS Servers at the addresses of 8.8.8.8 and 8.8.4.4.
+Public DNS Servers at the addresses of ``8.8.8.8`` and ``8.8.4.4``.
 
 WINS
 ----
