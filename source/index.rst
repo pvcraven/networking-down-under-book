@@ -1,3 +1,7 @@
+.. raw:: html
+
+   <meta name="google-site-verification" content="Xd8G8wGXgkuMwFTVtcZl1og21z0cXKLiN5-DrODQwNQ" />
+
 Networking Down Under
 =====================
 
