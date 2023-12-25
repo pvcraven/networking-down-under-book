@@ -574,6 +574,7 @@ parts. Ideally, we don't want to fragment our packets because
 disassembly and reassembly takes time.
 
 TCP
+^^^
 
 Most connections on the internet happen with TCP, which is built on top
 of IP and offers notification of delivery failure; retransmission;
@@ -644,7 +645,7 @@ The most common of these protocols are IS-IS, EIGRP, OSPF, and RIP. It's
 up to the administrator of the autonomous system to decide which
 interior gateway protocol to use and how to route packets inside of it.
 
-Figure 6-4 shows a semi-fictional example of how these routing protocols
+:numref:`as` shows a semi-fictional example of how these routing protocols
 come together. In the upper left is New York University. Their AS number
 is 12. The short name of their ASN is NYU-DOMAIN. (While this name is
 descriptive, not all short names make it easy to guess their owner.)
@@ -654,9 +655,12 @@ ASN. Each AS might have one or more TCP/IP groupings assigned to them.
 New York University has about six, although I only listed two in the
 diagram.
 
-|Diagram Description automatically generated|
+.. _as:
+.. figure:: media/as.svg
+   :alt: Autonomous systems and routing protocols
+   :width: 100%
 
-Autonomous systems and routing protocols
+   Autonomous systems and routing protocols
 
 Internally, NYU might use a routing protocol like IS-IS. Externally it
 must use BGP. In the image, NYU has two internet connections to outside
@@ -715,22 +719,18 @@ Along with the base TCP/IP protocols, there are many other related
 protocols you should know about. Before we delve into each protocol,
 here's a quick overview:
 
-The Domain Name System allows us to use names like twitter.com instead
-of IP addresses.
-
-ICMP notifies us if our packet can't reach the destination.
-
-ARP is the bridge between Layer 2 and Layer 3 addresses.
-
-DHCP lets us hook a computer up to a network without manually setting
-its address.
-
-Finally, firewalls can help us stay safe on the network.
+- The Domain Name System allows us to use names like google.com instead
+  of IP addresses.
+- ICMP notifies us if our packet can't reach the destination.
+- ARP is the bridge between Layer 2 and Layer 3 addresses.
+- DHCP lets us hook a computer up to a network without manually setting
+  its address.
+- Finally, firewalls can help us stay safe on the network.
 
 Domain Name System
 ------------------
 A TCP/IP address might look like 104.20.209.3, but we typically type a
-name like *nostarch.com* into a web browser. In order to go from the
+name like *google.com* into a web browser. In order to go from the
 computer-readable address to one that humans can understand, we use the
 *DNS (Domain Name System)*.
 
@@ -776,22 +776,15 @@ works like this:
 
 1. The local computer requests the IP address for the computer from the
    router.
-
 2. The router asks for the IP address from the ISP.
-
 3. The ISP asks the root server for TLD name servers. (Who owns
    .example?)
-
 4. The ISP asks the TLD servers who owns the domain. (Who owns
    my-domain.example?)
-
 5. The ISP asks the domain name server for the IP of the computer in the
    domain. (What IP is www.my-domain.example?)
-
 6. The ISP passes the address back to the router.
-
 7. The router passes the address back to the local computer.
-
 8. Now the local computer has the IP address.
 
 The local computer and the DNS can cache the IP address of a domain name
@@ -819,40 +812,28 @@ This record holds the primary name server for the domain, an e-mail
 address of the person responsible for the domain, and how long each
 record should be cached, before clients should get an updated copy.
 
-A
+- *A*: This associates an address like ``www.mydomain.example`` to ``192.168.1.100``.
+- *AAAA*: This is just like an A-record, but for IPv6 addresses.
+- *Domain Name Alias (CNAME)*: This allows you to point a computer like www.mydomain.example to a
+  different domain like ``www2.myotherdomain.example``.
+- *Mail Exchange (MX)*: This record entry contains the IP addresses of a domain's e-mail
+  servers. Sending mail to ``mary@my-domain.example`` will cause the mail
+  server to look up the MX record for ``my-domain.example`` and open a
+  connection to send the mail there.
+- *Name Server (NS)*: This identifies the computers that will manage all the name server
+  records for the domain. If a computer wants to look up the IP address of
+  ``www.my-domain.example``, it first finds the server for the ``.example`` TLD,
+  then when asks that server who owns my-domain.example. It will then get
+  the NS record so it can look up the IP address for computers such as
+  ``www.my-domain.example``.
 
-This associates an address like www.mydomain.example to 192.168.1.100.
+.. note::
 
-AAAA
-
-This is just like an A-record, but for IPv6 addresses.
-
-Domain Name Alias (CNAME)
-
-This allows you to point a computer like www.mydomain.example to a
-different domain like www2.myotherdomain.example.
-
-Mail Exchange (MX)
-
-This record entry contains the IP addresses of a domain's e-mail
-servers. Sending mail to mary@my-domain.example will cause the mail
-server to look up the MX record for my-domain.example and open a
-connection to send the mail there.
-
-Name Server (NS)
-
-This identifies the computers that will manage all the name server
-records for the domain. If a computer wants to look up the IP address of
-www.my-domain.example, it first finds the server for the .example TLD,
-then when asks that server who owns my-domain.example. It will then get
-the NS record so it can look up the IP address for computers such as
-www.my-domain.example.
-
-**NOTE** Addresses can also be hardcoded in a *hosts file* stored on the
-local computer. With the hosts file you can override any address. You
-can change google.com to go to a different IP address. On Unix and macOS
-systems, you can find the file at */etc/hosts*; on Windows, the file is
-found at *C:\\Windows\\System32\\Drivers\\etc\\hosts*.
+   Addresses can also be hardcoded in a *hosts file* stored on the
+   local computer. With the hosts file you can override any address. You
+   can change google.com to go to a different IP address. On Unix and macOS
+   systems, you can find the file at */etc/hosts*; on Windows, the file is
+   found at *C:\\Windows\\System32\\Drivers\\etc\\hosts*.
 
 It's also possible to find a domain name record with an IP address,
 which is called a *reverse look-up*. If you do a Wireshark packet trace
@@ -922,15 +903,17 @@ When a new computer is connected to a TCP/IP network, *DHCP (Dynamic
 Host Configuration Protocol)* figures out how to set the computer's IP
 address and DNS. Most routers have built-in DHCP servers.
 
-Figure 6-5 shows a screen from my DSL modem. The modem starts giving out
-IP addresses at 192.168.0.2 and goes up to 192.168.0.254. With DNS set
+:numref:`dhcp` shows a screen from my DSL modem. The modem starts giving out
+IP addresses at ``192.168.0.2`` and goes up to ``192.168.0.254``. With DNS set
 to Dynamic, the router will pass along the same DNS servers that the ISP
 sets.
 
-|Graphical user interface, text, application, email Description
-automatically generated|
+.. _dhcp:
+.. figure:: media/dhcp.png
+   :alt: DHCP router settings
+   :width: 100%
 
-DHCP router settings
+   DHCP router settings
 
 When a computer receives an IP address from DHCP, it gets a lease that
 allows the computer to use the address for a certain time period. After
@@ -948,12 +931,15 @@ virtually) sits between a computer and the outside network, or between a
 subnet and the outside network.
 
 An administrator can use a firewall to filter network traffic going into
-or out of a device. Figure 6-6 shows an example of a firewall that I set
+or out of a device. :numref:`firewall` shows an example of a firewall that I set
 up with Amazon Web Services.
 
-|Graphical user interface Description automatically generated|
+.. _firewall:
+.. figure:: media/firewall.png
+   :alt: AWS firewall settings
+   :width: 100%
 
-AWS firewall settings
+   AWS firewall settings
 
 This firewall will allow incoming unencrypted web traffic and encrypted
 web traffic from any source. That is, anyone can access my web server.

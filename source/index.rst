@@ -36,9 +36,10 @@ networking. Create.
    chapter_04/chapter_04
    chapter_05/chapter_05
    chapter_06/chapter_06
+   chapter_07/chapter_07
 
 .. note::
 
-   Originally this book was to be published, but after it kind of got abandoned,
+   Originally this book was to be published, but after was abandoned,
    I decided to put it on-line. There are about 14 chapters, and I'm still in the
    process of putting it on-line.

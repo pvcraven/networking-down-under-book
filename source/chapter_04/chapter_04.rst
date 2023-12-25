@@ -464,7 +464,7 @@ Preamble
 
 An Ethernet frame first transmits a *preamble* to give the receiver a
 chance to synchronize with the transmitter. The preamble is seven bytes
-worth of alternating ones and zeros, or 56 (:math:``) bits. In Chapter
+worth of alternating ones and zeros, or 56 (8 x 7) bits. In Chapter
 3's Manchester Encoding project, you needed to know how long the gap was
 between each up/down transition; the preambles give the receiver time to
 figure that out.
