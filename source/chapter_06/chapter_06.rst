@@ -181,7 +181,6 @@ the IP version, bits 4-7 hold the length of the header. Starting at the
 
    IP Packet Format
 
-
 In more detail, the packet contains:
 
 - *IP Version*:
@@ -469,23 +468,24 @@ Most business and home networks will combine a firewall with *NAT
 computers served by only one IP address. This has permitted the internet
 to continue with v4 addresses long after it should have run out.
 
-For example, the organization in Figure 6-3 has one IP address,
-123.1.21.2, and a router that uses NAT. It creates a private subnet so
-that multiple computers—in this case numbered 192.168.1.100-104—hook up
-to the router with the address 192.168.1.1. The router will translate
-the address so everything looks like it is coming from 123.1.21.2, which
+For example, the organization in :numref:`NAT` has one IP address,
+``123.1.21.2``, and a router that uses NAT. It creates a private subnet so
+that multiple computers—in this case numbered ``192.168.1.100`` to ``104`` hook up
+to the router with the address ``192.168.1.1``. The router will translate
+the address so everything looks like it is coming from ``123.1.21.2``, which
 allows those five computers to share one internet address.
 
-|Table Description automatically generated|
+.. _NAT:
+.. figure:: media/NAT.svg
+   :alt: Network address translation
+   :width: 100%
 
-Network address translation
+   Network address translation
 
 NAT uses a private subnet within one of the following address ranges:
 
 -  ``10.0.0.0`` to ``10.255.255.255``
-
 -  ``172.16.0.0`` to ``172.31.255.255``
-
 -  ``192.168.0.0`` to ``192.168.255.255``
 
 Since these addresses are reserved for private subnets, you don't have
@@ -505,7 +505,7 @@ Chances are, you're behind a NAT right now. You can test it and see:
 
 1. Take two devices on the same network such as your local Wi-Fi.
 2. Launch a web browser on both devices and connect to a service like
-   *www.whatismyip.com*, which displays your assigned IP address. If
+   `www.whatismyip.com <https://www.whatismyip.com>`_, which displays your assigned IP address. If
    both devices show the same IP address, you're using a NAT.
 
 You can also check your local IP address with ipconfig or ifconfig and
@@ -530,29 +530,12 @@ data to the proper program running on a computer. A program on a server
 "listens" for incoming data on certain ports. Ports are numbered 0 to
 65,535. Common ports for popular protocols include:
 
-22
-
-Secure Shell (SSH, for opening a remote console/command line)
-
-25
-
-SMTP (mail)
-
-53
-
-Domain Name System
-
-80
-
-Unencrypted web (http)
-
-443
-
-Encrypted web (https)
-
-636
-
-Encrypted LDAP (Lookup for login information)
+- *22*: Secure Shell (SSH, for opening a remote console/command line)
+- *25*: SMTP (mail)
+- *53*: Domain Name System
+- *80*: Unencrypted web (http)
+- *443*: Encrypted web (https)
+- *636*: Encrypted LDAP (Lookup for login information)
 
 If a program is listening for connections on those ports, it is ready to
 take connections for SSH, serve up web pages, or whatever that port maps
@@ -563,9 +546,9 @@ to the server and listen for return data on a random unoccupied port
 from 49152–65535. This short-lived port used to receive return traffic
 is called an *ephemeral port*. For example, a web browser may connect to
 google.com on port 443 (encrypted web). The IP address and port at
-Google might be: 216.58.192.206:443. Google will connect back to the
+Google might be: ``216.58.192.206:443``. Google will connect back to the
 client computer on an "ephemeral" port, and return packets going to the
-client address might look like 192.168.1.101:51010. Notice how we write
+client address might look like ``192.168.1.101:51010``. Notice how we write
 the IP address with periods, followed by a colon and the port number.
 The IP address gets you to the computer, the port gets you to the
 correct program running on that computer.
@@ -644,13 +627,13 @@ The internet is divided into multiple *autonomous systems (AS)*. Each AS
 is a collection of routers controlled by a single administrative entity.
 As I write this, there are around 100,000 autonomous systems, each with
 their own autonomous system name (ASN). You can download a huge text
-file with all of the ASNs from: *ftp://ftp.arin.net/info/asn.txt*.
+file with all of the ASNs from: `ftp://ftp.arin.net/info/asn.txt <ftp://ftp.arin.net/info/asn.txt>`_.
 
 Each of these ASNs owns one or more blocks of IP addresses. When we
 route traffic to an IP address, we figure out what ASN it is part of,
 then route the traffic to that ASN. Several tools exist to quickly
 figure out who owns block of IP addresses, such as Mx Toolbox
-(*https://mxtoolbox.com/arin.aspx*).
+(`https://mxtoolbox.com/arin.aspx <https://mxtoolbox.com/arin.aspx>`_).
 
 The Exterior Gateway Protocol routes packets between each of these
 autonomous systems; the current version of this protocol is version 4 of
