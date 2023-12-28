@@ -145,6 +145,7 @@ atom on earth can have its own address.
 
 Internet Protocol (IP)
 ----------------------
+
 IP addresses are part of the larger Layer 3 *Internet Protocol (IP)*.
 The IP adds the following data fields for routing a packet to its final
 destination:

@@ -10,28 +10,28 @@ connecting with a world-wide network. The best way to understand the
 magic of the internet is to put some of this theory around the
 networking layer into practice.
 
-In this chapter, you’ll learn to set the IP address, DNS info, and
-hostname on different types of computers. You’ll use example code to
+In this chapter, you'll learn to set the IP address, DNS info, and
+hostname on different types of computers. You'll use example code to
 send and receive data packets between different computers, use Wireshark
 to capture those packets, and then adjust the program to see how a Layer
 3 packet can fragment across multiple Layer 2 Ethernet frames.
 
-You’ll learn to test your network response time and trace the computers
-and routers your packet goes through to reach its destination. You’ll
+You'll learn to test your network response time and trace the computers
+and routers your packet goes through to reach its destination. You'll
 examine the table of MAC to IP addresses your computer keeps, and use
 Wireshark to see the packet addressing. With tools commands already
-built into your computer you’ll examine the details of a DNS records
+built into your computer you'll examine the details of a DNS records
 like google.com and see the address records that allow web mail
-delivery. You’ll also practice reverse DNS lookup to get a computer name
+delivery. You'll also practice reverse DNS lookup to get a computer name
 from an IP address.
 
-Every wonder who your computer is talking to in the background? You’ll
-learn the commands to find that out. You’ll scan a network and identify
+Every wonder who your computer is talking to in the background? You'll
+learn the commands to find that out. You'll scan a network and identify
 the connected computers and which networking services they have running.
 
-Finally, you’ll trace the path your data takes across the internet.
-You’ll learn to look up ASNs to see what companies move your data.
-You’ll create graphs as to visually see how your data travels through
+Finally, you'll trace the path your data takes across the internet.
+You'll learn to look up ASNs to see what companies move your data.
+You'll create graphs as to visually see how your data travels through
 the network and the companies that own each section.
 
 Project: Finding the Layer 3 TCP/IP Information
@@ -102,14 +102,14 @@ NetBIOS over Tcpip. . . . . . . . : Enabled
 
 Getting network information from a Windows computer
 
-The host name is your computer’s name and should be unique for your
+The host name is your computer's name and should be unique for your
 local domain 1. To find this on Linux/macOS, enter **hostname**, as it
-isn’t part of the ifconfig output. The Primary DNS Suffix is your local
+isn't part of the ifconfig output. The Primary DNS Suffix is your local
 domain 2. If your hostname is my_computer and your domain is
 my_domain.example, your local domain is my_computer.my_domain_example.
 Type **hostname -d** on Linux/macOS to find your local domain. If
-nothing appears, it isn’t set. Later in the *Project: Set Hostname*
-section we’ll show you how to set it.
+nothing appears, it isn't set. Later in the *Project: Set Hostname*
+section we'll show you how to set it.
 
 The MAC address, or Physical Address, is your six-byte layer 2 address
 3. The IPv4 address is your four-byte Layer 3 IPv4 address 4, while IPv6
@@ -117,11 +117,11 @@ is your 16-byte address 8. The subnet mask is for IPv4 5.
 
 The DNS servers are those your computer will contact to find the IP
 address for a domain name 9. Lease obtained lets you know when you
-received your IP address from DHCP 6, and lease expired says when you’re
+received your IP address from DHCP 6, and lease expired says when you're
 due to get another IP address from your DHCP server 7.
 
 On Linux and macOS, the equivalent command is ifconfig, as shown in
-Listing 7-2. You’ll need a couple more commands to get all the
+Listing 7-2. You'll need a couple more commands to get all the
 networking information. You can get the host name by typing hostname and
 you can get your DNS servers by typing cat /etc/resolv.conf on Linux and
 scutil --dns on macOS:
@@ -172,8 +172,8 @@ Project: Set the IP Address
 You can set up computer networks to give out IP addresses automatically.
 This is great for wireless networks where devices come and go. However,
 for computers that serve or receive information (for example, web
-servers) you need to set a static, non-changing IP address. You can’t
-connect to a computer if you don’t know the address, and a constantly
+servers) you need to set a static, non-changing IP address. You can't
+connect to a computer if you don't know the address, and a constantly
 changing address makes this difficult. This project great if you are
 setting up your own web server, or even a server on your local home
 network. For example, I have a computer on my home network that controls
@@ -192,7 +192,7 @@ automatically generated|
 Network and sharing center
 
 Under *View Your Active Networks*, click the active connection you want
-to change to open it. Once you open the network connection, you’ll get a
+to change to open it. Once you open the network connection, you'll get a
 dialog box shown on the left of Figure 7-2.
 
 |Graphical user interface, application Description automatically
@@ -211,17 +211,17 @@ DNS server, as shown in Figure 7-3.
 Setting Static IP and DNS
 
 After setting the IP address, confirm that it has changed. You may need
-to reboot the computer for the changes to take effect. After you’ve
-completed this project, don’t forget to go back into your computer
+to reboot the computer for the changes to take effect. After you've
+completed this project, don't forget to go back into your computer
 settings and switch it back to Obtain an IP Address Automatically so
 your computer goes back to normal.
 
 Linux
 
 There are many different types of Linux operating systems, and
-unfortunately, they don’t all set up a static IP address the same way.
-Your operating system’s official documentation will describe how to set
-the IP. If you’re using a Raspberry Pi, to set the IP address manually,
+unfortunately, they don't all set up a static IP address the same way.
+Your operating system's official documentation will describe how to set
+the IP. If you're using a Raspberry Pi, to set the IP address manually,
 edit the */etc/dhcpcd.conf* file from the command line with the nano
 text editor and enter **sudo nano /etc/dhcpcd.conf**. You need to edit
 only four lines. The rest of the file is mostly commented out lines to
@@ -281,27 +281,27 @@ automatically setting itself up.
 Project: Set Hostname
 =====================
 Your hostname is the friendly text-name of your computer. This name is
-associated with the computer’s IP address. Rather than memorizing your
+associated with the computer's IP address. Rather than memorizing your
 IP address, you can instead use the hostname and the computer will look
 up the IP address for you. Each computer on your network should have a
 different hostname. Enter **hostname** on the command prompt to find
-your computer’s hostname. You might want to change your hostname. For
-example, my home computer is named DESKTOP-SE6D5FB. This isn’t easy to
+your computer's hostname. You might want to change your hostname. For
+example, my home computer is named DESKTOP-SE6D5FB. This isn't easy to
 remember. I might instead want to call it DESKTOP-PAUL.
 
 Windows
 
 To change your hostname on Windows, open the Windows Control Panel.
 Select **System and Security**, then select **System**. If you are using
-Windows 11, they’ve made it easy to find. The option to change the
-computer’s name is via a button at the top titled **Rename this PC**. If
-you are using Windows 10 you’ll see details about the computer, and
-you’ll want to look for the section titled *Computer name, domain, and
+Windows 11, they've made it easy to find. The option to change the
+computer's name is via a button at the top titled **Rename this PC**. If
+you are using Windows 10 you'll see details about the computer, and
+you'll want to look for the section titled *Computer name, domain, and
 workgroup settings*. Under that will be as **Change Settings** button.
 After clicking that a new dialog will pop up and you can click
 **Change** at the bottom of it
 
-You can then set the computer name. If you don’t have admin privileges
+You can then set the computer name. If you don't have admin privileges
 on the computer (for example, if it is part of a school or work
 network), the network administrator may have the computer set up to
 prevent changing the name.
@@ -312,7 +312,7 @@ On Linux-based systems, the hostname is contained in two files:
 */etc/hostname* and */etc/hosts*. The first file sets the hostname,
 while the second maps the IP 127.0.0.1 back to your hostname. Like
 before, you can edit from the command line using nano, with **sudo nano
-/etc/hostname**. Once updated, the change doesn’t take effect until you
+/etc/hostname**. Once updated, the change doesn't take effect until you
 reboot the computer.
 
 In addition to editing the host files manually, most Linux distributions
@@ -348,9 +348,9 @@ Project: Send and Receive Datagrams
 ===================================
 The real purpose of a network is to send and receive data. How do you
 send data at Layer 3 so that it can pass across the internet? In this
-section, you’ll learn to send and receive TCP/IP *datagrams*—a basic
+section, you'll learn to send and receive TCP/IP *datagrams*—a basic
 type of Layer 3 packet for transferring data on a network. While most
-packets include additional information for Layer 4 functionality you’ll
+packets include additional information for Layer 4 functionality you'll
 cover in Chapters 8 and 9, the datagram is simpler and a easier to get
 started with. However, unlike a Layer 2 data frame from Chapters 4 and
 5, a datagram lets a person send data across the full internet, rather
@@ -391,13 +391,13 @@ Sending a datagram in Python
 You first import a Python library called socket for working with the
 network. Next, you specify the address and the port that your datagram
 is going to travel to. Pay close attention to the destination address
-and destination port. You’ll need to change the destination address from
+and destination port. You'll need to change the destination address from
 127.0.0.1, unless you are receiving and transmitting on the same
 computer. For the port, I randomly picked 10,000. The port number that
 you send to should be the same as the port number you receive from.
 
 Next, you need a message to send, and that data must be in an array of
-bytes. You’ll use a byte array to get a string of text that is limited
+bytes. You'll use a byte array to get a string of text that is limited
 to one byte per character (see Chapter 3) by putting a b before the
 quote that starts a string.
 
@@ -406,15 +406,15 @@ essentially a virtual plug where you will connect your data stream. The
 AF_NET means the code is using IP, and the SOCK_DGRAM means it will send
 using User Datagram Protocol (UDP). These are names that come from the
 early days of the internet before networking settled on using TCP/IP, so
-they may seem oddly named now. You’ll always use AF_NET, and in Chapter
-9 we’ll show how stream packets instead of using datagrams. The next
+they may seem oddly named now. You'll always use AF_NET, and in Chapter
+9 we'll show how stream packets instead of using datagrams. The next
 line of code sets up a variable to hold both the desired destination and
 port 1.
 
 Everything we have done so far is just setup. In the case of simple
 datagrams, no network data has been sent even when the connect command
-is done executing. Datagrams don’t build a connection and all the
-connect command does is tell the computer what address and port we’ll be
+is done executing. Datagrams don't build a connection and all the
+connect command does is tell the computer what address and port we'll be
 sending the data to.
 
 Finally, we send data with the send command, which causes the datagram
@@ -431,29 +431,29 @@ Receive Datagram
 
 The whole point of computer networking is to send and receive data
 between devices. We can send sensor data, video shorts, status updates,
-thumbs up, and more. But sending data isn’t very useful without being
+thumbs up, and more. But sending data isn't very useful without being
 able to receive it. How you write code that will grab the data we sent
 from the previous section? Code to receive data can be structured one of
 the following ways:
 
 Blocking
 
-Use a command to receive data. The program pauses and won’t continue
+Use a command to receive data. The program pauses and won't continue
 until data is received. While this is the easiest to code, the program
-can’t do anything as it waits for the data, causing it to hang if it
+can't do anything as it waits for the data, causing it to hang if it
 fails to receive anything.
 
 Non-blocking
 
 Use a command to receive data. Unlike blocking, if no data is available
-the command doesn’t wait. It returns immediately.
+the command doesn't wait. It returns immediately.
 
 Time-out
 
-Wait for a certain number of milliseconds for data. If there’s no data
+Wait for a certain number of milliseconds for data. If there's no data
 after a specified number of milliseconds, then time out and keep
 running. For example, the code could wait for a couple seconds for data,
-then give up if it doesn’t receive anything. This keeps the program from
+then give up if it doesn't receive anything. This keeps the program from
 hanging.
 
 Callback
@@ -461,8 +461,8 @@ Callback
 Register a function that we write which will get called when we receive
 data. This is particularly popular in JavaScript.
 
-Let’s cover the first two methods, as they are the most fundamental to
-understanding how the networking is happening. Using time outs isn’t
+Let's cover the first two methods, as they are the most fundamental to
+understanding how the networking is happening. Using time outs isn't
 very popular, but callbacks are very popular in web programming.
 Callbacks are created using non-blocking calls as a building block.
 
@@ -470,7 +470,7 @@ Blocking
 
 Blocking networking commands are the easiest to understand and get
 started coding with. Listing 7-5 shows receiving a datagram with
-blocking. To end the program, you’ll need to press CTRL-C or otherwise
+blocking. To end the program, you'll need to press CTRL-C or otherwise
 force it to terminate.
 
 datagram_receive_blocking.py
@@ -500,10 +500,10 @@ Receiving a datagram with blocking
 Like Listing 7-4, you enter an address and port 1. This should be the
 address of the computer that the code is running on. If you are running
 the sending and receiving on the same computer, you can use 127.0.0.1;
-otherwise, you’ll need to change it. The same address of the receiving
+otherwise, you'll need to change it. The same address of the receiving
 computer should be used for both the sending and receiving code. Do not
-put the sending computer’s address here. Both the sending and the
-receiving program will have the receiving program’s address.
+put the sending computer's address here. Both the sending and the
+receiving program will have the receiving program's address.
 
 Next, the code sets up a buffer size 2. This will be the largest number
 of bytes that we can receive at once. Since a TCP/IP packet is limited
@@ -522,7 +522,7 @@ program to process anything else or react to user input.
 to execute code simultaneously, a common question at his point is if a
 program could run blocking networking code in a different thread. The
 problem is that even threads are supposed to be shut down nicely when
-your program ends. You can’t shut down a thread if it is blocked waiting
+your program ends. You can't shut down a thread if it is blocked waiting
 for input, so we still will need to learn about non-blocking network
 calls.
 
@@ -569,8 +569,8 @@ In this listing, we set the socket to non-blocking 1. Then, when we try
 to receive data 2. If there is no data, the code will throw a
 BlockingIOError exception. We can catch that exception 3 and continue
 processing. In a more advanced application, we might have code run our
-user interface. In this example, we just pause using Python’s sleep
-command. Don’t set up a loop to continually check for input with no
+user interface. In this example, we just pause using Python's sleep
+command. Don't set up a loop to continually check for input with no
 pause, or the computer will use a lot of unnecessary CPU checking the
 network for data thousands of times per second.
 
@@ -584,7 +584,7 @@ Wireshark.
 
 Selecting the UDP
 
-The protocol is listed as UDP. Let’s deconstruct the IP and UDP parts of
+The protocol is listed as UDP. Let's deconstruct the IP and UDP parts of
 the packet. Being able to “lift the hood” and inspect packets, plus see
 how your program makes the packets is important. It is just as important
 as being able to inspect and upgrade the engine of your car if you want
@@ -610,7 +610,7 @@ length of the header, not the entire message.
 Next are fields for prioritizing traffic. Differentiated services allow
 some packets to take priority over others. For example, video might be
 prioritized over web requests, so video can keep streaming without
-skips. They aren’t used in this case, so they are all left at zero
+skips. They aren't used in this case, so they are all left at zero
 (Figure 7-7).
 
 |image4|
@@ -629,7 +629,7 @@ Total Length
 
 Next is a packet ID field, shown in Figure 7-9, which is used if a
 packet is fragmented so it can be reassembled based on the ID. It
-doesn’t have much use otherwise. While TCP/IP packets can be large, we
+doesn't have much use otherwise. While TCP/IP packets can be large, we
 often try to keep them small so that fragmentation does not occur.
 Because the TCP protocol can split data up into small parts, there is no
 need to do it again at Layer 2. Doing it twice is inefficient and slow.
@@ -639,7 +639,7 @@ Therefore we try to keep packets small enough it only happens once.
 
 Identification Field
 
-In Figure 7-10, the Flags field is set to *Don’t Fragment*, which tells
+In Figure 7-10, the Flags field is set to *Don't Fragment*, which tells
 the network not to fragment this datagram into parts. Therefore, if this
 datagram has more data than one Layer 2 data frame can hold, the
 datagram will be dropped and not routed (rather than be broken into
@@ -666,13 +666,13 @@ Protocol
 
 The header checksum (Figure 7-13) is an additional two bytes of data
 used by the networking layer to ensure the header is valid and the data
-hasn’t been corrupted.
+hasn't been corrupted.
 
 |image10|
 
 Header Checksum
 
-By default, Wireshark doesn’t validate that the checksum is correct;
+By default, Wireshark doesn't validate that the checksum is correct;
 this can be changed in the Wireshark preferences window, under
 *Protocols* and *IPv4*. Corrupted packets will be dropped by the
 networking layer.
@@ -694,7 +694,7 @@ destination across the entire internet.
 
 User Datagram Protocol
 
-Now that we’re done with the IP part of the packet, we can move on to
+Now that we're done with the IP part of the packet, we can move on to
 the UDP part.
 
 The first field in the UDP is the networking port that sent the data
@@ -706,7 +706,7 @@ Source Port
 
 This is an ephemeral, randomly opened port somewhere between
 1025-65,535. Return traffic goes here for connection-based protocols. In
-this case, UDP is connectionless so it doesn’t expect return traffic.
+this case, UDP is connectionless so it doesn't expect return traffic.
 However for consistency with other protocols it is still filled in.
 
 Next is the destination port number (Figure 7-17), which was selected in
@@ -728,7 +728,7 @@ frame header or IP packet header.
 
 UDP Length
 
-To ensure the data isn’t corrupted, you’ll use a checksum. Two bytes are
+To ensure the data isn't corrupted, you'll use a checksum. Two bytes are
 dedicated to that, as shown in Figure 7-19.
 
 |image16|
@@ -747,7 +747,7 @@ Wireshark. This is why encrypting sensitive data is important.
 Project: Use Basic Networking Tools to Gather Information
 =========================================================
 Networking tools can help you understand how your network is put
-together and debug why things aren’t working right. Common tools include
+together and debug why things aren't working right. Common tools include
 ping, getmac, arp, nslookup, and whois.
 
 ping
@@ -770,7 +770,7 @@ On Linux and macOS, the command uses -c instead of -n:
 
 ping -c 10 google.com
 
-You’ll get a response like this:
+You'll get a response like this:
 
 Pinging google.com [172.217.4.78] with 32 bytes of data:
 
@@ -804,12 +804,12 @@ Minimum = 16ms, Maximum = 17ms, Average = 16ms
 
 From this I can tell which IP address I am connecting to, that all my
 data arrived and was sent back successfully, and it took about 16ms for
-that to happen. If I can’t connect to another computer, the ping command
+that to happen. If I can't connect to another computer, the ping command
 is the first thing I try.
 
 Keep in mind that if congestion occurs, the ICMP packets like those ping
 sends are the first to get dropped. Some computers are set up to
-automatically drop ping requests, so dropped ping packets don’t always
+automatically drop ping requests, so dropped ping packets don't always
 mean a connection is down.
 
 getmac
@@ -820,7 +820,7 @@ than ipconfig provides.
 
 arp
 
-You can use arp to view your computer’s table of IP to MAC addresses. On
+You can use arp to view your computer's table of IP to MAC addresses. On
 macOS and Linux, type **arp** at the command prompt. On Windows, use
 **arp -a** at the command prompt. You can even add and remove entries
 manually, if you feel the need to do so.
@@ -829,7 +829,7 @@ nslookup
 
 If you have a DNS address and want its associated IP address, use the
 nslookup command on a command prompt. If you are on a Linux machine that
-doesn’t recognize nslookup as a command, you may need to install a
+doesn't recognize nslookup as a command, you may need to install a
 package that has it. For Raspberry Pi, type **sudo apt-get install
 dnsutils**.
 
@@ -837,8 +837,8 @@ An example of using the command is as follows:
 
 nslookup *arcade.academy.*
 
-Notice the trailing period. If you don’t put this period on the address,
-nslookup will first append your local domain. In my case, I’ve got a
+Notice the trailing period. If you don't put this period on the address,
+nslookup will first append your local domain. In my case, I've got a
 local domain of *home*, so doing an nslookup without the trailing period
 will first query arcade.academy.home. When that fails, it will fall back
 and look up arcade.academy. The output from this command might look
@@ -864,12 +864,12 @@ The first item, Server, refers to the server that looked up the IP
 addresses, which is the local DNS server (*not* the IP address of the
 local DNS server). Non-authoritative answer means that the local DNS
 server is not the nameserver that is the authority for arcade.academy.
-It’s passing us the information second-hand because it needed to go and
+It's passing us the information second-hand because it needed to go and
 look up the info. Finally, the IP address for the domain is listed.
 
 In the case above, four IP addresses are listed; the computer could
 connect to any of them. A one-to-one mapping of domains to IP addresses
-doesn’t always happen. If my web browser can’t connect with the first
+doesn't always happen. If my web browser can't connect with the first
 address, it can try connecting with the next address on the list. The
 administrator of a DNS record can set it up for round-robin where the
 server will give out one IP, then the next, and continue until it wraps
@@ -904,12 +904,12 @@ Name: *server-52-85-117-97.ind6.r.cloudfront.net*
 
 Address: *52.85.117.97*
 
-In this example, notice that it didn’t send back arcade.academy, which
+In this example, notice that it didn't send back arcade.academy, which
 is the name used to look up that IP address! There can be multiple
 domains associated with a single IP address, just as there can be
 multiple IP addresses per domain. We just get back the first one
-nslookup found. Reverse look up is a bit flaky, so don’t be too
-concerned if you don’t get anything back. Just try a different IP.
+nslookup found. Reverse look up is a bit flaky, so don't be too
+concerned if you don't get anything back. Just try a different IP.
 
 whois
 
@@ -1004,7 +1004,7 @@ waiting to be closed 1. My computer is using a network drive 2. I have
 Steam running in the background, and connected to their servers 3.
 Microsoft Outlook is keeping an eye on incoming email 4.
 
-The Mac implementation of netstat isn’t that great, but macOS has a
+The Mac implementation of netstat isn't that great, but macOS has a
 command called lsof to list open files. Network connections are treated
 like files, so you can show open network connections with lsof -i.
 
@@ -1013,22 +1013,22 @@ Tutorial: Scan a Network with Nmap
 Nmap scans computers for open ports, which is very useful in securing an
 individual computer and even auditing an entire network.
 
-You can install nmap on most Linux computers by typing: **sudo apt-get
-install nmap zenmap**. Download and install it for Windows and macOS
-from *https://nmap.org/download.html*.
+You can install nmap on most Linux computers by typing:
+``sudo apt-get install nmap zenmap``. Download and install it for Windows and macOS
+from `https://nmap.org/download.html <https://nmap.org/download.html>`_.
 
 You can scan a single computer by using the nmap command and the
-computer’s IP address. For example, if you have a computer with the IP
-address of 192.168.1.1 you can scan it with **nmap 192.168.1.1**.
+computer's IP address. For example, if you have a computer with the IP
+address of ``192.168.1.1`` you can scan it with ``nmap 192.168.1.1``.
 
 Nmap has a lot of options for scanning, such as a fast scan to determine
 what computers or devices are attached and a slow scan that checks every
 single networking port on a computer. It can also look at the responses
-to try to figure out the computer’s operating system.
+to try to figure out the computer's operating system.
 
 You can scan a range of addresses with the CIDR form to identify what
-computers are connected to a network. The nmap 192.168.1.0/24 command
-does a scan of 192.168.1.0 to 192.168.1.255.
+computers are connected to a network. The ``nmap 192.168.1.0/24`` command
+does a scan of ``192.168.1.0`` to ``192.168.1.255``.
 
 The output lists any open port, and the service that may be running on
 that port:
@@ -1058,9 +1058,9 @@ PORT STATE SERVICE
 The example above shows that the computer 192.168.1.1 (my gateway) is up
 and is receiving data on *open ports* 80, 443, and 5431. If Nmap tries
 connecting to a port, and the computer responds back that a connection
-isn’t possible, the port is considered *closed*. Closed ports aren’t
-listed. Ports 21, 22, and 23 are filtered, meaning we aren’t getting any
-response. It’s possible filtered ports are open, but a firewall is
+isn't possible, the port is considered *closed*. Closed ports aren't
+listed. Ports 21, 22, and 23 are filtered, meaning we aren't getting any
+response. It's possible filtered ports are open, but a firewall is
 dropping the connection requests before they get there.
 
 Certain ports are tied to certain services. Nmap lists the common
@@ -1078,7 +1078,7 @@ is up. The command below will scan all computers from 192.168.1.1 to
 
 nmap -sn 192.168.1.0/24
 
-The -sV command won’t just see what ports are open, but will also try to
+The -sV command won't just see what ports are open, but will also try to
 guess what software and what version that software is running. This can
 take a while even for just one machine! Scanning a whole network this
 way would be a test of patience.
@@ -1086,7 +1086,7 @@ way would be a test of patience.
 nmap -sV -O 10.10.20.45
 
 Nmap also has a GUI called Zenmap. Sometimes a command line works best,
-and sometimes it’s more convenient to run Nmap from a point-and-click
+and sometimes it's more convenient to run Nmap from a point-and-click
 GUI. The command line option is great when you want to quickly run an
 exact scan because all the parameters are listed as part of the command;
 if you want to include it as part of a script; or if you want to use the
@@ -1128,15 +1128,18 @@ If you want to learn more about how regular expressions work, the best
 way is through an interactive tutorial. I highly recommend RegexOne:
 *https://regexone.com/*.
 
-Proejct: Lookup ASNs
+Project: Lookup ASNs
+====================
 
 As discussed in Chapter 6, the internet routes traffic between large
 networks, each of which has an Autonomous System Number (ASN). You can
 look up an ASN by first finding your public IP address. This likely
-isn’t your machine IP address. You can go to the following page to get
+isn't your machine IP address. You can go to the following page to get
 your public IP address: *https://www.whatismyip.com/*.
 
-Visit *https://mxtoolbox.com/SuperTool.aspx* to use MXToolbox; plug in
+Visit
+`https://mxtoolbox.com/SuperTool.aspx <https://mxtoolbox.com/SuperTool.aspx>`_
+to use MXToolbox; plug in
 your IP address and select ASN Lookup.
 
 Next, find the ASNs of several other websites you are interested in. To
@@ -1151,6 +1154,7 @@ doing a traceroute.
 
 Project: Trace Data Across the Internet
 =======================================
+
 To trace the route your data takes over the network, use the
 *traceroute* command. On macOS and Linux, this command is traceroute; on
 Windows, tracert. By understanding the hops from one computer to
@@ -1160,20 +1164,22 @@ and the structure of how the internet is put together.
 
 Traceroute constructs a packet with a short TTL value, starting with
 one. The packet goes one hop, then expires. That node sends a negative
-acknowledgement (NACK) packet back saying that your packet didn’t make
+acknowledgement (NACK) packet back saying that your packet didn't make
 it. You can identify the computer that made the NACK and assume it is
 one hop out. Then you repeat the process with a TTL of two.
 
-The process isn’t perfect. Some nodes will destroy a packet when the TTL
+The process isn't perfect. Some nodes will destroy a packet when the TTL
 times out, but not send a NACK back. These nodes will show up as an \*
 on the traceroute. You know the nodes are there because the packet went
-away, but you don’t know what node did it.
+away, but you don't know what node did it.
 
-**NOTE** At the school where I work, we have a router that will take TCP
-packets and rewrite the TTL so it looks like all packets magically reach
-their destination at four hops. Oddly enough, it doesn’t rewrite the TTL
-of ICMP packets. With this in mind, it can be a good idea to try a
-traceroute with both TCP and ICMP packets.
+.. note::
+
+    At the school where I work, we have a router that will take TCP
+    packets and rewrite the TTL so it looks like all packets magically reach
+    their destination at four hops. Oddly enough, it doesn't rewrite the TTL
+    of ICMP packets. With this in mind, it can be a good idea to try a
+    traceroute with both TCP and ICMP packets.
 
 To use traceroute on Windows, type tracert followed by the IP address or
 DNS name of the computer you want to trace to. Listing 7-8 shows an
@@ -1213,27 +1219,27 @@ Trace complete.
 
 Output of the netstat command on Windows
 
-The trace shows that my packet first goes to my router at 192.168.1.1 1
-and then hops to 100.66.16.1 2. Next you can see each hop as it heads to
-its final destination, simpson.edu, at 23.185.0.3 3. The computer runs
+The trace shows that my packet first goes to my router at ``192.168.1.1`` 1
+and then hops to ``100.66.16.1`` 2. Next you can see each hop as it heads to
+its final destination, simpson.edu, at ``23.185.0.3`` 3. The computer runs
 the route three times, and shows how long it takes to get to that hop in
 three different columns. If the computer can, it does a reverse DNS
 lookup on each address, which helps you get an idea of what that node
-is. In Listing 7-8, the address 199.66.12.132 is the same as the DNS
-address *b224.cr1.ind.imufiber.net*.
+is. In Listing 7-8, the address ``199.66.12.132`` is the same as the DNS
+address ``b224.cr1.ind.imufiber.net``.
 
 On Linux or macOS, traceroute can be done with traceroute followed by
 the IP or DNS address. By default, traceroute runs differently on
 Windows vs. Linux systems, as Windows uses ICMP packets and Linux uses
-UDP packets. If running a traceroute isn’t working well with one type of
+UDP packets. If running a traceroute isn't working well with one type of
 packet, try the other type. You can run a packet trace with ICMP instead
-by using -I, which also requires admin privileges. The command looks
+by using ``-I``, which also requires admin privileges. The command looks
 like so:
 
 **sudo traceroute -I google.com**
 
 With the Linux version of traceroute, adding the -A parameter will look
-up the ASN of each hop. Note there’s no valid ASN for a private subnet
+up the ASN of each hop. Note there's no valid ASN for a private subnet
 that sits behind a NAT. Listing 7-9 shows the output from a Linux
 traceroute that includes the ASN lookup:
 
@@ -1275,12 +1281,13 @@ traceroute to simpson.edu (23.185.0.3), 30 hops max, 60 byte packets
 Output of the netstat command
 
 The first ASN shown is part of our local subnet, because it starts with
-192.168.x.x 1. This isn’t a valid ASN, so we can ignore the result. The
-computer wasn’t able to look up the next ASN 2, but the following ASN 3
+192.168.x.x 1. This isn't a valid ASN, so we can ignore the result. The
+computer wasn't able to look up the next ASN 2, but the following ASN 3
 is AS30169.
 
-Hurricane Electric Internet Services’s tool for looking up information
-on ASNs (at *https://bgp.he.net/*) can be used to see what other ASNs
+Hurricane Electric Internet Services's tool for looking up information
+on ASNs (at `https://bgp.he.net/ <https://bgp.he.net/>`_)
+can be used to see what other ASNs
 are connected to the ASN you search for. It even shows graphs on how
 many other ASNs were hooked up to it in the past so you can see if that
 number has gotten larger or smaller over time. If this number is going
@@ -1330,7 +1337,7 @@ Wikipedia travels to your computer
 Update the program to contain a list of websites you want to trace to.
 If you list more than one, you can see what paths they have in common
 and where the traffic splits off. The traceroute command runs the
-traceroute; if it doesn’t work well, try to use ICMP packets instead.
+traceroute; if it doesn't work well, try to use ICMP packets instead.
 Now that we have a traceroute, we can graph it with the res.graph
 command. Graphs can be in vector-graphics format (SVG), or can be saved
 as a raster-graphic image like PNG.
@@ -1347,75 +1354,11 @@ The nodes beginning with 199.66 all belong to AS30169. Once the traffic
 hits 24.149.31.16 it finally splits into different locations.
 
 What You Learned
-
-In this chapter, we’ve learned to write programs to send and receive
+================
+In this chapter, we've learned to write programs to send and receive
 packets over TCP/IP, and to capture, decode, and understand packets
 using Wireshark. You learned to use commands like ipconfig, netstat, and
 nmap to inspect open and in-use networking ports not only on your
 computer, but your entire network. Using traceroutes, we can see every
 hop our data takes as it travels across the internet, and even look up
 who owns and manages those hops.
-
-.. |Graphical user interface, text, application, email Description automatically generated| image:: media/image2.png
-   :width: 5.36827in
-   :height: 2.59847in
-.. |Graphical user interface, application Description automatically generated| image:: media/image4.png
-   :width: 5.17365in
-   :height: 3.47108in
-.. |image1| image:: media/image5.png
-   :width: 2.59259in
-   :height: 2.95183in
-.. |Graphical user interface, text, application Description automatically generated| image:: media/image8.png
-   :width: 2.32436in
-   :height: 2.31472in
-.. |image2| image:: media/image9.png
-   :width: 6.91944in
-   :height: 0.71736in
-.. |image3| image:: media/image10.png
-   :width: 5.1039in
-   :height: 2.25434in
-.. |image4| image:: media/image11.png
-   :width: 4.25988in
-   :height: 2.14557in
-.. |image5| image:: media/image12.png
-   :width: 4.06199in
-   :height: 2.31221in
-.. |image6| image:: media/image13.png
-   :width: 5.72845in
-   :height: 2.35387in
-.. |image7| image:: media/image14.png
-   :width: 4.18698in
-   :height: 1.49981in
-.. |image8| image:: media/image15.png
-   :width: 4.05158in
-   :height: 1.46857in
-.. |image9| image:: media/image16.png
-   :width: 4.12448in
-   :height: 1.59355in
-.. |image10| image:: media/image17.png
-   :width: 3.42913in
-   :height: 2.05059in
-.. |image11| image:: media/image18.png
-   :width: 3.4134in
-   :height: 1.3724in
-.. |image12| image:: media/image19.png
-   :width: 4.09324in
-   :height: 1.60397in
-.. |image13| image:: media/image20.png
-   :width: 4.50985in
-   :height: 2.32263in
-.. |image14| image:: media/image21.png
-   :width: 4.47861in
-   :height: 2.31221in
-.. |image15| image:: media/image22.png
-   :width: 4.15573in
-   :height: 2.38512in
-.. |image16| image:: media/image23.png
-   :width: 4.15573in
-   :height: 2.32263in
-.. |image17| image:: media/image24.png
-   :width: 5.64513in
-   :height: 1.6977in
-.. |image18| image:: media/image25.png
-   :width: 4.42985in
-   :height: 5.64935in
