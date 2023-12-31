@@ -43,80 +43,58 @@ To create a network connection between computers, you need to know their
 IP addresses. The method you use depends on the operating system a
 computer is running.
 
-On Windows, enter **ipconfig** on the command line. If you want even
-more information, you can type ipconfig /all, as shown in Listing 7-1:
+On Windows, enter ``ipconfig`` on the command line. If you want even
+more information, you can type ``ipconfig /all``, as shown in :numref:`ip_config`:
 
-C:\\>\ **ipconfig /all**
+.. _ip_config:
+.. code-block:: text
+    :linenos:
+    :caption: Getting network information from a Windows computer
 
-Windows IP Configuration
+    C:\>ipconfig /all
 
-1 Host Name . . . . . . . . . . . . : MYCOMPUTER
+    Windows IP Configuration
 
-2 Primary Dns Suffix . . . . . . . : local.example
+       Host Name . . . . . . . . . . . . : MYCOMPUTER
+       Primary Dns Suffix  . . . . . . . : local.example
+       Node Type . . . . . . . . . . . . : Hybrid
+       IP Routing Enabled. . . . . . . . : No
+       WINS Proxy Enabled. . . . . . . . : No
+       DNS Suffix Search List. . . . . . : local.example
 
-Node Type . . . . . . . . . . . . : Hybrid
+    Ethernet adapter Ethernet:
 
-IP Routing Enabled. . . . . . . . : No
-
-WINS Proxy Enabled. . . . . . . . : No
-
-DNS Suffix Search List. . . . . . : local.example
-
-Ethernet adapter Ethernet:
-
-Connection-specific DNS Suffix . : sc.loc
-
-Description . . . . . . . . . . . : Intel(R) Ethernet Connection (7)
-I219-V
-
-3 Physical Address. . . . . . . . . : 00-D8-61-33-8C-B9
-
-DHCP Enabled. . . . . . . . . . . : Yes
-
-Autoconfiguration Enabled . . . . : Yes
-
-Link-local IPv6 Address . . . . . :
-fe80::d177:2318:812e:9bb2%13(Preferred)
-
-4 IPv4 Address. . . . . . . . . . . : 10.10.20.40(Preferred)
-
-5 Subnet Mask . . . . . . . . . . . : 255.255.254.0
-
-6 Lease Obtained. . . . . . . . . . : Monday, September 30, 2021 8:20:14
-AM
-
-7 Lease Expires . . . . . . . . . . : Tuesday, August 1, 2023 8:16:58 AM
-
-Default Gateway . . . . . . . . . : 10.10.21.254
-
-DHCP Server . . . . . . . . . . . : 172.16.99.2
-
-DHCPv6 IAID . . . . . . . . . . . : 335599713
-
-8 DHCPv6 Client DUID. . . . . . . . :
-00-01-00-01-24-A3-AD-FE-00-D8-61-33-8C-B9
-
-9 DNS Servers . . . . . . . . . . . : 198.206.243.21
-
-198.206.243.31
-
-NetBIOS over Tcpip. . . . . . . . : Enabled
-
-Getting network information from a Windows computer
+       Connection-specific DNS Suffix  . : sc.loc
+       Description . . . . . . . . . . . : Intel(R) Ethernet Connection (7) I219-V
+       Physical Address. . . . . . . . . : 00-D8-61-33-8C-B9
+       DHCP Enabled. . . . . . . . . . . : Yes
+       Autoconfiguration Enabled . . . . : Yes
+       Link-local IPv6 Address . . . . . : fe80::d177:2318:812e:9bb2%13(Preferred)
+       IPv4 Address. . . . . . . . . . . : 10.10.20.40(Preferred)
+       Subnet Mask . . . . . . . . . . . : 255.255.254.0
+       Lease Obtained. . . . . . . . . . : Monday, September 30, 201921 8:20:14 AM
+       Lease Expires . . . . . . . . . . : SaturdayTuesday, October August 12, 201923 8:16:58 AM
+       Default Gateway . . . . . . . . . : 10.10.21.254
+       DHCP Server . . . . . . . . . . . : 172.16.99.2
+       DHCPv6 IAID . . . . . . . . . . . : 335599713
+       DHCPv6 Client DUID. . . . . . . . : 00-01-00-01-24-A3-AD-FE-00-D8-61-33-8C-B9
+       DNS Servers . . . . . . . . . . . : 198.206.243.21
+                                           198.206.243.31
+       NetBIOS over Tcpip. . . . . . . . : Enabled
 
 The host name is your computer's name and should be unique for your
-local domain 1. To find this on Linux/macOS, enter **hostname**, as it
-isn't part of the ifconfig output. The Primary DNS Suffix is your local
-domain 2. If your hostname is my_computer and your domain is
-my_domain.example, your local domain is my_computer.my_domain_example.
-Type **hostname -d** on Linux/macOS to find your local domain. If
-nothing appears, it isn't set. Later in the *Project: Set Hostname*
+local domain (line 5). To find this on Linux/macOS, enter ``hostname``, as it
+isn't part of the ``ifconfig`` output. The Primary DNS Suffix is your local
+domain (line 6). If your hostname is my_computer and your domain is
+``my_domain.example``, your local domain is my_computer.my_domain_example.
+Type ``hostname -d`` on Linux/macOS to find your local domain. If
+nothing appears, it isn't set. Later in the :ref:`project_set_hostname`
 section we'll show you how to set it.
 
 The MAC address, or Physical Address, is your six-byte layer 2 address
 (line 16). The IPv4 address is your four-byte Layer 3 IPv4 address (line 20),
 while IPv6
-is your 16-byte address (line 27)). The subnet mask is for IPv4 (line 21).
+is your 16-byte address (line 27). The subnet mask is for IPv4 (line 21).
 
 The DNS servers are those your computer will contact to find the IP
 address for a domain name (line 28). Lease obtained lets you know when you
@@ -385,7 +363,7 @@ network. Next, you specify the address and the port that your datagram
 is going to travel to. Pay close attention to the destination address
 and destination port. You'll need to change the destination address from
 ``127.0.0.1``, unless you are receiving and transmitting on the same
-computer. For the port, I randomly picked 10,000. The port number that
+computer. For the port, I arbitrarily picked 10,000. The port number that
 you send to should be the same as the port number you receive from.
 
 Next, you need a message to send, and that data must be in an array of
@@ -401,7 +379,7 @@ early days of the internet before networking settled on using TCP/IP, so
 they may seem oddly named now. You'll always use ``AF_NET``, and in Chapter
 9 we'll show how stream packets instead of using datagrams. The next
 line of code sets up a variable to hold both the desired destination and
-port 1.
+port (lines 5 and 8).
 
 Everything we have done so far is just setup. In the case of simple
 datagrams, no network data has been sent even when the connect command
@@ -778,35 +756,24 @@ On Linux and macOS, the command uses -c instead of -n:
 
 You'll get a response like this:
 
-Pinging google.com [172.217.4.78] with 32 bytes of data:
+.. code-block:: text
 
-Reply from 172.217.4.78: bytes=32 time=17ms TTL=118
+    Pinging google.com [172.217.4.78] with 32 bytes of data:
+    Reply from 172.217.4.78: bytes=32 time=17ms TTL=118
+    Reply from 172.217.4.78: bytes=32 time=16ms TTL=118
+    Reply from 172.217.4.78: bytes=32 time=16ms TTL=118
+    Reply from 172.217.4.78: bytes=32 time=16ms TTL=118
+    Reply from 172.217.4.78: bytes=32 time=16ms TTL=118
+    Reply from 172.217.4.78: bytes=32 time=16ms TTL=118
+    Reply from 172.217.4.78: bytes=32 time=16ms TTL=118
+    Reply from 172.217.4.78: bytes=32 time=16ms TTL=118
+    Reply from 172.217.4.78: bytes=32 time=16ms TTL=118
+    Reply from 172.217.4.78: bytes=32 time=16ms TTL=118
 
-Reply from 172.217.4.78: bytes=32 time=16ms TTL=118
-
-Reply from 172.217.4.78: bytes=32 time=16ms TTL=118
-
-Reply from 172.217.4.78: bytes=32 time=16ms TTL=118
-
-Reply from 172.217.4.78: bytes=32 time=16ms TTL=118
-
-Reply from 172.217.4.78: bytes=32 time=16ms TTL=118
-
-Reply from 172.217.4.78: bytes=32 time=16ms TTL=118
-
-Reply from 172.217.4.78: bytes=32 time=16ms TTL=118
-
-Reply from 172.217.4.78: bytes=32 time=16ms TTL=118
-
-Reply from 172.217.4.78: bytes=32 time=16ms TTL=118
-
-Ping statistics for 172.217.4.78:
-
-Packets: Sent = 10, Received = 10, Lost = 0 (0% loss),
-
-Approximate round trip times in milli-seconds:
-
-Minimum = 16ms, Maximum = 17ms, Average = 16ms
+    Ping statistics for 172.217.4.78:
+        Packets: Sent = 10, Received = 10, Lost = 0 (0% loss),
+    Approximate round trip times in milli-seconds:
+        Minimum = 16ms, Maximum = 17ms, Average = 16ms
 
 From this I can tell which IP address I am connecting to, that all my
 data arrived and was sent back successfully, and it took about 16ms for
@@ -821,7 +788,7 @@ mean a connection is down.
 getmac
 ------
 
-To quickly get your MAC address on Windows machines, getmac will list
+To quickly get your MAC address on Windows machines, ``getmac`` will list
 out all MAC addresses the machine has. It is a quicker, smaller list
 than ipconfig provides.
 
@@ -829,8 +796,8 @@ arp
 ---
 
 You can use arp to view your computer's table of IP to MAC addresses. On
-macOS and Linux, type **arp** at the command prompt. On Windows, use
-**arp -a** at the command prompt. You can even add and remove entries
+macOS and Linux, type ``arp`` at the command prompt. On Windows, use
+``arp -a`` at the command prompt. You can even add and remove entries
 manually, if you feel the need to do so.
 
 nslookup
@@ -838,40 +805,37 @@ nslookup
 If you have a DNS address and want its associated IP address, use the
 nslookup command on a command prompt. If you are on a Linux machine that
 doesn't recognize nslookup as a command, you may need to install a
-package that has it. For Raspberry Pi, type **sudo apt-get install
-dnsutils**.
+package that has it. For Raspberry Pi, type:
+
+``sudo apt-get install dnsutils``
 
 An example of using the command is as follows:
 
-nslookup *arcade.academy.*
+``nslookup arcade.academy``
 
 Notice the trailing period. If you don't put this period on the address,
 nslookup will first append your local domain. In my case, I've got a
-local domain of *home*, so doing an nslookup without the trailing period
-will first query arcade.academy.home. When that fails, it will fall back
-and look up arcade.academy. The output from this command might look
+local domain of ``home``, so doing an nslookup without the trailing period
+will first query ``arcade.academy.home``. When that fails, it will fall back
+and look up ``arcade.academy``. The output from this command might look
 like:
 
-Server: snowflake.sc.loc
+.. code-block:: text
 
-Address: 198.206.243.21
+   Server:  snowflake.sc.loc
+   Address:  198.206.243.21
 
-Non-authoritative answer:
-
-Name: arcade.academy
-
-Addresses: 52.85.117.97
-
-52.85.117.31
-
-52.85.117.113
-
-52.85.117.198
+   Non-authoritative answer:
+   Name:    arcade.academy
+   Addresses:  52.85.117.97
+             52.85.117.31
+             52.85.117.113
+             52.85.117.198
 
 The first item, Server, refers to the server that looked up the IP
 addresses, which is the local DNS server (*not* the IP address of the
 local DNS server). Non-authoritative answer means that the local DNS
-server is not the nameserver that is the authority for arcade.academy.
+server is not the nameserver that is the authority for ``arcade.academy``.
 It's passing us the information second-hand because it needed to go and
 look up the info. Finally, the IP address for the domain is listed.
 
@@ -891,14 +855,11 @@ example, an MX record type holds the IP address for a computer that can
 receive email destined for a domain. You can use an interactive session
 with the nslookup command to get more information, like so:
 
-1. Type **nslookup** to enter the interactive mode of nslookup.
-
-9.  When a > prompt appears, enter **set type=mx** to look for MX (mail)
-    records.
-
-10. Enter the domain you want to look up, like **gmail.com**.
-
-11. When done, type **exit** to leave the interactive mode.
+1. Type ``nslookup`` to enter the interactive mode of nslookup.
+2. When a ``>`` prompt appears, enter ``set type=mx`` to look for MX (mail)
+   records.
+3. Enter the domain you want to look up, like ``gmail.com``.
+4. When done, type ``exit`` to leave the interactive mode.
 
 If you get a time-out looking up a record, try again.
 
@@ -908,11 +869,12 @@ typing **nslookup 52.85.117.97**.
 This version of the command will try to find a domain address to match
 that IP. For example:
 
-Name: *server-52-85-117-97.ind6.r.cloudfront.net*
+.. code-block:: text
 
-Address: *52.85.117.97*
+   Name: server-52-85-117-97.ind6.r.cloudfront.net
+   Address: 52.85.117.97
 
-In this example, notice that it didn't send back arcade.academy, which
+In this example, notice that it didn't send back ``arcade.academy``, which
 is the name used to look up that IP address! There can be multiple
 domains associated with a single IP address, just as there can be
 multiple IP addresses per domain. We just get back the first one
@@ -922,14 +884,16 @@ concerned if you don't get anything back. Just try a different IP.
 whois
 -----
 On Linux and macOS, you can sometimes find who owns a domain with the
-whois command. For example:
+``whois`` command. For example:
 
-whois my-domain.example
+``whois my-domain.example``
 
 Often the real information is hidden to prevent people from spamming
 site owners. There are also many websites that let you use online
 lookups to get an idea who owns a domain; I happen to like this one from
-MxToolbox: *https://mxtoolbox.com/DNSLookup.aspx*. There are a lot of
+MxToolbox:
+`https://mxtoolbox.com/DNSLookup.aspx <https://mxtoolbox.com/DNSLookup.aspx>`_.
+There are a lot of
 cases where this is useful, such as allowing a person to find the
 current owner of a network domain if they are receiving a lot of spam
 e-mail from it.
@@ -952,60 +916,43 @@ favorite options on Windows are:
 
 -  Show how many bytes sent/received by the computer since start:
 
-netstat -e
+``netstat -e``
 
 -  Show what process created each network connection (requires you to be
    in a command prompt run as administrator):
 
-netstat -b
+``netstat -b``
 
-On Linux, you can enter netstat --tcp to filter the output to show only
+On Linux, you can enter ``netstat --tcp`` to filter the output to show only
 TCP/IP connections.
 
 Listing 7-7 shows a shortened list of what my computer displayed from
 the netstat command:
 
-C:\\>\ **netstat -b**
+.. code-block:: text
+   :caption: Output of the netstat command
+   :linenos:
 
-Active Connections
+   C:\>netstat -b
 
-Proto Local Address Foreign Address State
+   Active Connections
 
-1 TCP 10.1.23.175:15319 ord30s25-in-f10:https CLOSE_WAIT
-[googledrivesync.exe]
-
-TCP 10.1.23.175:43450 ord30s25-in-f205:https CLOSE_WAIT
-[googledrivesync.exe]
-
-2 TCP 10.1.23.175:46136 fileserve:microsoft-ds ESTABLISHED Can not /
-obtain ownership information
-
-3 TCP 10.1.23.175:46170 162.254.193.47:27021 ESTABLISHED [Steam.exe]
-
-TCP 10.1.23.175:46174 jd-in-f125:5222 ESTABLISHED [Explorer.EXE]
-
-TCP 10.1.23.175:46658 65-52-108-208:https ESTABLISHED / ShellHWDetection
-
-[svchost.exe]
-
-4 TCP 10.1.23.175:48688 207.32.33.199:59234 ESTABLISHED [OUTLOOK.EXE]
-
-TCP 10.1.23.175:48696 207.32.33.199:59234 ESTABLISHED [CompanionApp.exe]
-
-TCP 10.1.23.175:62396 ord36s04-in-f10:https CLOSE_WAIT [motty.exe]
-
-TCP 10.1.23.175:65125 cs:ssh ESTABLISHED [MobaXterm.exe]
-
-TCP 10.1.23.175:65127 bitbucket:ssh TIME_WAIT
-
-TCP 127.0.0.1:4172 cvr1834b:65001 ESTABLISHED
-[NvStreamNetworkService.exe]
-
-TCP 127.0.0.1:6000 cvr1834b:65121 ESTABLISHED [XWin_MobaX.exe]
-
-TCP 127.0.0.1:6000 cvr1834b:65122 ESTABLISHED
-
-Output of the netstat command
+     Proto  Local Address          Foreign Address        State
+   1 TCP    10.1.23.175:15319      ord30s25-in-f10:https  CLOSE_WAIT [googledrivesync.exe]
+     TCP    10.1.23.175:43450      ord30s25-in-f205:https CLOSE_WAIT [googledrivesync.exe]
+   2 TCP    10.1.23.175:46136      fileserve:microsoft-ds ESTABLISHED Can not / obtain ownership information
+   3 TCP    10.1.23.175:46170      162.254.193.47:27021   ESTABLISHED [Steam.exe]
+     TCP    10.1.23.175:46174      jd-in-f125:5222        ESTABLISHED [Explorer.EXE]
+     TCP    10.1.23.175:46658      65-52-108-208:https    ESTABLISHED / ShellHWDetection
+    [svchost.exe]
+   4 TCP    10.1.23.175:48688       207.32.33.199:59234   ESTABLISHED [OUTLOOK.EXE]
+     TCP    10.1.23.175:48696      207.32.33.199:59234    ESTABLISHED [CompanionApp.exe]
+     TCP    10.1.23.175:62396      ord36s04-in-f10:https  CLOSE_WAIT [motty.exe]
+     TCP    10.1.23.175:65125      cs:ssh                 ESTABLISHED [MobaXterm.exe]
+     TCP    10.1.23.175:65127      bitbucket:ssh          TIME_WAIT
+     TCP    127.0.0.1:4172         cvr1834b:65001         ESTABLISHED [NvStreamNetworkService.exe]
+     TCP    127.0.0.1:6000         cvr1834b:65121         ESTABLISHED [XWin_MobaX.exe]
+     TCP    127.0.0.1:6000         cvr1834b:65122         ESTABLISHED
 
 I can see that Google Drive is using port 15319, and that connection is
 waiting to be closed 1. My computer is using a network drive 2. I have
@@ -1013,11 +960,12 @@ Steam running in the background, and connected to their servers 3.
 Microsoft Outlook is keeping an eye on incoming email 4.
 
 The Mac implementation of netstat isn't that great, but macOS has a
-command called lsof to list open files. Network connections are treated
-like files, so you can show open network connections with lsof -i.
+command called ``lsof`` to list open files. Network connections are treated
+like files, so you can show open network connections with ``lsof -i``.
 
 Tutorial: Scan a Network with Nmap
----------------------------------
+----------------------------------
+
 Nmap scans computers for open ports, which is very useful in securing an
 individual computer and even auditing an entire network.
 
@@ -1123,14 +1071,14 @@ addresses. You can filter the output to just the important parts. For
 example, the following command runs ifconfig and shows only the lines
 that have inet and a space:
 
-ifconfig \| grep "inet "
+``ifconfig \| grep "inet "``
 
 By piping the output from ping to grep, you can pull out the timings and
 save the output to a text file that you can use for graphing. We can
 save that information to a file we can later create a graph with the
 following command:
 
-ping -c 20 google.com \| grep -o "[0-9]*\\.[0-9] " > data.txt
+``ping -c 20 google.com \| grep -o "[0-9]*\\.[0-9] " > data.txt``
 
 If you want to learn more about how regular expressions work, the best
 way is through an interactive tutorial. I highly recommend RegexOne:
