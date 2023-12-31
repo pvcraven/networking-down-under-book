@@ -1,3 +1,5 @@
+.. _chapter_06:
+
 Theory: Networking Layer
 ************************
 
