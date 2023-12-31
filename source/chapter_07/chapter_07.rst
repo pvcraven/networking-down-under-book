@@ -43,51 +43,74 @@ To create a network connection between computers, you need to know their
 IP addresses. The method you use depends on the operating system a
 computer is running.
 
-On Windows, enter ``ipconfig`` on the command line. If you want even
-more information, you can type ``ipconfig /all``, as shown in Listing 7-1:
+On Windows, enter **ipconfig** on the command line. If you want even
+more information, you can type ipconfig /all, as shown in Listing 7-1:
 
-.. code-block:: text
-    :linenos:
-    :caption: Getting network information from a Windows computer
+C:\\>\ **ipconfig /all**
 
-    C:\>ipconfig /all
+Windows IP Configuration
 
-    Windows IP Configuration
+1 Host Name . . . . . . . . . . . . : MYCOMPUTER
 
-       Host Name . . . . . . . . . . . . : MYCOMPUTER
-       Primary Dns Suffix  . . . . . . . : local.example
-       Node Type . . . . . . . . . . . . : Hybrid
-       IP Routing Enabled. . . . . . . . : No
-       WINS Proxy Enabled. . . . . . . . : No
-       DNS Suffix Search List. . . . . . : local.example
+2 Primary Dns Suffix . . . . . . . : local.example
 
-    Ethernet adapter Ethernet:
+Node Type . . . . . . . . . . . . : Hybrid
 
-       Connection-specific DNS Suffix  . : sc.loc
-       Description . . . . . . . . . . . : Intel(R) Ethernet Connection (7) I219-V
-       Physical Address. . . . . . . . . : 00-D8-61-33-8C-B9
-       DHCP Enabled. . . . . . . . . . . : Yes
-       Autoconfiguration Enabled . . . . : Yes
-       Link-local IPv6 Address . . . . . : fe80::d177:2318:812e:9bb2%13(Preferred)
-       IPv4 Address. . . . . . . . . . . : 10.10.20.40(Preferred)
-       Subnet Mask . . . . . . . . . . . : 255.255.254.0
-       Lease Obtained. . . . . . . . . . : Monday, September 30, 201921 8:20:14 AM
-       Lease Expires . . . . . . . . . . : SaturdayTuesday, October August 12, 201923 8:16:58 AM
-       Default Gateway . . . . . . . . . : 10.10.21.254
-       DHCP Server . . . . . . . . . . . : 172.16.99.2
-       DHCPv6 IAID . . . . . . . . . . . : 335599713
-       DHCPv6 Client DUID. . . . . . . . : 00-01-00-01-24-A3-AD-FE-00-D8-61-33-8C-B9
-       DNS Servers . . . . . . . . . . . : 198.206.243.21
-                                           198.206.243.31
-       NetBIOS over Tcpip. . . . . . . . : Enabled
+IP Routing Enabled. . . . . . . . : No
+
+WINS Proxy Enabled. . . . . . . . : No
+
+DNS Suffix Search List. . . . . . : local.example
+
+Ethernet adapter Ethernet:
+
+Connection-specific DNS Suffix . : sc.loc
+
+Description . . . . . . . . . . . : Intel(R) Ethernet Connection (7)
+I219-V
+
+3 Physical Address. . . . . . . . . : 00-D8-61-33-8C-B9
+
+DHCP Enabled. . . . . . . . . . . : Yes
+
+Autoconfiguration Enabled . . . . : Yes
+
+Link-local IPv6 Address . . . . . :
+fe80::d177:2318:812e:9bb2%13(Preferred)
+
+4 IPv4 Address. . . . . . . . . . . : 10.10.20.40(Preferred)
+
+5 Subnet Mask . . . . . . . . . . . : 255.255.254.0
+
+6 Lease Obtained. . . . . . . . . . : Monday, September 30, 2021 8:20:14
+AM
+
+7 Lease Expires . . . . . . . . . . : Tuesday, August 1, 2023 8:16:58 AM
+
+Default Gateway . . . . . . . . . : 10.10.21.254
+
+DHCP Server . . . . . . . . . . . : 172.16.99.2
+
+DHCPv6 IAID . . . . . . . . . . . : 335599713
+
+8 DHCPv6 Client DUID. . . . . . . . :
+00-01-00-01-24-A3-AD-FE-00-D8-61-33-8C-B9
+
+9 DNS Servers . . . . . . . . . . . : 198.206.243.21
+
+198.206.243.31
+
+NetBIOS over Tcpip. . . . . . . . : Enabled
+
+Getting network information from a Windows computer
 
 The host name is your computer's name and should be unique for your
-local domain (line 5). To find this on Linux/macOS, enter ``hostname``, as it
-isn't part of the ``ifconfig`` output. The Primary DNS Suffix is your local
-domain (line 6). If your hostname is my_computer and your domain is
-my_domain.example, your local domain is ``my_computer.my_domain_example``.
-Type ``hostname -d`` on Linux/macOS to find your local domain. If
-nothing appears, it isn't set. Later in the :ref:`project_set_hostname`
+local domain 1. To find this on Linux/macOS, enter **hostname**, as it
+isn't part of the ifconfig output. The Primary DNS Suffix is your local
+domain 2. If your hostname is my_computer and your domain is
+my_domain.example, your local domain is my_computer.my_domain_example.
+Type **hostname -d** on Linux/macOS to find your local domain. If
+nothing appears, it isn't set. Later in the *Project: Set Hostname*
 section we'll show you how to set it.
 
 The MAC address, or Physical Address, is your six-byte layer 2 address
@@ -804,6 +827,7 @@ than ipconfig provides.
 
 arp
 ---
+
 You can use arp to view your computer's table of IP to MAC addresses. On
 macOS and Linux, type **arp** at the command prompt. On Windows, use
 **arp -a** at the command prompt. You can even add and remove entries
@@ -997,13 +1021,13 @@ Tutorial: Scan a Network with Nmap
 Nmap scans computers for open ports, which is very useful in securing an
 individual computer and even auditing an entire network.
 
-You can install nmap on most Linux computers by typing: **sudo apt-get
-install nmap zenmap**. Download and install it for Windows and macOS
-from *https://nmap.org/download.html*.
+You can install nmap on most Linux computers by typing:
+``sudo apt-get install nmap zenmap``. Download and install it for Windows and macOS
+from `https://nmap.org/download.html <https://nmap.org/download.html>`_.
 
 You can scan a single computer by using the nmap command and the
 computer's IP address. For example, if you have a computer with the IP
-address of 192.168.1.1 you can scan it with **nmap 192.168.1.1**.
+address of ``192.168.1.1`` you can scan it with ``nmap 192.168.1.1``.
 
 Nmap has a lot of options for scanning, such as a fast scan to determine
 what computers or devices are attached and a slow scan that checks every
@@ -1011,8 +1035,8 @@ single networking port on a computer. It can also look at the responses
 to try to figure out the computer's operating system.
 
 You can scan a range of addresses with the CIDR form to identify what
-computers are connected to a network. The nmap 192.168.1.0/24 command
-does a scan of 192.168.1.0 to 192.168.1.255.
+computers are connected to a network. The ``nmap 192.168.1.0/24`` command
+does a scan of ``192.168.1.0`` to ``192.168.1.255``.
 
 The output lists any open port, and the service that may be running on
 that port:
@@ -1112,7 +1136,8 @@ If you want to learn more about how regular expressions work, the best
 way is through an interactive tutorial. I highly recommend RegexOne:
 *https://regexone.com/*.
 
-Proejct: Lookup ASNs
+Project: Lookup ASNs
+====================
 
 As discussed in Chapter 6, the internet routes traffic between large
 networks, each of which has an Autonomous System Number (ASN). You can
@@ -1120,7 +1145,9 @@ look up an ASN by first finding your public IP address. This likely
 isn't your machine IP address. You can go to the following page to get
 your public IP address: *https://www.whatismyip.com/*.
 
-Visit *https://mxtoolbox.com/SuperTool.aspx* to use MXToolbox; plug in
+Visit
+`https://mxtoolbox.com/SuperTool.aspx <https://mxtoolbox.com/SuperTool.aspx>`_
+to use MXToolbox; plug in
 your IP address and select ASN Lookup.
 
 Next, find the ASNs of several other websites you are interested in. To
@@ -1135,6 +1162,7 @@ doing a traceroute.
 
 Project: Trace Data Across the Internet
 =======================================
+
 To trace the route your data takes over the network, use the
 *traceroute* command. On macOS and Linux, this command is traceroute; on
 Windows, tracert. By understanding the hops from one computer to
@@ -1153,11 +1181,13 @@ times out, but not send a NACK back. These nodes will show up as an \*
 on the traceroute. You know the nodes are there because the packet went
 away, but you don't know what node did it.
 
-**NOTE** At the school where I work, we have a router that will take TCP
-packets and rewrite the TTL so it looks like all packets magically reach
-their destination at four hops. Oddly enough, it doesn't rewrite the TTL
-of ICMP packets. With this in mind, it can be a good idea to try a
-traceroute with both TCP and ICMP packets.
+.. note::
+
+    At the school where I work, we have a router that will take TCP
+    packets and rewrite the TTL so it looks like all packets magically reach
+    their destination at four hops. Oddly enough, it doesn't rewrite the TTL
+    of ICMP packets. With this in mind, it can be a good idea to try a
+    traceroute with both TCP and ICMP packets.
 
 To use traceroute on Windows, type tracert followed by the IP address or
 DNS name of the computer you want to trace to. Listing 7-8 shows an
@@ -1197,21 +1227,21 @@ Trace complete.
 
 Output of the netstat command on Windows
 
-The trace shows that my packet first goes to my router at 192.168.1.1 1
-and then hops to 100.66.16.1 2. Next you can see each hop as it heads to
-its final destination, simpson.edu, at 23.185.0.3 3. The computer runs
+The trace shows that my packet first goes to my router at ``192.168.1.1`` 1
+and then hops to ``100.66.16.1`` 2. Next you can see each hop as it heads to
+its final destination, simpson.edu, at ``23.185.0.3`` 3. The computer runs
 the route three times, and shows how long it takes to get to that hop in
 three different columns. If the computer can, it does a reverse DNS
 lookup on each address, which helps you get an idea of what that node
-is. In Listing 7-8, the address 199.66.12.132 is the same as the DNS
-address *b224.cr1.ind.imufiber.net*.
+is. In Listing 7-8, the address ``199.66.12.132`` is the same as the DNS
+address ``b224.cr1.ind.imufiber.net``.
 
 On Linux or macOS, traceroute can be done with traceroute followed by
 the IP or DNS address. By default, traceroute runs differently on
 Windows vs. Linux systems, as Windows uses ICMP packets and Linux uses
 UDP packets. If running a traceroute isn't working well with one type of
 packet, try the other type. You can run a packet trace with ICMP instead
-by using -I, which also requires admin privileges. The command looks
+by using ``-I``, which also requires admin privileges. The command looks
 like so:
 
 ``sudo traceroute -I google.com``
@@ -1264,7 +1294,8 @@ computer wasn't able to look up the next ASN 2, but the following ASN 3
 is AS30169.
 
 Hurricane Electric Internet Services's tool for looking up information
-on ASNs (at *https://bgp.he.net/*) can be used to see what other ASNs
+on ASNs (at `https://bgp.he.net/ <https://bgp.he.net/>`_)
+can be used to see what other ASNs
 are connected to the ASN you search for. It even shows graphs on how
 many other ASNs were hooked up to it in the past so you can see if that
 number has gotten larger or smaller over time. If this number is going
