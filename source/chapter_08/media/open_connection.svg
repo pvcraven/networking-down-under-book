@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   version="1.1"
+   width="136px"
+   height="176px"
+   viewBox="-0.5 -0.5 136 176"
+   content="&lt;mxfile modified=&quot;2019-03-14T15:37:04.205Z&quot; host=&quot;www.draw.io&quot; agent=&quot;Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.121 Safari/537.36&quot; version=&quot;10.4.6&quot; etag=&quot;2ZJCdq9ZgEw4ma1J6G2H&quot; type=&quot;google&quot;&gt;&lt;diagram id=&quot;PP3Sg_4z7Q18pJbmnBCL&quot;&gt;5ZZdb4MgFIZ/jff40a63nWu3ZdmypBe7JnKmJCgN0g/360cHipStbUx70fVKeDwcOO8LYhCn5fZR4GXxygmwIEJkG8QPQRRFKE7UY0caTcIQTTTJBSWGWbCgX2AgMnRFCdROoOScSbp0YcarCjLpMCwE37hhn5y5sy5xDh5YZJj59IMSWWg6GSHLn4DmhezqM29K3AYbUBeY8E0PxbMgTgXnUrfKbQpsp16rix43/+NttzABlTxlQKQHrDFbmdrMumTTFgsVme40U72KVwreF7Jkqheqpo4G4ullFxB2ZakNAbwEKRoVsrHCtboVPc1aJoBhSdduemz8y7t03QzvnKqJI2Q2W2LSNO3eQ26Gmq9EBmZQX6fDeZK9NBKLHKSXRjV6NVv0Y8LvhsSeIfPnt0OeZAzXNc2u2pZ9OU91JRy7eSYXsyXxbJmmL//OlmN6DjwtYXQxX0Y3cVz2ffEEHWrM+GLGjG/iwBzTc+iHzLunzmfMnWfMIVeu78Y/KuVQT85256uu/cHT4fY/OZ59Aw==&lt;/diagram&gt;&lt;/mxfile&gt;"
+   style="background-color: rgb(255, 255, 255);"
+   id="svg924"
+   sodipodi:docname="open_connection.svg"
+   inkscape:version="1.1.1 (3bf5ae0d25, 2021-09-20)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <sodipodi:namedview
+     id="namedview926"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     showgrid="false"
+     inkscape:zoom="5.1931818"
+     inkscape:cx="127.85996"
+     inkscape:cy="102.82713"
+     inkscape:window-width="3840"
+     inkscape:window-height="2066"
+     inkscape:window-x="-11"
+     inkscape:window-y="-11"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg924" />
+  <defs
+     id="defs876" />
+  <path
+     d="M 8.155361,163.53392 V 3.5339169"
+     fill="none"
+     stroke="#000000"
+     stroke-miterlimit="10"
+     pointer-events="none"
+     id="path878" />
+  <path
+     d="m 8.155361,15.533917 113.959999,37.99"
+     fill="none"
+     stroke="#000000"
+     stroke-miterlimit="10"
+     pointer-events="none"
+     id="path880" />
+  <path
+     d="m 127.09536,55.183917 -7.75,1.1 2.77,-2.76 -0.55,-3.88 z"
+     fill="#000000"
+     stroke="#000000"
+     stroke-miterlimit="10"
+     pointer-events="none"
+     id="path882" />
+  <g
+     transform="translate(55.959519,36.928884)"
+     id="g888">
+    <switch
+       id="switch886">
+      <foreignObject
+         style="overflow:visible;"
+         pointer-events="all"
+         width="18"
+         height="11"
+         requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility">
+        <xhtml:div
+           style="display: inline-block; font-size: 11px; font-family: Helvetica; color: rgb(0, 0, 0); line-height: 1.2; vertical-align: top; white-space: nowrap; text-align: center;">
+          <xhtml:div
+             style="display:inline-block;text-align:inherit;text-decoration:inherit;background-color:#ffffff;">FIN</xhtml:div>
+        </xhtml:div>
+      </foreignObject>
+      <text
+         x="9"
+         y="11"
+         fill="#000000"
+         text-anchor="middle"
+         font-size="11px"
+         font-family="Helvetica"
+         id="text884">SYN</text>
+    </switch>
+  </g>
+  <path
+     d="m 128.15536,55.533917 -113.959999,37.99"
+     fill="none"
+     stroke="#000000"
+     stroke-miterlimit="10"
+     pointer-events="none"
+     id="path890" />
+  <path
+     d="m 9.215361,95.18392 5.53,-5.540003 -0.55,3.88 2.77,2.760003 z"
+     fill="#000000"
+     stroke="#000000"
+     stroke-miterlimit="10"
+     pointer-events="none"
+     id="path892" />
+  <g
+     transform="translate(57.233042,80.587527)"
+     id="g898">
+    <switch
+       id="switch896">
+      <foreignObject
+         style="overflow:visible;"
+         pointer-events="all"
+         width="23"
+         height="11"
+         requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility">
+        <xhtml:div
+           style="display: inline-block; font-size: 11px; font-family: Helvetica; color: rgb(0, 0, 0); line-height: 1.2; vertical-align: top; white-space: nowrap; text-align: center;">
+          <xhtml:div
+             style="display:inline-block;text-align:inherit;text-decoration:inherit;background-color:#ffffff;">ACK</xhtml:div>
+        </xhtml:div>
+      </foreignObject>
+      <text
+         x="12"
+         y="11"
+         fill="#000000"
+         text-anchor="middle"
+         font-size="11px"
+         font-family="Helvetica"
+         id="text894">SYN-ACK</text>
+    </switch>
+  </g>
+  <path
+     d="m 8.5404813,102.60613 113.9599987,37.99"
+     fill="none"
+     stroke="#000000"
+     stroke-miterlimit="10"
+     pointer-events="none"
+     id="path910" />
+  <path
+     d="m 127.48048,142.25613 -7.75,1.1 2.77,-2.76 -0.55,-3.88 z"
+     fill="#000000"
+     stroke="#000000"
+     stroke-miterlimit="10"
+     pointer-events="none"
+     id="path912" />
+  <g
+     transform="translate(55.462801,128.23742)"
+     id="g918">
+    <switch
+       id="switch916">
+      <foreignObject
+         style="overflow:visible;"
+         pointer-events="all"
+         width="23"
+         height="11"
+         requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility">
+        <xhtml:div
+           style="display: inline-block; font-size: 11px; font-family: Helvetica; color: rgb(0, 0, 0); line-height: 1.2; vertical-align: top; white-space: nowrap; text-align: center;">
+          <xhtml:div
+             style="display:inline-block;text-align:inherit;text-decoration:inherit;background-color:#ffffff;">ACK</xhtml:div>
+        </xhtml:div>
+      </foreignObject>
+      <text
+         x="12"
+         y="11"
+         fill="#000000"
+         text-anchor="middle"
+         font-size="11px"
+         font-family="Helvetica"
+         id="text914">ACK</text>
+    </switch>
+  </g>
+  <path
+     d="M 128.15536,163.53392 V 3.5339169"
+     fill="none"
+     stroke="#000000"
+     stroke-miterlimit="10"
+     pointer-events="none"
+     id="path920" />
+</svg>
