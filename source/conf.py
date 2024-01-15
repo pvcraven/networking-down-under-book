@@ -13,14 +13,14 @@ author = 'Paul Vincent Craven'
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
 
-extensions = []
+extensions = ['sphinx_sitemap']
 
 templates_path = ['_templates']
 exclude_patterns = []
 
 # Sitemap configuration
-html_baseurl = 'https://networking-down-under.readthedocs.io/'
-
+html_baseurl = 'https://networking-down-under.readthedocs.io/en/latest/'
+sitemap_url_scheme = "{link}"
 # -- Options for HTML output -------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output
 
