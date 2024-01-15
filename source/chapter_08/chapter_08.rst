@@ -96,7 +96,7 @@ simplicity, this example uses a sequence number that alternates between
 
    Using ACK Packets
 
-What happens if the data doesn't arrive? Figure 8-3 shows that if the
+What happens if the data doesn't arrive? :numref:`window_one_loss` shows that if the
 data packet doesn't arrive, eventually the sender will time out waiting
 for the ACK, and resend the data. The longer the timeout, the slower it
 takes to recognize we are missing a packet and start transmitting data
@@ -113,9 +113,12 @@ the data. The data packets need the ACK sequence number, so the receiver
 can identify when a duplicate packet arrives that needs to be discarded.
 We don't want to add duplicate data to the receive buffer.
 
-|image3|
+.. _window_one_loss:
+.. figure:: media/window_one_loss.svg
+   :alt: Losing Packets
+   :width: 80%
 
-Figure 8-3: (left) Data Packet Loss (right) ACK Loss
+   (left) Data Packet Loss (right) ACK Loss
 
 This protocol ensures that your data gets to its destination. But you
 can't transfer data very fast this way. Remember doing *ping* times from
@@ -134,25 +137,31 @@ value of MBps. One MBps equals eight Mbps.
 With this approach, you are spending most of your time waiting for
 packets and not enough time transmitting data. How can you improve this?
 Since it is not common for a network to lose packets, you can send
-multiple packets and use additional sequence numbers, as shown in Figure
-8-4. When you have received Data 1, you send an ACK 2 showing you are
+multiple packets and use additional sequence numbers, as shown in
+:numref:`two_packets_one_ack`. When you have received Data 1, you send an ACK 2 showing you are
 ready for Data 2 and that everything up to, but not including Data 2 has
 been received ok.
 
-|image4|
+.. _two_packets_one_ack:
+.. figure:: media/two_packets_one_ack.svg
+   :alt: Two Packets Per ACK
+   :width: 25%
 
-Figure 8-4: Two Packets Per ACK
+   Two Packets Per ACK
 
 This approach is better, but a delay still happens as the computer waits
 for ACK packets. What if the code behind the transport layer did not
-wait? Compare Figure 8-4 with Figure 8-5, where the system does not wait
+wait? Compare :numref:`two_packets_one_ack` with :numref:`window_of_two_sliding`, where the system does not wait
 for the ACK on data packet 0 and data packet 1, but continues to
 transmit data packets 2 and 3. While there is still a round-trip delay,
 we no longer wait for it.
 
-|image5|
+.. _window_of_two_sliding:
+.. figure:: media/window_of_two_sliding.svg
+   :alt: Two Packets Per ACK
+   :width: 25%
 
-Figure 8-5: Overlapping ACK and Data Packets
+   Overlapping ACK and Data Packets
 
 This method requires a bit more work on the sender, as the
 transport-layer code must track what part of the message has been sent,
