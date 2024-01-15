@@ -1,3 +1,5 @@
+.. _chapter_03:
+
 Projects: Physical Layer
 ************************
 

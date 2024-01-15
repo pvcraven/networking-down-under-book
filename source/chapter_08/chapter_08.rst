@@ -1,6 +1,6 @@
 .. include:: <isonum.txt>
 
-.. _chapter_07:
+.. _chapter_08:
 
 Theory: Transport Layer
 ***********************
@@ -51,7 +51,7 @@ First, the client that wants to create a connection generates a *TCP
 synchronize packet* (SYN) and sends it to the server. The SYN packet
 includes a randomly generated 32-bit *sequence number*. The sequence
 number identifies client-to-server data packets, so you can tell which
-packets have arrived. In the “sliding window” section, discussed later
+packets have arrived. In the "sliding window" section, discussed later
 in this chapter, you can see the sequence number at work.
 
 Second, the server sends back a two-in-one packet known as a
@@ -166,20 +166,23 @@ we no longer wait for it.
 This method requires a bit more work on the sender, as the
 transport-layer code must track what part of the message has been sent,
 and what part acknowledged. Overlapping in this way is called a *sliding
-window*, which is illustrated in Figure 8-6.
+window*, which is illustrated in :numref:`sliding_window`:
 
-|image6|
+.. _sliding_window:
+.. figure:: media/sliding_window.svg
+   :alt: Sliding Window
+   :width: 90%
 
-Figure 8-6: Sliding Window
+   Sliding Window
 
-In Figure 8-6 each packet is numbered sequentially. TCP numbers its
+In :numref:`sliding_window` each packet is numbered sequentially. TCP numbers its
 sliding window a bit differently: that is, rather than number each
 packet, TCP numbers by the byte count. If the first packet is numbered 0
 and you transmit 700 bytes, the next packet will be numbered 700 rather
 than 1. Then if you transmit 1,001 bytes, the next packet will be
-numbered 1,701. TCP stores the sequence number in four bytes, or 4 \* 8
-= 32 bits. The maximum sequence number is 2 ^ 32 - 1= 4,294,967,295.
-When you go beyond that four billion max number, you “roll over” back to
+numbered 1,701. TCP stores the sequence number in four bytes, or
+:math:`4 \cdot 8 = 32` bits. The maximum sequence number is :math:`2^{32}-1=4,294,967,295`.
+When you go beyond that four billion max number, you "roll over" back to
 zero. TCP can send both data and an ACK at the same time. In the earlier
 examples, data flowed only one way. It can flow both ways, and you can
 combine your data and ACK packets together.
@@ -209,24 +212,24 @@ data is buffered up and sent, because it impacts both the timing on when
 data is sent, and how the data is grouped together. For example, if you
 executed the following networking code in Python:
 
-my_socket.sendall(b"1")
+.. code-block::
 
-my_socket.sendall(b"2")
-
-my_socket.sendall(b"3")
+   my_socket.sendall(b"1")
+   my_socket.sendall(b"2")
+   my_socket.sendall(b"3")
 
 Based on these three lines of code, there are at least two logical
 guesses on how the code would group the data into packets. One, the
 program could send three packets, each with a different number in it. Or
 two, the program could keep storing data until the buffer is full and
-then send “123” as one packet.
+then send "123" as one packet.
 
 What happens in reality? Neither. Python will send the 1 to the
 transport layer. The transport layer bundles up the 1 into a packet, and
 the computer will start sending it. The 2 and 3 arrive immediately
 after, but we can't change the packet in the middle of being sent.
 Therefore the transport layer will queue up the 2 and 3 into the same
-packet and send “23” when the network is ready again. Depending on your
+packet and send "23" when the network is ready again. Depending on your
 networking back-end, you might have different behavior. Some computer
 languages will queue the data until there is enough for a full packet,
 or until you explicitly flush the data. This can cause unexpected
@@ -240,7 +243,9 @@ In the case of the three-line example above, we can use our
 understanding of networks to buffer up all three numbers and send them
 out as one packet using one sendall command:
 
-my_socket.sendall(b"123")
+.. code-block::
+
+   my_socket.sendall(b"123")
 
 This will only transmit one packet instead of two, resulting in the
 entire message arriving twice as fast. Remember, moving data in one
@@ -249,7 +254,7 @@ large packet is more efficient than multiple smaller packets.
 Some computer languages work differently. For example, sending data with
 Java will put the data in a buffer, but not immediately send it. Data
 will be sent when the buffer is full, or when the program calls a
-flush() function. This can prevent the unnecessary fragmenting of our
+``flush()`` function. This can prevent the unnecessary fragmenting of our
 data across two packets as shown in our Python example. The disadvantage
 is that if we forget to flush the buffer, we might be stuck waiting for
 a response to data that was never sent.
@@ -265,7 +270,7 @@ Close a Connection
 
 The last step when sending data between clients and servers is closing a
 connection. One side will send a *finalize packet* (FIN), stating it
-will not be sending any more data, as shown in Figure 8-7. This doesn't
+will not be sending any more data, as shown in :numref:`finalize_connection`. This doesn't
 mean you can close the connection yet! The other side may not have
 successfully received all of the data; it may still need to send ACK
 packets or request rebroadcast of any missing data. After the other side
@@ -273,9 +278,12 @@ has sent all of its ACK packets, it will *also* send a FIN packet. That
 second FIN packet must be acknowledged, and then the connection can
 close.
 
-|image7|
+.. _finalize_connection:
+.. figure:: media/finalize_connection.svg
+   :alt: Finalize connection
+   :width: 25%
 
-Figure 8-7: Finalize connection
+   Finalize connection
 
 Popular Internet Transport Protocols
 ====================================
@@ -302,104 +310,81 @@ requests can be made.
 HTTP has *response codes* for requests. There are many different codes;
 I recommend you memorize at least these five:
 
-200 OK – Success. If you ask for a document and get it, this is the code
-you see.
-
-304 Not modified – If you ask for a document and it hasn't been modified
-since the last time you asked for it, you get a 304 code. The document
-is not sent, as the server will assume your browser has cached it for
-reuse.
-
-3XX Redirect – Many of the codes starting with a 3 (but not 304) direct
-the browser to a different page. Therefore, if you ask for page “A” it
-will redirect you to page “B” instead. In the past, this code was used a
-lot. Why? Good program design separates logic from user interface. You'd
-have one page that processed a user form or input while not showing the
-user anything. The code redirected the user to the proper page showing
-the output. Now with the heavy use of JavaScript and JSON, redirect
-codes aren't used quite as much.
-
-404 Not Found – You've probably heard of this one. This code is returned
-when the user asks for a document that isn't there.
-
-500 Server error – If you have an application server processing the
-user's requests, there might be an unhandled error. If so, the user sees
-a 500 server error. Chances are, you need to look in the server log and
-find a copy of the error.
+* **200 OK** – Success. If you ask for a document and get it, this is the code
+  you see.
+* **304 Not modified** – If you ask for a document and it hasn't been modified
+  since the last time you asked for it, you get a 304 code. The document
+  is not sent, as the server will assume your browser has cached it for
+  reuse.
+* **3XX Redirect** – Many of the codes starting with a 3 (but not 304) direct
+  the browser to a different page. Therefore, if you ask for page "A" it
+  will redirect you to page "B" instead. In the past, this code was used a
+  lot. Why? Good program design separates logic from user interface. You'd
+  have one page that processed a user form or input while not showing the
+  user anything. The code redirected the user to the proper page showing
+  the output. Now with the heavy use of JavaScript and JSON, redirect
+  codes aren't used quite as much.
+* **404 Not Found** – You've probably heard of this one. This code is returned
+  when the user asks for a document that isn't there.
+* **500 Server error** – If you have an application server processing the
+  user's requests, there might be an unhandled error. If so, the user sees
+  a 500 server error. Chances are, you need to look in the server log and
+  find a copy of the error.
 
 The basic HTTP protocol isn't complex. In fact, you can use a terminal
-window to “telnet” directly to a web server and request a document just
+window to "telnet" directly to a web server and request a document just
 by typing in the commands. It is easy to write a program to serve up, or
 request, documents over the web.
 
 Upon opening a TCP connection to port 80, the client computer will
 request a web page via HTTP by sending a *HTTP request header*. See the
-example in Listing 8-1.
+example in :numref:`http_header`.
 
-GET / HTTP/1.1
+.. _http_header:
+.. code-block:: text
+   :caption: Client requesting a web page via HTTP over a TCP connection
 
-Host: mysite.example
-
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:95.0)
-Gecko/20100101 Firefox/95.0
-
-Accept:
-text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/\*;q=0.8
-
-Accept-Language: en-US,en;q=0.5
-
-Accept-Encoding: gzip, deflate
-
-Connection: keep-alive
-
-Cookie: SESSID=k4hd2hakmigjcfam5020p9blbl;
-
-Listing 8-1: Client requesting a web page via HTTP over a TCP connection
+   GET / HTTP/1.1
+   Host: mysite.example
+   User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:95.0) Gecko/20100101 Firefox/95.0
+   Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8
+   Accept-Language: en-US,en;q=0.5
+   Accept-Encoding: gzip, deflate
+   Connection: keep-alive
+   Cookie: SESSID=k4hd2hakmigjcfam5020p9blbl;
 
 This request contains what web page we are asking for, on what website,
 what language we'd prefer, and information as to how we are logged in
-stored in a “cookie.” The server will look at that information, and
-respond back using HTTP as shown in Listing 8-2.
+stored in a "cookie." The server will look at that information, and
+respond back using HTTP as shown in :numref:`http_body`.
 
-HTTP/1.1 200 OK
+.. _http_body:
+.. code-block:: text
+   :caption: Server responding to client request with a web page via HTTP over a TCP connection
 
-Date: Fri, 17 Dec 2021 17:47:17 GMT
+   HTTP/1.1 200 OK
+   Date: Fri, 17 Dec 2021 17:47:17 GMT
+   Server: Apache/2.4.41 (Ubuntu)
+   Expires: Thu, 19 Nov 1981 08:52:00 GMT
+   Cache-Control: no-store, no-cache, must-revalidate
+   Pragma: no-cache
+   Vary: Accept-Encoding
+   Content-Encoding: gzip
+   Content-Length: 9959
+   Keep-Alive: timeout=5, max=100
+   Connection: Keep-Alive
+   Content-Type: text/html; charset=utf-8
 
-Server: Apache/2.4.41 (Ubuntu)
-
-Expires: Thu, 19 Nov 1981 08:52:00 GMT
-
-Cache-Control: no-store, no-cache, must-revalidate
-
-Pragma: no-cache
-
-Vary: Accept-Encoding
-
-Content-Encoding: gzip
-
-Content-Length: 9959
-
-Keep-Alive: timeout=5, max=100
-
-Connection: Keep-Alive
-
-Content-Type: text/html; charset=utf-8
-
-<html>
-
-<p>Sample HTML Page</p>
-
-</html>
-
-Listing 8-2: Server responding to client request with a web page via
-HTTP over a TCP connection
+   <html>
+     <p>Sample HTML Page</p>
+   </html>
 
 This response has our HTTP response code (200 OK) along with what kind
 of document it is (text/html), how long to cache it before asking for a
 new copy (don't) and some other information. That is followed by a blank
 line, and then the HTML document. The initial information is called the
 *HTTP response header*. This can be confusing, as the HTML document can
-also have a “head” section, and even a “header” section. These are not
+also have a "head" section, and even a "header" section. These are not
 the same as the HTTP headers.
 
 HTTP is not encrypted, and not secure. *Hypertext Transfer Protocol
@@ -424,13 +409,13 @@ action is shown in Listing 8-3.
 
 What the original SMTP didn't plan for was misuse. When you connect to
 an SMTP server, you don't have to authenticate who you are. A person can
-use any “open” SMTP server and use it to send mail to anyone else. The
-“from” line on an e-mail is just a blank. You can put anything in there.
+use any "open" SMTP server and use it to send mail to anyone else. The
+"from" line on an e-mail is just a blank. You can put anything in there.
 There's no authentication. It is as easy to make an e-mail look like it
 came from the President of the U.S. as anyone else.
 
 This lack of foresight quickly made e-mail a mess. People created
-“blacklists” that identified email servers that send out spam. Over 100
+"blacklists" that identified email servers that send out spam. Over 100
 of these blacklists exist, and if your e-mail server lands on one, no
 one will accept your e-mail. (You can research these.) Even with
 blacklists, spam was starting to make e-mail unusable. Eventually
@@ -443,54 +428,32 @@ companies like Amazon or Microsoft. Keep in mind, though, that these
 companies maintain a lot of rules around spam; they will ban you without
 mercy.
 
-Server: 220 smtp.theirsite.example ESMTP Postfix
+.. code-block:: text
+   :caption: Example of sending e-mail via SMTP
 
-Client: HELO relay.mysite.example
-
-Server: 250 Hello relay.mysite.example, I am glad to meet you
-
-Client: MAIL FROM:<sam@mysite.example>
-
-Server: 250 Ok
-
-Client: RCPT TO:<natasha@theirsite.example>
-
-Server: 250 Ok
-
-Client: DATA
-
-Server: 354 End data with <CR><LF>.<CR><LF>
-
-Client: From: "Sam Smith" <bob@example.org>
-
-Client: To: "Natasha Romanoff" <alice@example.com>
-
-Client: Date: Tue, 15 Jan 2022 16:00:00 -0500
-
-Client: Subject: Test message
-
-Client:
-
-Client: Hello Natasha.
-
-Client: I'll send my grandma's secret cookie recipie in exchange for an
-infinity stone?
-
-Client: Sincerely,
-
-Client: Sam
-
-Client: .
-
-Server: 250 Ok: queued as 12345
-
-Client: QUIT
-
-Server: 221 Bye
-
-{The server closes the connection}
-
-Listing 8-3: Example of sending e-mail via SMTP
+   Server: 220 smtp.theirsite.example ESMTP Postfix
+   Client: HELO relay.mysite.example
+   Server: 250 Hello relay.mysite.example, I am glad to meet you
+   Client: MAIL FROM:<sam@mysite.example>
+   Server: 250 Ok
+   Client: RCPT TO:<natasha@theirsite.example>
+   Server: 250 Ok
+   Client: DATA
+   Server: 354 End data with <CR><LF>.<CR><LF>
+   Client: From: "Sam Smith" <bob@example.org>
+   Client: To: "Natasha Romanoff" <alice@example.com>
+   Client: Date: Tue, 15 Jan 2022 16:00:00 -0500
+   Client: Subject: Test message
+   Client:
+   Client: Hello Natasha.
+   Client: I'll send my grandma's secret cookie recipie in exchange for an infinity stone?
+   Client: Sincerely,
+   Client: Sam
+   Client: .
+   Server: 250 Ok: queued as 12345
+   Client: QUIT
+   Server: 221 Bye
+   {The server closes the connection}
 
 SMTP assumes that everyone is online to pass e-mail. Most end-users
 don't have their computer on all the time, so they connect to a server
@@ -508,8 +471,8 @@ server, you can with a web browser just by using FTP instead of HTTPS in
 the URL. However, there aren't too many FTP servers out there anymore.
 It is an insecure system, and you should try your best to avoid using
 it. However, since it was one of the original ways to transfer files,
-you'll still hear (perhaps older) people use a phrase like “FTP the file
-over” even if FTP is no longer the protocol of choice.
+you'll still hear (perhaps older) people use a phrase like "FTP the file
+over" even if FTP is no longer the protocol of choice.
 
 A more secure version of FTP now exists, called SFTP. This protocol uses
 Secure Shell (SSH) to transfer files between computers. The S in SFTP
@@ -517,7 +480,7 @@ can stand for either SSH or Secure. Because HTTPS is more flexible and
 popular, I recommend using that protocol over SFTP.
 
 If you don't want to set up a web server, but you are using SSH, you can
-use the *secure copy command* (scp) to move files. This protocol runs on
+use the *secure copy command* (`scp`) to move files. This protocol runs on
 top of SSH and allows you to securely copy files between computers.
 We'll show you how to do that in Chapter 9.
 

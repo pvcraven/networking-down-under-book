@@ -38,6 +38,7 @@ networking. Create.
    chapter_06/chapter_06
    chapter_07/chapter_07
    chapter_08/chapter_08
+   chapter_09/chapter_09
 
 .. note::
 
