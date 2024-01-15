@@ -509,7 +509,7 @@ Datagram Structure
 What exactly are we sending are receiving tin these examples?
 Back in :ref:`chapter_05`, we introduced the program *Wireshark*.
 :numref:`data_structure_01` shows a datagram
-created and sent by the send-datagram code in Listing 7-4 captured by
+created and sent by the send-datagram code in :numref:`datagram_send` captured by
 Wireshark.
 
 .. _data_structure_01:
@@ -540,7 +540,7 @@ the packet (see :numref:`data_structure_02`).
    IP Version and Length
 
 The window has a line for Internet Protocol Version 4; clicking it
-should highlight the IP portion of the data. In Figure 7-6, the first
+should highlight the IP portion of the data. In :numref:`data_structure_02`, the first
 byte of the IP portion is 0x45, which holds two pieces of data. The
 first four bits represent the version of TCP/IP used (TCPv4) and the
 next four bits say how long the header is (20 bytes). Note that this is
@@ -572,7 +572,7 @@ Internet Protocol.
 
    Packet Length
 
-Next is a packet ID field, shown in Figure 7-9, which is used if a
+Next is a packet ID field, shown in :numref:`data_structure_05`, which is used if a
 packet is fragmented so it can be reassembled based on the ID. It
 doesn't have much use otherwise. While TCP/IP packets can be large, we
 often try to keep them small so that fragmentation does not occur.
@@ -601,8 +601,9 @@ parts).
    Fragment Field
 
 The Time to Live (TTL) starts by default at 64. Each time the datagram
-makes a hop on the network, the TTL field subtracts 1 as shown in Figure
-7-11. When it hits 0, the packet is dropped. This keeps the system from
+makes a hop on the network, the TTL field subtracts 1 as shown in
+:numref:`data_structure_07`. When it hits 0, the packet is dropped.
+This keeps the system from
 endlessly forwarding the packet.
 
 .. _data_structure_07:
@@ -612,7 +613,7 @@ endlessly forwarding the packet.
 
    Time to Live
 
-The next byte, Protocol, says that this is a UDP packet (Figure 7-12).
+The next byte, Protocol, says that this is a UDP packet (:numref:`data_structure_08`).
 
 .. _data_structure_08:
 .. figure:: media/datagram_structure_08.png
@@ -621,7 +622,7 @@ The next byte, Protocol, says that this is a UDP packet (Figure 7-12).
 
    Protocol
 
-The header checksum (Figure 7-13) is an additional two bytes of data
+The header checksum (:numref:`data_structure_09`) is an additional two bytes of data
 used by the networking layer to ensure the header is valid and the data
 hasn't been corrupted.
 
@@ -637,7 +638,7 @@ this can be changed in the Wireshark preferences window, under
 *Protocols* and *IPv4*. Corrupted packets will be dropped by the
 networking layer.
 
-Next up, the source IP address appears in hex, as shown in Figure 7-14.
+Next up, the source IP address appears in hex, as shown in :numref:`data_structure_10`.
 
 .. _data_structure_10:
 .. figure:: media/datagram_structure_10.png
@@ -646,7 +647,7 @@ Next up, the source IP address appears in hex, as shown in Figure 7-14.
 
    Source IP Address
 
-The destination is highlighted in Figure 7-15.
+The destination is highlighted in :numref:`data_structure_11`.
 
 .. _data_structure_11:
 .. figure:: media/datagram_structure_11.png
@@ -665,7 +666,7 @@ Now that we're done with the IP part of the packet, we can move on to
 the UDP part.
 
 The first field in the UDP is the networking port that sent the data
-(Figure 7-16).
+(:numref:`data_structure_12`).
 
 .. _data_structure_12:
 .. figure:: media/datagram_structure_12.png
@@ -679,9 +680,9 @@ This is an ephemeral, randomly opened port somewhere between
 this case, UDP is connectionless so it doesn't expect return traffic.
 However for consistency with other protocols it is still filled in.
 
-Next is the destination port number (Figure 7-17), which was selected in
-the send-datagram program from Listing 7-4 with the variable
-destination_ip_port.
+Next is the destination port number (:numref:`data_structure_13`), which was selected in
+the send-datagram program from :numref:`datagram_send` with the variable
+``destination_ip_port``.
 
 .. _data_structure_13:
 .. figure:: media/datagram_structure_13.png
@@ -691,9 +692,9 @@ destination_ip_port.
    Destination Port
 
 The receiving computer needs to have a program listening to the port to
-pick up the data, as we did in Listing 7-5 with listen_ip_port.
+pick up the data, as we did in :numref:`datagram_receive_blocking` with ``listen_ip_port``.
 
-The length of the UDP portion of this packet (Figure 7-18); the number
+The length of the UDP portion of this packet (:numref:`data_structure_14`); the number
 displayed in this field does not include the length of the Ethernet
 frame header or IP packet header.
 
@@ -705,7 +706,7 @@ frame header or IP packet header.
    UDP Length
 
 To ensure the data isn't corrupted, you'll use a checksum. Two bytes are
-dedicated to that, as shown in Figure 7-19.
+dedicated to that, as shown in :numref:`data_structure_15`.
 
 .. _data_structure_15:
 .. figure:: media/datagram_structure_15.png
@@ -714,7 +715,7 @@ dedicated to that, as shown in Figure 7-19.
 
    Checksum
 
-Finally, you get to see the data in Figure 7-20.
+Finally, you get to see the data in :numref:`data_structure_16`.
 
 .. _data_structure_16:
 .. figure:: media/datagram_structure_16.png
@@ -741,16 +742,19 @@ and how long it takes to get a response. Ping sends an ICMP packet to a
 server and times how long until it gets a response. The format is a
 little different between Windows and Linux/macOS. The official Windows
 documentation for ping is available here:
-*https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/ping*.
+
+`https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/ping <https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/ping>`_
+
 Documentation for the Linux version of ping can be found at
-*https://vitux.com/linux-ping-command/*.
+
+`https://vitux.com/linux-ping-command/ <https://vitux.com/linux-ping-command/>`_
 
 On Windows, the command below sets the number of packets to send with
-the -n option, and this example sends them to google.com:
+the ``-n`` option, and this example sends them to ``google.com``:
 
 ``ping -n 10 google.com``
 
-On Linux and macOS, the command uses -c instead of -n:
+On Linux and macOS, the command uses ``-c`` instead of ``-n``:
 
 ``ping -c 10 google.com``
 
@@ -790,7 +794,7 @@ getmac
 
 To quickly get your MAC address on Windows machines, ``getmac`` will list
 out all MAC addresses the machine has. It is a quicker, smaller list
-than ipconfig provides.
+than ``ipconfig`` provides.
 
 arp
 ---
@@ -864,7 +868,7 @@ with the nslookup command to get more information, like so:
 If you get a time-out looking up a record, try again.
 
 You can sometimes reverse lookup an IP address and get a domain by
-typing **nslookup 52.85.117.97**.
+typing ``nslookup 52.85.117.97``.
 
 This version of the command will try to find a domain address to match
 that IP. For example:
@@ -911,24 +915,21 @@ To see the current network connections on your machine, run the netstat
 command. The output can be long and a bit confusing because it includes
 local loopback connections, which is your computer connecting to itself.
 
-Type **netstat -?** to see command line options for netstat. Some of my
+Type ``netstat -?`` to see command line options for ``netstat``. Some of my
 favorite options on Windows are:
 
--  Show how many bytes sent/received by the computer since start:
+- Show how many bytes sent/received by the computer since start:
+  ``netstat -e``
+- Show what process created each network connection (requires you to be
+  in a command prompt run as administrator):
+  ``netstat -b``
+- On Linux, you can enter ``netstat --tcp`` to filter the output to show only
+  TCP/IP connections.
 
-``netstat -e``
+:numref:`netstat` shows a shortened list of what my computer displayed from
+the ``netstat`` command:
 
--  Show what process created each network connection (requires you to be
-   in a command prompt run as administrator):
-
-``netstat -b``
-
-On Linux, you can enter ``netstat --tcp`` to filter the output to show only
-TCP/IP connections.
-
-Listing 7-7 shows a shortened list of what my computer displayed from
-the netstat command:
-
+.. _netstat:
 .. code-block:: text
    :caption: Output of the netstat command
    :linenos:
@@ -938,14 +939,14 @@ the netstat command:
    Active Connections
 
      Proto  Local Address          Foreign Address        State
-   1 TCP    10.1.23.175:15319      ord30s25-in-f10:https  CLOSE_WAIT [googledrivesync.exe]
+     TCP    10.1.23.175:15319      ord30s25-in-f10:https  CLOSE_WAIT [googledrivesync.exe]
      TCP    10.1.23.175:43450      ord30s25-in-f205:https CLOSE_WAIT [googledrivesync.exe]
-   2 TCP    10.1.23.175:46136      fileserve:microsoft-ds ESTABLISHED Can not / obtain ownership information
-   3 TCP    10.1.23.175:46170      162.254.193.47:27021   ESTABLISHED [Steam.exe]
+     TCP    10.1.23.175:46136      fileserve:microsoft-ds ESTABLISHED Can not / obtain ownership information
+     TCP    10.1.23.175:46170      162.254.193.47:27021   ESTABLISHED [Steam.exe]
      TCP    10.1.23.175:46174      jd-in-f125:5222        ESTABLISHED [Explorer.EXE]
      TCP    10.1.23.175:46658      65-52-108-208:https    ESTABLISHED / ShellHWDetection
     [svchost.exe]
-   4 TCP    10.1.23.175:48688       207.32.33.199:59234   ESTABLISHED [OUTLOOK.EXE]
+     TCP    10.1.23.175:48688       207.32.33.199:59234   ESTABLISHED [OUTLOOK.EXE]
      TCP    10.1.23.175:48696      207.32.33.199:59234    ESTABLISHED [CompanionApp.exe]
      TCP    10.1.23.175:62396      ord36s04-in-f10:https  CLOSE_WAIT [motty.exe]
      TCP    10.1.23.175:65125      cs:ssh                 ESTABLISHED [MobaXterm.exe]
@@ -955,9 +956,9 @@ the netstat command:
      TCP    127.0.0.1:6000         cvr1834b:65122         ESTABLISHED
 
 I can see that Google Drive is using port 15319, and that connection is
-waiting to be closed 1. My computer is using a network drive 2. I have
-Steam running in the background, and connected to their servers 3.
-Microsoft Outlook is keeping an eye on incoming email 4.
+waiting to be closed (line 6). My computer is using a network drive (line 8). I have
+Steam running in the background, and connected to their servers (line 9).
+Microsoft Outlook is keeping an eye on incoming email (line 13).
 
 The Mac implementation of netstat isn't that great, but macOS has a
 command called ``lsof`` to list open files. Network connections are treated
@@ -989,29 +990,21 @@ does a scan of ``192.168.1.0`` to ``192.168.1.255``.
 The output lists any open port, and the service that may be running on
 that port:
 
-Starting Nmap 7.40 ( https://nmap.org ) at 2019-02-24 14:41 CST
+.. code-block:: text
 
-Nmap scan report for DeviceDHCP.Home (192.168.1.1)
+   Starting Nmap 7.40 ( https://nmap.org ) at 2019-02-24 14:41 CST
+   Nmap scan report for DeviceDHCP.Home (192.168.1.1)
+   Host is up (0.019s latency).
+   Not shown: 994 closed ports
+   PORT     STATE    SERVICE
+   21/tcp   filtered ftp
+   22/tcp   filtered ssh
+   23/tcp   filtered telnet
+   80/tcp   open     http
+   443/tcp  open     https
+   5431/tcp open     park-agent
 
-Host is up (0.019s latency).
-
-Not shown: 994 closed ports
-
-PORT STATE SERVICE
-
-21/tcp filtered ftp
-
-22/tcp filtered ssh
-
-23/tcp filtered telnet
-
-80/tcp open http
-
-443/tcp open https
-
-5431/tcp open park-agent
-
-The example above shows that the computer 192.168.1.1 (my gateway) is up
+The example above shows that the computer ``192.168.1.1`` (my gateway) is up
 and is receiving data on *open ports* 80, 443, and 5431. If Nmap tries
 connecting to a port, and the computer responds back that a connection
 isn't possible, the port is considered *closed*. Closed ports aren't
@@ -1028,9 +1021,9 @@ address in the address bar. Port 53 would indicate I can use the node as
 a domain name server.
 
 To quickly see what computers are on the network, you can do a fast
-*ping scan* with -sn, which skips scanning ports to check if a computer
-is up. The command below will scan all computers from 192.168.1.1 to
-192.168.1.254 to see what computers are on the network:
+``ping scan`` with ``-sn``, which skips scanning ports to check if a computer
+is up. The command below will scan all computers from ``192.168.1.1`` to
+``192.168.1.254`` to see what computers are on the network:
 
 ``nmap -sn 192.168.1.0/24``
 
@@ -1058,9 +1051,9 @@ of one command into another command to further refine our results.
 
 For example, we can capture output from Nmap in a text file and have a
 log of which computers are up and running on a local subnet. To redirect
-output from a Nmap scan to a file, add the greater-than sign (>) to the
-nmap command. The nmap 192.168.1.0/24 > scan1.txt command redirects the
-output from nmap to a file called *scan1.txt*.
+output from a Nmap scan to a file, add the greater-than sign (``>``) to the
+nmap command. The ``nmap 192.168.1.0/24 > scan1.txt`` command redirects the
+output from nmap to a file called ``scan1.txt``.
 
 To redirect output to another command, use the *pipe* symbol by hitting
 SHIFT-**\\**.
@@ -1091,7 +1084,7 @@ As discussed in Chapter 6, the internet routes traffic between large
 networks, each of which has an Autonomous System Number (ASN). You can
 look up an ASN by first finding your public IP address. This likely
 isn't your machine IP address. You can go to the following page to get
-your public IP address: *https://www.whatismyip.com/*.
+your public IP address: `https://www.whatismyip.com/ <https://www.whatismyip.com/>`_.
 
 Visit
 `https://mxtoolbox.com/SuperTool.aspx <https://mxtoolbox.com/SuperTool.aspx>`_
@@ -1138,50 +1131,39 @@ away, but you don't know what node did it.
     traceroute with both TCP and ICMP packets.
 
 To use traceroute on Windows, type tracert followed by the IP address or
-DNS name of the computer you want to trace to. Listing 7-8 shows an
-example:
+DNS name of the computer you want to trace to. :numref:`netstat_output_windows`
+shows an example:
 
-C:\\>tracert simpson.edu
+.. _netstat_output_windows:
+.. code-block:: text
+   :caption: Output of the tracert command on Windows
+   :linenos:
 
-Tracing route to simpson.edu [23.185.0.3]
+   C:\>tracert simpson.edu
 
-over a maximum of 30 hops:
+   Tracing route to simpson.edu [23.185.0.3]
+   over a maximum of 30 hops:
 
-1 1 <1 ms <1 ms <1 ms DeviceDHCP.Home [192.168.1.1]
+        1    <1 ms    <1 ms    <1 ms  DeviceDHCP.Home [192.168.1.1]
+        2     3 ms     2 ms     3 ms  100.66.16.1
+        3     2 ms     2 ms     2 ms  b224.cr1.ind.imufiber.net [199.66.12.132]
+        4     2 ms     2 ms     2 ms  b201.ar1.ind.imufiber.net [199.66.12.195]
+        5     2 ms     2 ms     2 ms  b201.cr1.ind.imufiber.net [199.66.12.193]
+        6     1 ms     2 ms     2 ms  69.57.197.2
+        7     7 ms     6 ms     7 ms  vl1141.core7k1.cf-noc.cfu.net [24.149.0.164]
+        8     6 ms     6 ms     7 ms  ae0-1101.agg3.cf-noc.cfu.net [24.149.31.16]
+        9     7 ms     7 ms     7 ms  vl1122.gw-core.cf-noc.cfu.net [24.149.0.241]
+       10    13 ms    13 ms    13 ms  loopback0.chi-edge1.cf-noc.cfu.net [24.149.0.133]
+       11    30 ms    11 ms    10 ms  eqix-ch2.fastly.com [208.115.136.62]
+       12    13 ms    13 ms    13 ms  23.185.0.3
 
-2 2 3 ms 2 ms 3 ms 100.66.16.1
-
-3 2 ms 2 ms 2 ms b224.cr1.ind.imufiber.net [199.66.12.132]
-
-4 2 ms 2 ms 2 ms b201.ar1.ind.imufiber.net [199.66.12.195]
-
-5 2 ms 2 ms 2 ms b201.cr1.ind.imufiber.net [199.66.12.193]
-
-6 1 ms 2 ms 2 ms 69.57.197.2
-
-7 7 ms 6 ms 7 ms vl1141.core7k1.cf-noc.cfu.net [24.149.0.164]
-
-8 6 ms 6 ms 7 ms ae0-1101.agg3.cf-noc.cfu.net [24.149.31.16]
-
-9 7 ms 7 ms 7 ms vl1122.gw-core.cf-noc.cfu.net [24.149.0.241]
-
-10 13 ms 13 ms 13 ms loopback0.chi-edge1.cf-noc.cfu.net [24.149.0.133]
-
-11 30 ms 11 ms 10 ms eqix-ch2.fastly.com [208.115.136.62]
-
-3 12 13 ms 13 ms 13 ms 23.185.0.3
-
-Trace complete.
-
-Output of the netstat command on Windows
-
-The trace shows that my packet first goes to my router at ``192.168.1.1`` 1
-and then hops to ``100.66.16.1`` 2. Next you can see each hop as it heads to
-its final destination, simpson.edu, at ``23.185.0.3`` 3. The computer runs
+The trace shows that my packet first goes to my router at ``192.168.1.1`` (line 6)
+and then hops to ``100.66.16.1`` (line 7). Next you can see each hop as it heads to
+its final destination, simpson.edu, at ``23.185.0.3`` (line 17). The computer runs
 the route three times, and shows how long it takes to get to that hop in
 three different columns. If the computer can, it does a reverse DNS
 lookup on each address, which helps you get an idea of what that node
-is. In Listing 7-8, the address ``199.66.12.132`` is the same as the DNS
+is. In :numref:`netstat_output_windows`, the address ``199.66.12.132`` is the same as the DNS
 address ``b224.cr1.ind.imufiber.net``.
 
 On Linux or macOS, traceroute can be done with traceroute followed by
@@ -1196,49 +1178,32 @@ like so:
 
 With the Linux version of traceroute, adding the -A parameter will look
 up the ASN of each hop. Note there's no valid ASN for a private subnet
-that sits behind a NAT. Listing 7-9 shows the output from a Linux
-traceroute that includes the ASN lookup:
+that sits behind a NAT. :numref:`netstat_output_linux` shows the output from a Linux
+``traceroute`` that includes the ASN lookup:
 
-sudo traceroute -I -A simpson.edu
+.. _netstat_output_linux:
+.. code-block:: text
+   :caption: Output of the traceroute command on Linux
+   :linenos:
 
-traceroute to simpson.edu (23.185.0.3), 30 hops max, 60 byte packets
-
-1 DeviceDHCP.Home (192.168.1.1)1 [AS198949] 2.157 ms 2.277 ms 2.339 ms
-
-2 100.66.16.1 (100.66.16.1)2 [\*] 5.050 ms 5.730 ms 6.165 ms
-
-3 b224.cr1.ind.imufiber.net (199.66.12.132)3 [AS30169] 4.254 ms 4.737 ms
-/ 4.636 ms
-
-4 b201.ar1.ind.imufiber.net (199.66.12.195) [AS30169] 3.554 ms 3.799 ms
-/ 3.750 ms
-
-5 b201.cr1.ind.imufiber.net (199.66.12.193) [AS30169] 5.011 ms 5.173 ms
-/ 5.586 ms
-
-6 69.57.197.2 (69.57.197.2) [AS13855/AS10464] 5.587 ms 2.918 ms 4.367 ms
-
-7 vl1141.core7k1.cf-noc.cfu.net (24.149.0.164) [AS7029/AS13855/AS10464]
-9.222 / ms 9.468 ms 9.675 ms
-
-8 ae0-1101.agg3.cf-noc.cfu.net (24.149.31.16) [AS7029/AS13855/AS10464]
-8.610 / ms 8.722 ms 9.115 ms
-
-9 vl1122.gw-core.cf-noc.cfu.net (24.149.0.241) [AS7029/AS13855/AS10464]
-9.718 / ms 10.117 ms 10.401 ms
-
-10 loopback0.chi-edge1.cf-noc.cfu.net (24.149.0.133)
-[AS7029/AS13855/AS10464] / 16.015 ms 16.220 ms 16.307 ms
-
-11 eqix-ch2.fastly.com (208.115.136.62) [AS30159] 14.250 ms \* 14.234 ms
-
-12 23.185.0.3 (23.185.0.3) [AS54113] 14.096 ms 15.212 ms 18.032 ms
-
-Output of the netstat command
+   sudo traceroute -I -A simpson.edu
+   traceroute to simpson.edu (23.185.0.3), 30 hops max, 60 byte packets
+    1  DeviceDHCP.Home (192.168.1.1)1 [AS198949]  2.157 ms  2.277 ms  2.339 ms
+    2  100.66.16.1 (100.66.16.1)2 [*]  5.050 ms  5.730 ms  6.165 ms
+    3  b224.cr1.ind.imufiber.net (199.66.12.132)3 [AS30169]  4.254 ms  4.737 ms  / 4.636 ms
+    4  b201.ar1.ind.imufiber.net (199.66.12.195) [AS30169]  3.554 ms  3.799 ms  / 3.750 ms
+    5  b201.cr1.ind.imufiber.net (199.66.12.193) [AS30169]  5.011 ms  5.173 ms  / 5.586 ms
+    6  69.57.197.2 (69.57.197.2) [AS13855/AS10464]  5.587 ms  2.918 ms  4.367 ms
+    7  vl1141.core7k1.cf-noc.cfu.net (24.149.0.164) [AS7029/AS13855/AS10464]  9.222 / ms  9.468 ms  9.675 ms
+    8  ae0-1101.agg3.cf-noc.cfu.net (24.149.31.16) [AS7029/AS13855/AS10464]  8.610 / ms  8.722 ms  9.115 ms
+    9  vl1122.gw-core.cf-noc.cfu.net (24.149.0.241) [AS7029/AS13855/AS10464]  9.718 / ms  10.117 ms  10.401 ms
+   10  loopback0.chi-edge1.cf-noc.cfu.net (24.149.0.133) [AS7029/AS13855/AS10464]  / 16.015 ms  16.220 ms  16.307 ms
+   11  eqix-ch2.fastly.com (208.115.136.62) [AS30159]  14.250 ms *  14.234 ms
+   12  23.185.0.3 (23.185.0.3) [AS54113]  14.096 ms  15.212 ms  18.032 ms
 
 The first ASN shown is part of our local subnet, because it starts with
-192.168.x.x 1. This isn't a valid ASN, so we can ignore the result. The
-computer wasn't able to look up the next ASN 2, but the following ASN 3
+``192.168.x.x`` (line 3). This isn't a valid ASN, so we can ignore the result. The
+computer wasn't able to look up the next ASN (line 4), but the following ASN (line 5)
 is AS30169.
 
 Hurricane Electric Internet Services's tool for looking up information
@@ -1255,40 +1220,24 @@ Project: Traceroute Graphing
 The Python project scapy has a lot of tools for sending and receiving
 custom-built packets. Scapy is great for low-level hacking, security
 testing, and performance testing. The following commands set up the
-libraries scapy needs:
+libraries scapy needs along with scapy itself:
 
-sudo apt-get update
+.. code-block::
 
-sudo apt-get install texlive-latex-base whois python3 python3-pip
-
-sudo apt-get install graphviz tcpdump
-
-sudo pip3 install matplotlib pyx
-
-Enter **sudo pip3 install scapy** to install scapy.
+   sudo apt-get update
+   sudo apt-get install texlive-latex-base whois python3 python3-pip
+   sudo apt-get install graphviz tcpdump
+   sudo pip3 install matplotlib pyx scapy
 
 Once installed, create a Python program to do a traceroute as shown in
-Listing 7-10. To run this program, you have to run it as an
+:numref:`traceroute_scapy`. To run this program, you have to run it as an
 administrator with sudo python3 traceroute_scapy.py.
 
-traceroute_scapy.py
-
-from scapy.all import \*
-
-site_list = "google.com", "youtube.com", "wikipedia.org"
-
-time_to_live = 30
-
-res, unans = traceroute(site_list, maxttl=time_to_live)
-
-# res, unans = traceroute(site_list, maxttl=time_to_live, l4=ICMP())
-
-res.graph(target="> traceroute_scapy.svg", type="svg")
-
-res.graph(target="> traceroute_scapy.png", type="png")
-
-Code that will generate a graph of how traffic to Google, YouTube, and
-Wikipedia travels to your computer
+.. _traceroute_scapy:
+.. literalinclude:: ../code_examples/traceroute_scapy.py
+   :language: python
+   :linenos:
+   :caption: traceroute_scapy.py: Code that will generate a graph of how traffic to Google, YouTube, and Wikipedia travels to your computer
 
 Update the program to contain a list of websites you want to trace to.
 If you list more than one, you can see what paths they have in common
@@ -1298,16 +1247,19 @@ Now that we have a traceroute, we can graph it with the res.graph
 command. Graphs can be in vector-graphics format (SVG), or can be saved
 as a raster-graphic image like PNG.
 
-An example run of the code in Listing 7-10 is shown in Figure 7-23.
+An example run of the code in :numref:`traceroute_scapy` is shown in :numref:`graphical_traceroute`.
 
-|image18|
+.. _graphical_traceroute:
+.. figure:: media/graphical_traceroute.svg
+   :alt: Scapy graphical traceroute
+   :width: 100%
 
-Scapy graphical traceroute
+   Scapy graphical traceroute
 
-Figure 7-21 shows that all three websites take the same path through the
+:numref:`graphical_traceroute` shows that all three websites take the same path through the
 first seven hops. There are boxes drawn around the nodes in each ASN.
-The nodes beginning with 199.66 all belong to AS30169. Once the traffic
-hits 24.149.31.16 it finally splits into different locations.
+The nodes beginning with ``199.66`` all belong to AS30169. Once the traffic
+hits ``24.149.31.16`` it finally splits into different locations.
 
 What You Learned
 ================
@@ -1315,6 +1267,6 @@ In this chapter, we've learned to write programs to send and receive
 packets over TCP/IP, and to capture, decode, and understand packets
 using Wireshark. You learned to use commands like ipconfig, netstat, and
 nmap to inspect open and in-use networking ports not only on your
-computer, but your entire network. Using traceroutes, we can see every
+computer, but your entire network. Using trace-routes, we can see every
 hop our data takes as it travels across the internet, and even look up
 who owns and manages those hops.
