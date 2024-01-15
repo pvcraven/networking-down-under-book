@@ -7,13 +7,13 @@
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
 project = 'Networking Down Under'
-copyright = '2023, Paul Vincent Craven'
+copyright = '2024, Paul Vincent Craven'
 author = 'Paul Vincent Craven'
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
 
-extensions = ['sphinx_sitemap']
+extensions = []
 
 templates_path = ['_templates']
 exclude_patterns = []
