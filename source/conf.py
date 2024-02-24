@@ -13,7 +13,7 @@ author = 'Paul Vincent Craven'
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
 
-extensions = ['sphinx_sitemap']
+extensions = ['sphinx_sitemap', 'sphinx_copybutton']
 
 templates_path = ['_templates']
 exclude_patterns = []
@@ -29,3 +29,6 @@ html_static_path = ['_static']
 
 numfig = True
 html_title = "Networking Down Under"
+
+def setup(app):
+  app.add_css_file( "custom.css" )

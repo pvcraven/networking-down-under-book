@@ -76,7 +76,7 @@ networking socket (line 13). It does not create the connection; it gets a
 variable ready to manage it. The constants ``AF_INET`` and ``SOCK_STREAM`` come
 from the original UNIX networking code written in C.
 
-With  you set up the socket connection. A socket connection occurs
+With (line 18) you set up the socket connection. A socket connection occurs
 between two IP addresses and two ports. The client specifies the server
 address and port. For example, you might connect from your client at
 ``192.168.1.100:51236`` to your destination server at ``192.168.1.101:10000``.
@@ -200,22 +200,22 @@ from the network. You can use this loop to not only process incoming
 network data, but also check for user input and do anything else you'd
 like. The code is a bit more complex to write.
 
-In Listing 9-3 we have updated code for the server. This code defines
-how long to wait between checks for new data from the network . In this
+In :numref:`tcp_receive_nonblocking` we have updated code for the server. This code defines
+how long to wait between checks for new data from the network (line 21). In this
 case, we'll check every 0.1 seconds. If we don't include this delay, the
 computer can check for new input thousands of times each second, wasting
 CPU resources. Next, we have to keep track of the state that we are in
-. Specifically, are we connected to a client computer, or do we have no
+(lines 23-28). Specifically, are we connected to a client computer, or do we have no
 connection? We start off with no connection.
 
 To keep the code from blocking when we receive data, we need to set a
-timeout . By setting the timeout to zero, the code will immediately
+timeout (lines 33-34). By setting the timeout to zero, the code will immediately
 continue if there is no data and not pause at all.
 
 Once our variables are set up, we start the main event loop, looping
-over and over to either receive a new connection or process data . If
-no client is currently connected, we see if there is one waiting . If
-not, we wait and try again . If a client is connected we try to receive
+over and over to either receive a new connection or process data (line 54). If
+no client is currently connected, we see if there is one waiting (lines 57-62). If
+not, we wait and try again (lines 64-65). If a client is connected we try to receive
 a packet of data . If there is data, we close the connection and wait
 for the next connection, otherwise we pause and next loop through we'll
 see if the data has arrived.
@@ -227,17 +227,17 @@ an interface, make sure to close the socket properly when the program
 ends.
 
 .. _tcp_receive_nonblocking:
-.. literalinclude:: ../code_examples/tcp_receive_blocking.py
+.. literalinclude:: ../code_examples/tcp_receive_nonblocking.py
    :language: python
    :linenos:
    :caption: tcp_receive_nonblocking.py (server)
 
 To get these code samples working, put tcp_send.py and possibly
-tcp_send_timings.py on a computer you designate as your client. Then put
-tcp_receive_blocking.py and tcp_receive_nonblocking.py on the computer
+``tcp_send_timings.py`` on a computer you designate as your client. Then put
+``tcp_receive_blocking.py`` and tcp_receive_nonblocking.py on the computer
 designated to be the server. Update the IP addresses in the examples to
 contain the server address. If you are using one computer for both the
-server and the client, use 127.0.0.1 as the address.
+server and the client, use ``127.0.0.1`` as the address.
 
 Start the server program first, then start the client.
 
@@ -248,14 +248,17 @@ After you have the code examples working, use Wireshark to examine
 precisely what data goes across the network. (Remember, due to a
 limitation with Windows, you can't capture packets using Windows if both
 the client and server are the same computer.) You can filter the results
-to see only the packets you care about by entering tcp.port == 10000 for
-the filter, and clicking the arrow at the far right, as shown in Figure
-9-1. You should end up with about eight packets. In Figure 9-1 the
-client computer was 192.168.1.4 and the server was 192.168.1.12.
+to see only the packets you care about by entering ``tcp.port == 10000`` for
+the filter, and clicking the arrow at the far right, as shown in :numref:`send_trace`.
+You should end up with about eight packets. In :numref:`send_trace` the
+client computer was ``192.168.1.4`` and the server was ``192.168.1.12``.
 
-|image1|
+.. _send_trace:
+.. figure:: media/send_trace.png
+   :alt: Capturing a TCP message in Wireshark.
+   :width: 100%
 
-Figure 9-1: Capturing a TCP message in Wireshark.
+   Capturing a TCP message in Wireshark.
 
 How does the theory we learned in Chapter 8 match up to the data we
 captured? Opening a connection is a sequence of three packets, a SYN, a
@@ -263,7 +266,7 @@ SYN-ACK, and a ACK. You should be able to find those three in your
 capture.
 
 The data is sent in one packet. You can click on the packet and see the
-data as shown at the bottom of Figure 9-1. It should also be the only
+data as shown at the bottom of :numref:`send_trace`. It should also be the only
 packet that has a data length of more than zero. In the example, I sent
 "Hello World!" which added up to 13 bytes. Because it isn't a full
 buffer, the packet might be marked as being pushed, with a PSH.
@@ -273,13 +276,16 @@ are ready for to close the connection with a FIN packet. Both those
 packets must be acknowledged before the connection is considered closed.
 
 Notice that Wireshark shows a *relative* sequence number as shown in
-Figure 9-2. The random sequence number that TCP starts with (0c 3b 4c 33
+:numref:`sequence_number`. The random sequence number that TCP starts with (``0c 3b 4c 33``
 in this example) is automatically subtracted out. This 32-bit sequence
 number is the same sequence number we talked about in Chapter 8.
 
-|image2|
+.. _sequence_number:
+.. figure:: media/sequence_number.png
+   :alt: Sequence Numbers in Wireshark are Relative
+   :width: 80%
 
-Figure 9-2: Sequence Numbers in Wireshark are Relative
+   Sequence Numbers in Wireshark are Relative
 
 Keep experimenting to see if data is really buffered before it is sent;
 for example, you can try multiple send commands in a row:
@@ -325,15 +331,15 @@ Once compiled, a file can be run with:
 
    java SendData
 
-The Java program in Listing 9-4 specifies what server and port to
-connect to , just like the Python program in Listing 9-1. The program
+The Java program in :numref:`send_data_java` specifies what server and port to
+connect to (lines 9-10), just like the Python program in :numref:`tcp_send`. The program
 specifies the message to be sent, but doesn't need to explicitly worry
-about Unicode strings and byte arrays like Python does . Java sets up
-the socket without requiring separate steps to create and bind  like
+about Unicode strings and byte arrays like Python does (line 11). Java sets up
+the socket without requiring separate steps to create and bind (line 13) like
 Python does. The line of code saved there is lost as we set up a
 PrintWriter for output.
 
-Next, we print the data which causes it to be sent . Note that we need
+Next, we print the data which causes it to be sent (line 17). Note that we need
 to specifically "flush" the print writer. If autoFlush is set to false,
 Java will keep buffering data until the buffer is full (which might not
 happen with short messages), or when we call the print writer's flush()
@@ -341,7 +347,7 @@ method. If autoFlush is set to true, we don't need to call flush, the
 data will automatically get sent after each print even if the buffer
 isn't full.
 
-Just like in Python, we need to close the socket when done .
+Just like in Python, we need to close the socket when done (line 20).
 
 .. _send_data_java:
 .. literalinclude:: ../code_examples/SendData.java
@@ -349,15 +355,14 @@ Just like in Python, we need to close the socket when done .
    :linenos:
    :caption: SendData.java
 
-You can receive data using Java as well. The code in Listing 9-5 is
-equivalent to the blocking version of the Python program in Listing 9-2:
+You can receive data using Java as well. The code in :numref:`receive_data_java` is
+equivalent to the blocking version of the Python program in :numref:`tcp_receive_blocking`:
 
 .. _receive_data_java:
-.. literalinclude:: ../code_examples/ReceiveData.java
+.. literalinclude:: ../code_examples/ReceiveDataBlocking.java
    :language: java
    :linenos:
-   :caption: ReceiveData.java
-
+   :caption: ReceiveDataBlocking.java
 
 If you run the Java code on a Mac, you might get an error related to
 permissions. If so, get around the error by compiling the file on the
@@ -376,28 +381,28 @@ Tutorial: Multi-Packet Messages
 The prior tutorial assumed you were sending and receiving a message that
 would fit in one packet. However, if you sent a message larger than one
 packet in size, you'd receive only the first packet of data when you do
-a connection.recv(). Instead, you need to loop and keep receiving data
+a ``connection.recv()``. Instead, you need to loop and keep receiving data
 until the end of the message. This tutorial shows you how to do that.
 Also, by working with multi-packet messages, you also get to see the
 *sliding window* in action.
 
 First, you need to adjust the code in the client program which sends
 data, and instruct it to send *lots* of data. That's easy to do. See
-Listing 9-6. We create a constant to specify how many bytes we want our
-message to be . From there, you can use Python's string-multiplication
+:numref:`tcp_send_big_message`. We create a constant to specify how many bytes we want our
+message to be. From there, you can use Python's string-multiplication
 to quickly create an array filled with the letter X which we do in the
-next line . Also in that line, you need some way to signify the end of
+next line. Also in that line, you need some way to signify the end of
 the message. Typically we do this with a special character that
 signifies "end of message." In this case, you'll signify the end of a
 message with a line feed \\n character. That's the only thing we need to
 modify on our client program.
 
-message_size_in_bytes = 600000
+.. _tcp_send_big_message:
+.. code-block:: python
+   :caption: Code segment from tcp_send_big_message.py at https://github.com/pvcraven/networking_down_under
 
-my_message = b"X" \* (message_size_in_bytes - 1) + b"\\n"
-
-Listing 9-6: Code segment from tcp_send_big_message.py at
-https://github.com/pvcraven/networking_down_under
+    message_size_in_bytes = 600000
+    my_message = b"X" \* (message_size_in_bytes - 1) + b"\\n"
 
 Now the server code receiving the message needs to be updated. Because
 our data doesn't come all at once, Listing 9-7 creates a full_message 
@@ -438,9 +443,12 @@ acknowledgement isn't seen until six packets later. Try spotting the
 same thing in your own packet captures. This is the sliding window we
 learned about in Chapter 8 in action.
 
-|image3|
+.. _overlap:
+.. figure:: media/overlap.png
+   :alt: Overlap in Sending Data and Acknowledgements
+   :width: 40%
 
-Figure 9-3: Overlap in Sending Data and Acknowledgements
+   Overlap in Sending Data and Acknowledgements
 
 Note: Ethernet limits packets to about 1500 bytes. When you capture
 packets with Wireshark, do you see packets larger than this? If you do,
@@ -517,9 +525,12 @@ doesn't run fast enough, and packets are more likely to get merged. The
 graph from a Raspberry Pi will look flat compared to a graph created
 with packets sent on desktop computers.
 
-|image4|
+.. _speed_graph:
+.. figure:: media/speed_graph.png
+   :alt: Graphing speed vs packet size
+   :width: 60%
 
-Figure 9-4: Graphing speed vs packet size
+   Graphing speed vs packet size
 
 Tutorial: Open/Teardown Transmission Rates
 ==========================================
@@ -571,13 +582,12 @@ is the same as the Python version. You might wonder, is one language
 faster than the other? To create benchmark timings in Java, you can use
 code like the following to create an elapsed time in Java:
 
-long start = System.currentTimeMillis();
+.. code-block:: python
 
-// ...
-
-long finish = System.currentTimeMillis();
-
-long timeElapsed = finish - start;
+   long start = System.currentTimeMillis();
+   // ...
+   long finish = System.currentTimeMillis();
+   long timeElapsed = finish - start;
 
 Try doing a packet trace for sending and receiving in Java on different
 computers. If you ask to send 250,000 two-byte packets, does Java also
@@ -674,12 +684,15 @@ right edge of the screen it does not bounce, but instead appears on the
 screen of the computer to the right. If you have a row of computers, you
 can pass the ball all the way down.
 
-Figure 9-5 shows running the program on the same computer, which is also
+:numref:`bouncing_ball_image` shows running the program on the same computer, which is also
 possible if you don't have multiple computers available.
 
-|image5|
+.. _bouncing_ball_image:
+.. figure:: media/bouncing_balls.png
+   :alt: Creating a Networked Bouncing Ball Program
+   :width: 80%
 
-Figure 9-5: Creating a Networked Bouncing Ball Program
+   Creating a Networked Bouncing Ball Program
 
 To network the program, instead of bouncing on one of the edges, we'll
 open a network connection and pass the ball information to a different
@@ -692,7 +705,7 @@ In the comments, read the "to do" parts, and fill in the information
 from the tcp_send.py and tcp_receive_nonblocking.py programs. Work to
 get the program passing the balls across multiple screens. If you get
 stuck, a working program is available in the same directory
-bouncing_balls.py.
+``bouncing_balls.py``.
 
 Tutorial: Threaded Bouncing Balls
 =================================

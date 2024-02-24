@@ -1,0 +1,8 @@
+.caption-number {
+    margin-right: 0px;
+}
+
+.caption-number:after {
+    content: '-';
+    margin-right: 5px;
+}
